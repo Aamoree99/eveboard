@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  EXECUTOR
+  ADMIN
+}
+
+enum OrderStatus {
+  ACTIVE
+  TAKEN
+  DONE
+  CANCELED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  characterId  Int      @unique
+  name         String
+  avatar       String?
+  role         Role     @default(USER)
+  isBanned     Boolean  @default(false)
+  balance      Int      @default(0)
+  rating       Float    @default(0.0)
+  accessToken  String
+  refreshToken String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  createdOrders   Order[]        @relation("CreatedOrders")
+  takenOrders     Order[]        @relation("TakenOrders")
+  reviewsGiven    Review[]       @relation("ReviewsGiven")
+  reviewsReceived Review[]       @relation("ReviewsReceived")
+  transactions    Transaction[]
+  messages        OrderMessage[] @relation("UserMessages")
+  complaints Complaint[]
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  title        String
+  description  String
+  requirements String?
+  language     String
+  system       String
+  price        Int
+  deadline     DateTime?
+  status       OrderStatus @default(ACTIVE)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  typeId Int
+  type   OrderType @relation(fields: [typeId], references: [id])
+
+  creatorId String
+  creator   User   @relation("CreatedOrders", fields: [creatorId], references: [id])
+
+  executorId String?
+  executor   User?   @relation("TakenOrders", fields: [executorId], references: [id])
+
+  review Review?
+
+  complaints Complaint[]
+
+  messages OrderMessage[]
+}
+
+model OrderType {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  orders Order[]
+}
+
+model OrderMessage {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  author   User   @relation("UserMessages", fields: [authorId], references: [id])
+  authorId String
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  text      String?
+  createdAt DateTime @default(now())
+
+  orderId String @unique
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  fromId String
+  from   User   @relation("ReviewsGiven", fields: [fromId], references: [id])
+
+  toId String
+  to   User   @relation("ReviewsReceived", fields: [toId], references: [id])
+}
+
+model Transaction {
+  id         String   @id @default(cuid())
+  amount     Int
+  reason     String
+  type       TransactionType
+  createdAt  DateTime @default(now())
+  confirmed  Boolean  @default(false)
+  externalId BigInt?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  PAYMENT
+  REWARD
+  BONUS
+}
+
+model Complaint {
+  id        String   @id @default(cuid())
+  reason    String
+  createdAt DateTime @default(now())
+
+  userId  String
+  user    User  @relation(fields: [userId], references: [id])
+
+  orderId String
+  order   Order @relation(fields: [orderId], references: [id])
+}
+
