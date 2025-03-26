@@ -20,6 +20,14 @@ enum OrderStatus {
   CANCELED
 }
 
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  PAYMENT
+  REWARD
+  BONUS
+}
+
 model User {
   id           String   @id @default(cuid())
   characterId  Int      @unique
@@ -117,14 +125,6 @@ model Transaction {
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
-}
-
-enum TransactionType {
-  DEPOSIT
-  WITHDRAWAL
-  PAYMENT
-  REWARD
-  BONUS
 }
 
 model Complaint {

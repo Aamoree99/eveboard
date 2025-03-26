@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { Cron } from '@nestjs/schedule';
 import { PrismaService } from '../prisma/prisma.service';
+import { User, Transaction } from '@prisma/client';
 
 const CHARACTER_ID = Number(process.env.MAIN_WALLET);
 const ESI_TOKEN_URL = 'https://login.eveonline.com/v2/oauth/token';
@@ -30,23 +31,24 @@ export class WalletMonitorService {
             where: { characterId: CHARACTER_ID },
         });
 
-        if (!systemUser) {
-            this.logger.error('System user not found');
+        if (!systemUser || !systemUser.accessToken) {
+            this.logger.error('System user not found or has no accessToken');
             return;
         }
 
-        let accessToken: string | null = systemUser.accessToken;
+        let accessToken: string = systemUser.accessToken;
         let journal = await this.fetchJournal(accessToken);
 
         if (journal === null) {
             this.logger.warn('Access token expired, refreshing...');
-            accessToken = await this.refreshAccessToken(systemUser);
+            const refreshedToken = await this.refreshAccessToken(systemUser);
 
-            if (!accessToken) {
+            if (!refreshedToken) {
                 this.logger.error('Failed to refresh token');
                 return;
             }
 
+            accessToken = refreshedToken;
             journal = await this.fetchJournal(accessToken);
             if (!journal) {
                 this.logger.error('Still failed to fetch journal after refresh');
@@ -58,11 +60,11 @@ export class WalletMonitorService {
             where: { confirmed: false },
         });
 
-        const deposits = unconfirmed.filter((tx) => tx.type === 'DEPOSIT');
-        const withdrawals = unconfirmed.filter((tx) => tx.type === 'WITHDRAWAL');
+        const deposits = unconfirmed.filter((tx: Transaction) => tx.type === 'DEPOSIT');
+        const withdrawals = unconfirmed.filter((tx: Transaction) => tx.type === 'WITHDRAWAL');
 
         for (const tx of deposits) {
-            const match = journal.find((entry) => {
+            const match = journal.find((entry: JournalEntry) => {
                 return (
                     entry.amount > 0 &&
                     entry.ref_type === 'player_donation' &&
@@ -92,7 +94,7 @@ export class WalletMonitorService {
         }
 
         for (const tx of withdrawals) {
-            const match = journal.find((entry) => {
+            const match = journal.find((entry: JournalEntry) => {
                 return (
                     entry.amount < 0 &&
                     entry.ref_type === 'player_donation' &&
@@ -122,7 +124,7 @@ export class WalletMonitorService {
             const entries: JournalEntry[] = [];
 
             while (true) {
-                const { data } = await this.http.axiosRef.get(ESI_JOURNAL_URL, {
+                const { data } = await this.http.axiosRef.get<JournalEntry[]>(ESI_JOURNAL_URL, {
                     headers: { Authorization: `Bearer ${accessToken}` },
                     params: { datasource: 'tranquility', page },
                 });
@@ -145,11 +147,7 @@ export class WalletMonitorService {
         }
     }
 
-    private async refreshAccessToken(user: {
-        id: string;
-        accessToken: string;
-        refreshToken: string;
-    }): Promise<string | null> {
+    private async refreshAccessToken(user: User): Promise<string | null> {
         try {
             const response = await this.http.axiosRef.post(
                 ESI_TOKEN_URL,
@@ -169,8 +167,8 @@ export class WalletMonitorService {
                 },
             );
 
-            const newAccessToken = response.data.access_token;
-            const newRefreshToken = response.data.refresh_token;
+            const newAccessToken: string = response.data.access_token;
+            const newRefreshToken: string = response.data.refresh_token;
 
             await this.prisma.user.update({
                 where: { id: user.id },
