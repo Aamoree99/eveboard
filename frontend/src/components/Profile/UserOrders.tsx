@@ -30,15 +30,30 @@ const UserOrders = ({ user, isOwnProfile }: Props) => {
     const orderIdFromUrl = searchParams.get('orderId')
 
     useEffect(() => {
-        void api.order.orderControllerGetAll({ userId: user.id }).then((res) => {
-            const data = (res as unknown as { data: Order[] }).data ?? []
+        const fetchOrders = async () => {
+            try {
+                const res = await api.order.orderControllerGetAll({ userId: user.id })
+                const json = await res.json()
 
-            const created = data.filter((o) => o.creator?.id === user.id)
-            const completed = data.filter((o) => o.executor?.id === user.id)
+                const data: Order[] = json?.data ?? []
+                const userRating = user.rating ?? 0
 
-            setCreatedOrders(created)
-            setCompletedOrders(completed)
-        })
+                const created = data
+                    .filter((o) => o.creator?.id === user.id)
+                    .filter((o) => userRating >= (o.minRating ?? 0))
+
+                const completed = data
+                    .filter((o) => o.executor?.id === user.id)
+                    .filter((o) => userRating >= (o.minRating ?? 0))
+
+                setCreatedOrders(created)
+                setCompletedOrders(completed)
+            } catch (e) {
+                console.error('[UserOrders] Failed to fetch orders:', e)
+            }
+        }
+
+        void fetchOrders()
     }, [user.id, showCreateModal])
 
     useEffect(() => {

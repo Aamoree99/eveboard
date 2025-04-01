@@ -38,7 +38,10 @@ const UserSettings = () => {
         }
     }
 
-    const isExecutor = user?.role === 'EXECUTOR'
+    const isExecutor =
+        user?.role === 'EXECUTOR' ||
+        user?.role === 'ADMIN' ||
+        user?.role === 'TESTER'
 
     return (
         <div className="user-settings">

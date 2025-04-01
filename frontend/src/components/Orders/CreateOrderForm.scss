@@ -187,3 +187,19 @@ button[type="submit"]:hover {
 .close-btn:hover {
   color: var(--accent-color);
 }
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -90,27 +90,29 @@ const DepositModal = ({ onClose }: Props) => {
                 ) : (
                     <div className="deposit-info">
                         <img
-                            src="https://images.evetech.net/characters/2117384847/portrait?size=512"
-                            alt="Aamoree portrait"
+                            src="https://images.evetech.net/corporations/98800365/logo?size=128"
+                            alt="EVE Board logo"
                             className="deposit-portrait"
                         />
                         <div className="deposit-details">
-                            <p><strong>Send ISK to:</strong>
-                                <span className="recipient">{depositInfo?.reason}</span>
-                                <button className="copy-btn" onClick={() => handleCopy(depositInfo?.reason ?? '')}>
-                                    <FaCopy />
+                            <p>
+                                <strong>Send ISK to:</strong>
+                                <span className="recipient">EVE Board [EVEBD]</span>
+                                <button className="copy-btn" onClick={() => handleCopy('EVE Board')}>
+                                    <FaCopy/>
                                 </button>
                             </p>
                             <p><strong>Amount:</strong>
                                 {depositInfo.amount.toLocaleString()} ISK
-                                <button className="copy-btn" onClick={() => handleCopy(depositInfo.amount.toLocaleString())}>
-                                    <FaCopy />
+                                <button className="copy-btn"
+                                        onClick={() => handleCopy(depositInfo.amount.toLocaleString())}>
+                                    <FaCopy/>
                                 </button>
                             </p>
                             <p><strong>Reason:</strong>
                                 <code>{depositInfo?.reason}</code>
                                 <button className="copy-btn" onClick={() => handleCopy(depositInfo?.reason ?? '')}>
-                                    <FaCopy />
+                                    <FaCopy/>
                                 </button>
                             </p>
                         </div>
