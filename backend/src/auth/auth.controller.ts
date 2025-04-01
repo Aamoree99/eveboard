@@ -78,16 +78,16 @@ export class AuthController {
     @Get('discord/callback')
     async discordCallback(@Query('code') code: string, @Res() res: Response) {
         const data = await this.authService.fetchDiscordData(code)
-        console.log(`[DiscordController]: Data:`, data)
         const script = `
-        window.opener.postMessage({
-            type: 'DISCORD_LINK',
-            payload: {
-                id: "${data.id}"
-            }
-        }, '*');
-        window.close();
-    `
+            window.opener.postMessage({
+                type: 'DISCORD_LINK',
+                payload: {
+                    id: "${data?.id}"
+                }
+            }, '*');
+            window.close();
+            `;
+
         res.setHeader('Content-Type', 'text/html')
         res.send(`<html><body><script>${script}</script></body></html>`)
     }
