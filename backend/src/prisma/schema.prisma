@@ -111,6 +111,8 @@ model System {
   id       Int     @id
   name     String
   orders   Order[] @relation("OrderSystem")
+
+  @@map("System")
 }
 
 

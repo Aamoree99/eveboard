@@ -113,7 +113,7 @@ export class TransactionService {
      */
     async confirmWithdrawManually(txId: string, actorCharacterId: string) {
         const MAIN_WALLET_ID = Number(process.env.MAIN_WALLET);
-        if (actorCharacterId !== MAIN_WALLET_ID) {
+        if (Number(actorCharacterId) !== MAIN_WALLET_ID) {
             throw new ForbiddenException('You are not allowed to confirm withdrawals');
         }
 
