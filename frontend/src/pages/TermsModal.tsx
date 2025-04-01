@@ -9,36 +9,46 @@ const TermsModal = () => {
             <div className="legal-modal" onClick={(e) => e.stopPropagation()}>
                 <button className="close-btn" onClick={() => navigate(-1)}>×</button>
                 <h1>Terms of Service</h1>
-                <p>Last updated: March 28, 2025</p>
+                <p>Last updated: April 2, 2025</p>
 
-                <h2>1. Acceptance of Terms</h2>
+                <h2>1. Using the platform</h2>
                 <p>
-                    By accessing or using this platform, you confirm that you have read, understood, and agreed to be bound by these Terms of Service.
+                    By accessing EVE Board, you agree to use the platform responsibly and in accordance with these terms. If you do not accept these terms, do not use the platform.
                 </p>
 
-                <h2>2. User Conduct</h2>
+                <h2>2. Accounts & access</h2>
                 <p>
-                    You are solely responsible for all activity associated with your account. Misuse, abuse, or violation of in-game rules or our policies may result in suspension or termination.
+                    Access requires authentication via EVE Online. You are responsible for all actions taken under your account, including contracts you create or accept.
                 </p>
 
-                <h2>3. Orders and Payments</h2>
+                <h2>3. Orders & payments</h2>
                 <p>
-                    All orders are final once confirmed. Prices are listed in ISK and may be subject to platform service fees. Platform admins reserve the right to moderate or cancel orders under exceptional circumstances.
+                    All contracts are final once created or accepted. Payouts are processed through the internal wallet system. Platform fees may apply. Orders can be moderated or canceled by admins in case of abuse, fraud, or error.
                 </p>
 
-                <h2>4. Platform Use</h2>
+                <h2>4. Wallet & withdrawals</h2>
                 <p>
-                    This service is provided "as is". We do our best to maintain reliability, but we make no guarantees regarding uptime, performance, or availability.
+                    ISK earned on the platform is stored in your internal balance. Withdrawals are subject to a service commission and may require identity verification. The platform is not liable for losses due to incorrect wallet info or in-game bans.
                 </p>
 
-                <h2>5. Refunds and Disputes</h2>
+                <h2>5. Conduct & restrictions</h2>
                 <p>
-                    Refunds are not provided automatically. In case of disputes, users may submit a complaint through the platform. All claims are reviewed manually.
+                    Abusive behavior, multi-accounting, scamming, or misuse of platform features will result in suspension or permanent ban. We reserve the right to revoke access at any time.
                 </p>
 
-                <h2>6. Changes to Terms</h2>
+                <h2>6. Uptime & availability</h2>
                 <p>
-                    We reserve the right to update these terms at any time. Continued use of the platform constitutes acceptance of the latest version.
+                    We strive for stable performance but do not guarantee uptime, error-free operation, or data availability. Scheduled or unscheduled downtime may occur.
+                </p>
+
+                <h2>7. Disputes</h2>
+                <p>
+                    If a dispute arises regarding a contract, users can submit a complaint. Disputes are reviewed manually by platform moderators. All decisions are final.
+                </p>
+
+                <h2>8. Changes to terms</h2>
+                <p>
+                    These terms may be updated at any time. Continued use of the platform after changes implies acceptance of the updated terms.
                 </p>
             </div>
         </div>

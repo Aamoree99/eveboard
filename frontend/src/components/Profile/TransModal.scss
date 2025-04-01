@@ -1,36 +1,42 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(10, 10, 20, 0.5);
+  backdrop-filter: blur(16px) brightness(0.85);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  animation: fadeIn 0.3s ease;
 }
 
 .modal-content {
-  background: var(--card-bg);
-  padding: 24px 28px;
-  border-radius: 12px;
-  width: 100%;
-  max-width: 420px;
+  background: rgba(30, 30, 40, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 460px;
+  width: 90%;
+  box-shadow: 0 0 40px rgba(14, 165, 233, 0.12), 0 0 60px rgba(14, 165, 233, 0.08);
   color: var(--main-text);
-  box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
-  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1.2rem;
+  animation: slideUp 0.4s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .modal-content h2 {
   text-align: center;
-  font-size: 18px;
-  margin-bottom: 8px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  letter-spacing: 0.5px;
 }
 
 .modal-content label {
-  font-size: 14px;
+  font-size: 0.95rem;
   color: var(--main-text);
   display: flex;
   flex-direction: column;
@@ -39,112 +45,137 @@
 
 .modal-content input[type="number"],
 .modal-content input[type="text"] {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 6px;
+  padding: 0.65rem 1rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
   border: 1px solid var(--accent-color);
   background: var(--header-bg);
   color: var(--main-text);
-  appearance: textfield;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--accent-color-hover);
+  }
 }
 
 .modal-content button:not(.close-btn) {
-  width: 100%;
-  padding: 10px;
   background-color: var(--accent-color);
   color: var(--main-bg);
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
+  padding: 0.75rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  font-size: 14px;
   cursor: pointer;
-  margin-top: 4px;
-  transition: background-color 0.3s ease;
-}
+  transition: all 0.3s ease;
 
-.modal-content button:not(.close-btn):hover {
-  background-color: var(--accent-color-hover);
+  &:hover {
+    background-color: var(--accent-color-hover);
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+  }
 }
 
 .close-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 20px;
-  background: none;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.03);
   border: none;
-  color: var(--main-text);
-  cursor: pointer;
-  padding: 4px;
-  line-height: 1;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
-  transition: background 0.2s ease;
-}
+  cursor: pointer;
+  transition: background 0.2s;
 
-.close-btn:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: var(--accent-color);
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+  }
 }
 
 .deposit-info {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  gap: 1rem;
   text-align: center;
 
   .deposit-portrait {
-    width: 60px; /* Новый размер картинки */
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
-    margin: 0 auto;
     border: 2px solid var(--accent-color);
   }
 
   .deposit-details {
     p {
-      margin: 6px 0;
+      margin: 0.4rem 0;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
     }
 
     code {
-      background: var(--header-bg);
-      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 6px 10px;
       border-radius: 6px;
       font-family: monospace;
-      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--accent-color);
       word-break: break-word;
     }
   }
 
   .recipient {
-    font-weight: bold;
+    font-weight: 600;
     color: var(--accent-color);
   }
 
   .copy-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: none;
+    background: transparent;
     border: none;
     cursor: pointer;
-    padding: 4px;
-    margin-top: 8px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     img {
       width: 20px;
       height: 20px;
+      filter: brightness(1.2);
+    }
+
+    &:hover {
+      opacity: 0.8;
     }
   }
 }
 
 .error {
-  color: #ff4d4d;
-  font-size: 13px;
-  margin-top: 4px;
+  color: #ff6b6b;
+  font-size: 0.85rem;
   text-align: center;
+  margin-top: -0.5rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
