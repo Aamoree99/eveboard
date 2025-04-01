@@ -41,7 +41,7 @@ const LandingPage = () => {
 
     const handleLinkDiscord = () => {
         window.open(
-            `https://discord.com/oauth2/authorize?client_id=1356284491966189588&response_type=code&redirect_uri=${encodeURIComponent('https://evebard.space/api/auth/discord/callback')}&scope=identify%20guilds.join`,
+            `https://discord.com/oauth2/authorize?client_id=1356284491966189588&response_type=code&redirect_uri=${encodeURIComponent('https://eveboard.space/api/auth/discord/callback')}&scope=identify%20guilds.join`,
             '_blank',
             'width=500,height=600'
         )
