@@ -10,7 +10,8 @@
     "start": "node dist/main.js",
     "build": "tsc",
     "start:prod": "npm run build && node dist/main.js",
-    "lint": "eslint \"src/**/*.ts\" --fix"
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "seed:systems": "ts-node scripts/seedSystems.ts"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.0",
@@ -27,8 +28,11 @@
     "axios": "^1.8.4",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "date-fns": "^4.1.0",
+    "discord.js": "^14.18.0",
     "dotenv": "^16.4.7",
     "franc": "^6.2.0",
+    "langdetect": "^0.2.1",
     "langs": "^2.0.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
@@ -39,6 +43,7 @@
   "devDependencies": {
     "@types/axios": "^0.9.36",
     "@types/cron": "^2.0.1",
+    "@types/node": "^22.13.14",
     "@types/passport-jwt": "^4.0.1",
     "prisma": "^6.5.0",
     "ts-node-dev": "^2.0.0",

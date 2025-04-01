@@ -1,0 +1,23 @@
+import { PrismaClient } from '@prisma/client'
+import 'dotenv/config'
+import systems from '../scripts/systems.json'
+
+const prisma = new PrismaClient()
+
+async function main() {
+    const entries = Object.entries(systems) as [string, string][]
+    for (const [id, name] of entries) {
+        await prisma.system.upsert({
+            where: { id: Number(id) },
+            update: {},
+            create: {
+                id: Number(id),
+                name,
+            },
+        })
+    }
+
+    console.log(`✅ Загружено ${entries.length} систем.`)
+}
+
+main().finally(() => prisma.$disconnect())

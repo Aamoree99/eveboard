@@ -8,8 +8,9 @@ import { CreateDepositDto } from './dto/create-deposit.dto';
 import { TransactionType } from '@prisma/client';
 import { success } from '../common/response';
 import { randomUUID } from 'crypto';
+import {GetTransactionQueryDto} from "./dto/GetTransactionQueryDto";
 
-const WITHDRAW_FEE_PERCENT = 5;
+const WITHDRAW_FEE_PERCENT = 10;
 
 @Injectable()
 export class TransactionService {
@@ -43,13 +44,28 @@ export class TransactionService {
     /**
      * Get user's full transaction history
      */
-    async getUserTransactions(userId: string) {
-        const transactions = await this.prisma.transaction.findMany({
-            where: { userId },
-            orderBy: { createdAt: 'desc' },
-        });
+    async getUserTransactions(userId: string, query: GetTransactionQueryDto) {
+        const { page = 1, limit = 20 } = query;
+        const skip = (page - 1) * limit;
 
-        return success('User transaction history', transactions);
+        const [transactions, total] = await this.prisma.$transaction([
+            this.prisma.transaction.findMany({
+                where: { userId },
+                orderBy: { createdAt: 'desc' },
+                skip,
+                take: limit,
+            }),
+            this.prisma.transaction.count({
+                where: { userId },
+            }),
+        ]);
+
+        return success('User transaction history', {
+            total,
+            page,
+            limit,
+            data: transactions,
+        });
     }
 
     /**
@@ -95,7 +111,7 @@ export class TransactionService {
     /**
      * Manually confirm a withdrawal — used when ISK has been sent
      */
-    async confirmWithdrawManually(txId: string, actorCharacterId: number) {
+    async confirmWithdrawManually(txId: string, actorCharacterId: string) {
         const MAIN_WALLET_ID = Number(process.env.MAIN_WALLET);
         if (actorCharacterId !== MAIN_WALLET_ID) {
             throw new ForbiddenException('You are not allowed to confirm withdrawals');
@@ -162,4 +178,30 @@ export class TransactionService {
 
         return success('Withdrawal request cancelled. No ISK was deducted.');
     }
+
+    async findByUserId(userId: string, page = 1, limit = 20) {
+        const where = { userId };
+
+        const [total, items] = await this.prisma.$transaction([
+            this.prisma.transaction.count({ where }),
+            this.prisma.transaction.findMany({
+                where,
+                orderBy: { createdAt: 'desc' },
+                skip: (page - 1) * limit,
+                take: limit,
+            }),
+        ]);
+
+        return {
+            message: 'List of transactions',
+            data: {
+                items,
+                total,
+                page,
+                limit,
+                pages: Math.ceil(total / limit),
+            },
+        };
+    }
+
 }

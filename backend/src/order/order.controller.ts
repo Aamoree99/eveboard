@@ -6,7 +6,7 @@ import {
   Param,
   Patch,
   Post,
-  Query,
+  Query, Res,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -18,8 +18,7 @@ import {
 } from '@nestjs/swagger';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
-import { OrderStatus, User as PrismaUser } from '@prisma/client';
+import {OrderStatus, OrderType, User as PrismaUser} from '@prisma/client';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
@@ -28,15 +27,28 @@ import { CurrentUser } from '../common/decorators/current-user.decorator';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
+  @Get('/types')
+  @ApiOperation({ summary: 'Get available order types (enum values)' })
+  getTypes() {
+    const formattedTypes = this.orderService.getFormattedOrderTypes();
+    return { data: formattedTypes };
+  }
+
   @Get()
   @ApiOperation({ summary: 'Get orders (optionally filtered)' })
   @ApiQuery({ name: 'status', required: false, enum: OrderStatus })
-  @ApiQuery({ name: 'typeId', required: false, type: Number })
+  @ApiQuery({ name: 'type', required: false, enum: OrderType })
+  @ApiQuery({ name: 'userId', required: false, type: String })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
   getAll(
       @Query('status') status?: OrderStatus,
-      @Query('typeId') typeId?: number,
-  ) {
-    return this.orderService.findAll(status, typeId);
+      @Query('type') type?: OrderType, // 👈 теперь это enum
+      @Query('userId') userId?: string,
+      @Query('page') page = 1,
+      @Query('limit') limit = 20,
+  ){
+    return this.orderService.findAll(status, type, userId, page, limit);
   }
 
   @Get(':id')
@@ -51,6 +63,8 @@ export class OrderController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new order' })
   create(@Body() body: CreateOrderDto, @CurrentUser() user: PrismaUser) {
+    console.log('[OrderController] Create body:', body);
+    console.log('[OrderController] Current user:', user);
     return this.orderService.create(body, user.id);
   }
 
@@ -64,17 +78,20 @@ export class OrderController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':id')
+  @Patch(':id/status')
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Update order (creator only)' })
+  @ApiOperation({ summary: 'Update order status (DONE or CANCELED)' })
   @ApiParam({ name: 'id', description: 'Order ID' })
-  update(
+  @ApiQuery({ name: 'status', enum: OrderStatus, required: true })
+  updateStatus(
       @Param('id') id: string,
-      @Body() body: UpdateOrderDto,
+      @Query('status') status: OrderStatus,
       @CurrentUser() user: PrismaUser,
   ) {
-    return this.orderService.update(id, body, user.id);
+    console.log(id, status);
+    return this.orderService.updateStatus(id, status, user.id);
   }
+
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')

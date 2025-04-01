@@ -1,8 +1,10 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {BadRequestException, Injectable, InternalServerErrorException} from '@nestjs/common';
 import axios from 'axios';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { Logger } from '@nestjs/common';
+import { addUserToGuildWithRole } from '../discordBot';
+import 'dotenv/config';
 
 interface EveTokenResponse {
     access_token: string;
@@ -13,6 +15,22 @@ interface EveVerifyResponse {
     CharacterID: number;
     CharacterName: string;
 }
+
+interface DiscordTokenResponse {
+    access_token: string;
+    token_type: string;
+    expires_in: number;
+    refresh_token: string;
+    scope: string;
+}
+
+interface DiscordUserResponse {
+    id: string;
+    username: string;
+    discriminator: string;
+    avatar: string;
+}
+
 
 @Injectable()
 export class AuthService {
@@ -84,9 +102,14 @@ export class AuthService {
 
             const avatar = `https://images.evetech.net/characters/${CharacterID}/portrait`;
 
-            // 3. Создаём или обновляем пользователя
+            const tester = await this.prisma.tester.findUnique({
+                where: { characterId: String(CharacterID) },
+            });
+
+            const role = tester ? 'TESTER' : 'PENDING';
+
             const user = await this.prisma.user.upsert({
-                where: { characterId: CharacterID },
+                where: { id: String(CharacterID) },
                 update: {
                     name: CharacterName,
                     avatar,
@@ -94,14 +117,16 @@ export class AuthService {
                     refreshToken: refresh_token,
                 },
                 create: {
+                    id: String(CharacterID),
                     characterId: CharacterID,
                     name: CharacterName,
                     avatar,
                     accessToken: access_token,
                     refreshToken: refresh_token,
-                    role: 'USER',
+                    role,
                 },
             });
+
 
             // 4. Возвращаем JWT
             return this.jwtService.sign({
@@ -113,5 +138,65 @@ export class AuthService {
             this.logger.error('OAuth callback failed', error instanceof Error ? error.stack : String(error));
             throw new InternalServerErrorException('Failed to authorize EVE account. Please try again later.');
         }
+    }
+
+    async fetchDiscordData(code: string) {
+        const tokenResponse = await axios.post<DiscordTokenResponse>(
+            'https://discord.com/api/oauth2/token',
+            new URLSearchParams({
+                client_id: process.env.DISCORD_CLIENT_ID!,
+                client_secret: process.env.DISCORD_CLIENT_SECRET!,
+                grant_type: 'authorization_code',
+                code,
+                redirect_uri: process.env.DISCORD_REDIRECT_URI!,
+            }).toString(),
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            }
+        );
+
+        const accessToken = tokenResponse.data.access_token;
+
+        const userResponse = await axios.get<DiscordUserResponse>(
+            'https://discord.com/api/users/@me',
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+
+        const { id, username, discriminator, avatar } = userResponse.data;
+
+        await addUserToGuildWithRole(id, accessToken);
+
+        const avatarUrl = avatar
+            ? `https://cdn.discordapp.com/avatars/${id}/${avatar}.${avatar.startsWith('a_') ? 'gif' : 'png'}`
+            : null;
+
+        return {
+            id,
+            username,
+            discriminator,
+            avatar,
+            avatarUrl,
+        };
+    }
+
+    async linkDiscord(userId: string, disid: string) {
+        if (!disid) throw new BadRequestException('Discord ID is required');
+
+        const data: any = {
+            discordId: disid,
+        };
+
+        await this.prisma.user.update({
+            where: { id: userId },
+            data,
+        });
+
+        return { message: 'Discord linked and invited to server' };
     }
 }

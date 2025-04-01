@@ -1,0 +1,150 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  padding: 24px 28px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  color: var(--main-text);
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-content h2 {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.modal-content label {
+  font-size: 14px;
+  color: var(--main-text);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-content input[type="number"],
+.modal-content input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid var(--accent-color);
+  background: var(--header-bg);
+  color: var(--main-text);
+  appearance: textfield;
+}
+
+.modal-content button:not(.close-btn) {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--accent-color);
+  color: var(--main-bg);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:not(.close-btn):hover {
+  background-color: var(--accent-color-hover);
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 20px;
+  background: none;
+  border: none;
+  color: var(--main-text);
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--accent-color);
+}
+
+.deposit-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+
+  .deposit-portrait {
+    width: 60px; /* Новый размер картинки */
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto;
+    border: 2px solid var(--accent-color);
+  }
+
+  .deposit-details {
+    p {
+      margin: 6px 0;
+    }
+
+    code {
+      background: var(--header-bg);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      display: inline-block;
+      word-break: break-word;
+    }
+  }
+
+  .recipient {
+    font-weight: bold;
+    color: var(--accent-color);
+  }
+
+  .copy-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-top: 8px;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 13px;
+  margin-top: 4px;
+  text-align: center;
+}

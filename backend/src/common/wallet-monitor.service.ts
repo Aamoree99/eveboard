@@ -3,10 +3,12 @@ import { HttpService } from '@nestjs/axios';
 import { Cron } from '@nestjs/schedule';
 import { PrismaService } from '../prisma/prisma.service';
 import { User, Transaction } from '@prisma/client';
+import { sendDM } from '../discordBot';
+import 'dotenv/config';
 
-const CHARACTER_ID = Number(process.env.MAIN_WALLET);
+const CORP_ID = Number(process.env.EVE_CORP_ID); // Прописать в .env
 const ESI_TOKEN_URL = 'https://login.eveonline.com/v2/oauth/token';
-const ESI_JOURNAL_URL = `https://esi.evetech.net/latest/characters/${CHARACTER_ID}/wallet/journal/`;
+const ESI_CORP_JOURNAL_URL = `https://esi.evetech.net/latest/corporations/${CORP_ID}/wallets/1/journal/`;
 
 interface JournalEntry {
     id: number;
@@ -25,23 +27,29 @@ export class WalletMonitorService {
         private readonly http: HttpService,
     ) {}
 
-    @Cron('30 * * * *') // every hour at :30
+    @Cron('30 * * * *') // Каждый час на 30-й минуте
     async checkWalletJournal() {
-        const systemUser = await this.prisma.user.findUnique({
-            where: { characterId: CHARACTER_ID },
+        console.log("WalletCheker started")
+        const adminWithToken = await this.prisma.user.findFirst({
+            where: {
+                role: 'ADMIN',
+                accessToken: {
+                    not: undefined,
+                }
+            },
         });
 
-        if (!systemUser || !systemUser.accessToken) {
-            this.logger.error('System user not found or has no accessToken');
+        if (!adminWithToken) {
+            this.logger.error('No admin user with access token found');
             return;
         }
 
-        let accessToken: string = systemUser.accessToken;
+        let accessToken: string = adminWithToken.accessToken;
         let journal = await this.fetchJournal(accessToken);
 
         if (journal === null) {
             this.logger.warn('Access token expired, refreshing...');
-            const refreshedToken = await this.refreshAccessToken(systemUser);
+            const refreshedToken = await this.refreshAccessToken(adminWithToken);
 
             if (!refreshedToken) {
                 this.logger.error('Failed to refresh token');
@@ -50,6 +58,7 @@ export class WalletMonitorService {
 
             accessToken = refreshedToken;
             journal = await this.fetchJournal(accessToken);
+
             if (!journal) {
                 this.logger.error('Still failed to fetch journal after refresh');
                 return;
@@ -90,6 +99,14 @@ export class WalletMonitorService {
                 });
 
                 this.logger.log(`✅ Confirmed deposit from ${tx.userId} for ${tx.amount} ISK`);
+
+                const user = await this.prisma.user.findUnique({ where: { id: tx.userId } });
+                if (user?.discordId) {
+                    await sendDM(
+                        user.discordId,
+                        `✅ **Deposit confirmed!**\nYour balance has been topped up by **${tx.amount.toLocaleString()} ISK**.\nYou can now use it for orders. Fly safe, capsuleer! 🚀`
+                    );
+                }
             }
         }
 
@@ -113,6 +130,14 @@ export class WalletMonitorService {
                 });
 
                 this.logger.log(`✅ Confirmed withdrawal to ${tx.userId} for ${tx.amount} ISK`);
+
+                const user = await this.prisma.user.findUnique({ where: { id: tx.userId } });
+                if (user?.discordId) {
+                    await sendDM(
+                        user.discordId,
+                        `💸 **Withdrawal confirmed!**\n**${tx.amount.toLocaleString()} ISK** has been sent from your account.\nThanks for using the service. o7`
+                    );
+                }
             }
         }
     }
@@ -124,7 +149,7 @@ export class WalletMonitorService {
             const entries: JournalEntry[] = [];
 
             while (true) {
-                const { data } = await this.http.axiosRef.get<JournalEntry[]>(ESI_JOURNAL_URL, {
+                const { data } = await this.http.axiosRef.get<JournalEntry[]>(ESI_CORP_JOURNAL_URL, {
                     headers: { Authorization: `Bearer ${accessToken}` },
                     params: { datasource: 'tranquility', page },
                 });

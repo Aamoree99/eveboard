@@ -1,0 +1,65 @@
+.my-orders-page {
+  padding: 3rem;
+  background: #0e0e0e;
+  color: var(--main-text);
+
+  .orders-block {
+    margin-bottom: 4rem;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.4);
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: #202020;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+
+      h2 {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 700;
+        background: linear-gradient(to right, var(--accent-color), #888);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      button {
+        background: var(--accent-color);
+        color: white;
+        padding: 0.6rem 1.2rem;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 0 8px var(--accent-color);
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: var(--accent-color-hover, #38bdf8);
+          box-shadow: 0 0 14px var(--accent-color-hover, #38bdf8);
+          transform: translateY(-1px);
+        }
+      }
+    }
+
+    .orders-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    p {
+      color: #777;
+      font-style: italic;
+    }
+  }
+}

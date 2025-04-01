@@ -1,38 +1,33 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsString, IsDateString } from 'class-validator';
+import { IsInt, IsBoolean, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { OrderType } from '@prisma/client';
 
 export class CreateOrderDto {
-    @ApiProperty()
     @IsString()
+    @IsNotEmpty()
     title!: string;
 
-    @ApiProperty()
     @IsString()
+    @IsNotEmpty()
     description!: string;
 
-    @ApiProperty({ required: false })
     @IsOptional()
     @IsString()
     requirements?: string;
 
-    @ApiProperty()
-    @IsString()
-    system!: string;
+    @IsEnum(OrderType)
+    type!: OrderType;
 
-    @ApiProperty()
+    @IsOptional()
+    @IsInt()
+    systemId?: number;
+
     @IsInt()
     price!: number;
 
-    @ApiProperty({ required: false })
     @IsOptional()
-    @IsDateString()
     deadline?: string;
 
-    @ApiProperty()
-    @IsInt()
-    typeId!: number;
-
-    @ApiProperty()
-    @IsString()
-    creatorId!: string;
+    @IsOptional()
+    @IsBoolean()
+    isAnonymous?: boolean;
 }

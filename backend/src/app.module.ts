@@ -9,9 +9,12 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { WalletMonitorService } from './common/wallet-monitor.service';
 import { ConfigModule } from '@nestjs/config';
+import { SystemModule } from './system/system.module';
+import {ScheduleModule} from "@nestjs/schedule";
 
 @Module({
     imports: [
+        ScheduleModule.forRoot(),
         ConfigModule.forRoot({
             isGlobal: true,
         }),
@@ -23,6 +26,7 @@ import { ConfigModule } from '@nestjs/config';
         AuthModule,
         PrismaModule,
         HttpModule,
+        SystemModule,
     ],
     providers: [WalletMonitorService],
 })

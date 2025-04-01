@@ -5,14 +5,15 @@ import {
   Get,
   Delete,
   Param,
-  UseGuards,
+  UseGuards, Query,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { CreateDepositDto } from './dto/create-deposit.dto';
 import { JwtAuthGuard } from '../auth/strategies/jwt.guard';
-import { ApiBearerAuth, ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
+import {ApiBearerAuth, ApiTags, ApiOperation, ApiParam, ApiQuery, ApiBody} from '@nestjs/swagger';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { User } from '@prisma/client';
+import {GetTransactionQueryDto} from "./dto/GetTransactionQueryDto";
 
 @ApiTags('Transactions')
 @ApiBearerAuth()
@@ -29,19 +30,36 @@ export class TransactionController {
 
   @Get()
   @ApiOperation({ summary: 'Get your transaction history' })
-  getAll(@CurrentUser() user: User) {
-    return this.transactionService.getUserTransactions(user.id);
+  @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
+  @ApiQuery({ name: 'limit', required: false, type: Number, example: 20 })
+  getAll(
+      @CurrentUser() user: User,
+      @Query() query: GetTransactionQueryDto,
+  ) {
+    return this.transactionService.getUserTransactions(user.id, query);
   }
 
   @Post('withdraw')
   @ApiOperation({ summary: 'Request a withdrawal from your internal balance' })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        amount: {
+          type: 'number',
+          example: 1000000000,
+        },
+      },
+      required: ['amount'],
+    },
+  })
   requestWithdraw(
       @CurrentUser() user: User,
       @Body('amount') amount: number,
   ) {
-    return this.transactionService.requestWithdraw(user.id, amount);
+    return this.transactionService.requestWithdraw(user.id, amount)
   }
-
+  /*
   @Post('withdraw/:id/confirm')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Manually confirm a withdrawal (MAIN_WALLET only)' })
@@ -50,9 +68,9 @@ export class TransactionController {
       @Param('id') id: string,
       @CurrentUser() user: User,
   ) {
-    return this.transactionService.confirmWithdrawManually(id, user.characterId);
+    return this.transactionService.confirmWithdrawManually(id, user.id);
   }
-
+  */
 
   @Delete('withdraw/:id')
   @ApiOperation({ summary: 'Cancel a pending withdrawal request' })

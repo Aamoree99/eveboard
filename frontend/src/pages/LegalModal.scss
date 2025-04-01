@@ -1,0 +1,91 @@
+.legal-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeInOverlay 0.25s ease;
+}
+
+.legal-modal {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 720px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  color: var(--main-text);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 0.35s ease;
+  transition: all 0.3s ease;
+  scrollbar-width: none; // Firefox
+  -ms-overflow-style: none; // IE
+}
+
+.legal-modal::-webkit-scrollbar {
+  display: none;
+}
+
+.legal-modal h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, var(--accent-color), #aaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.legal-modal h2 {
+  font-size: 1.3rem;
+  margin-top: 2rem;
+  color: var(--accent-color);
+}
+
+.legal-modal p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 0.75rem;
+  color: #ccc;
+}
+
+.legal-modal .close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: white;
+  }
+}
+
+// Анимации
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

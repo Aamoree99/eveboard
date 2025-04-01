@@ -1,0 +1,155 @@
+.landing {
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--main-bg);
+  color: var(--main-text);
+
+  &__content {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    background: var(--card-bg);
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 60px rgba(14, 165, 233, 0.12);
+    border: 1px solid var(--accent-color);
+    transition: all 0.3s ease;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    span {
+      color: var(--accent-color);
+    }
+  }
+
+  .tagline {
+    font-size: 1.2rem;
+    opacity: 0.7;
+    margin-bottom: 2rem;
+  }
+
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+
+    div {
+      background: var(--search-bg);
+      border: 1px solid var(--search-border);
+      padding: 1rem 1.4rem;
+      border-radius: 12px;
+      min-width: 70px;
+
+      span {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--accent-color);
+        display: block;
+      }
+
+      label {
+        font-size: 0.75rem;
+        color: var(--search-placeholder);
+      }
+    }
+  }
+
+  .features {
+    margin-bottom: 2rem;
+    h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: var(--accent-color);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.6;
+
+      li {
+        margin-bottom: 0.6rem;
+      }
+    }
+  }
+
+  .landing__cta,
+  .landing__join-discord {
+    background-color: var(--accent-color);
+    color: var(--button-text);
+    border: none;
+    padding: 0.8rem 1.6rem;
+    border-radius: 10px;
+    font-weight: bold;
+    margin: 0.5rem;
+    display: inline-block;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background-color: var(--accent-color-hover);
+    }
+  }
+
+  .landing__logout {
+    background: transparent;
+    color: var(--main-text);
+    border: 1px solid var(--search-border);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  .loading-text,
+  .user-status {
+    margin-top: 2rem;
+  }
+
+  // Адаптация под мобилки
+  @media (max-width: 600px) {
+    padding: 1rem;
+
+    &__content {
+      padding: 2rem 1rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .countdown {
+      gap: 1rem;
+
+      div {
+        padding: 0.8rem 1rem;
+        min-width: 60px;
+
+        span {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .features h2 {
+      font-size: 1.3rem;
+    }
+
+    .features ul {
+      font-size: 0.95rem;
+    }
+  }
+}

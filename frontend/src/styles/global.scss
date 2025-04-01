@@ -1,0 +1,84 @@
+:root {
+  --main-bg: #ffffff;
+  --main-text: #111111;
+  --accent-color: #0ea5e9;
+  --accent-color-hover: #38bdf8;
+  --header-bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --button-text: #000;
+
+  --header-blur-bg: rgba(255, 255, 255, 0.85);
+  --header-border: rgba(0, 0, 0, 0.05);
+
+  --search-bg: rgba(0, 0, 0, 0.03);
+  --search-border: rgba(0, 0, 0, 0.1);
+  --search-placeholder: rgba(0, 0, 0, 0.4);
+  --search-bg-focus: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='dark'] {
+  --main-bg: #121212;
+  --main-text: #f5f5f5;
+  --accent-color: #0ea5e9;
+  --accent-color-hover: #38bdf8;
+  --header-bg: #1e1e1e;
+  --card-bg: #1a1a1a;
+  --button-text: #ffffff;
+
+  --header-blur-bg: rgba(15, 15, 15, 0.85);
+  --header-border: rgba(255, 255, 255, 0.08);
+
+  --search-bg: rgba(255, 255, 255, 0.05);
+  --search-border: rgba(255, 255, 255, 0.1);
+  --search-placeholder: rgba(255, 255, 255, 0.4);
+  --search-bg-focus: rgba(255, 255, 255, 0.08);
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--main-bg);
+  color: var(--main-text);
+  font-family: 'Inter', sans-serif;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.main {
+  flex: 1;
+  padding: 0;              // убираем отступы, если хочешь по краям
+  margin: 0;               // убираем центрирование
+  width: 100%;             // на всю ширину
+  max-width: none;         // убираем ограничение
+  box-sizing: border-box;  // чтобы паддинги работали правильно, если добавишь
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    text-decoration: underline;
+    color: var(--accent-color-hover);
+  }
+
+  &:visited {
+    color: var(--accent-color);
+  }
+}
+
