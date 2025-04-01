@@ -7,8 +7,8 @@ const EveLoginButton = () => {
 
     const buttonSrc =
         theme === 'dark'
-            ? '/src/assets/eve-sso-login-black-large.png'
-            : '/src/assets/eve-sso-login-white-large.png'
+            ? '/images/eve-sso-login-black-large.png'
+            : '/images/eve-sso-login-white-large.png'
 
     return (
         <button
