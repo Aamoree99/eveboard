@@ -1,9 +1,9 @@
-import {BadRequestException, Injectable, InternalServerErrorException} from '@nestjs/common';
+import {BadRequestException, Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
 import axios from 'axios';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { Logger } from '@nestjs/common';
-import { addUserToGuildWithRole } from '../discordBot';
+import {addUserToGuildWithRole, setNickname} from '../discordBot';
 import 'dotenv/config';
 
 interface EveTokenResponse {
@@ -188,15 +188,25 @@ export class AuthService {
     async linkDiscord(userId: string, disid: string) {
         if (!disid) throw new BadRequestException('Discord ID is required');
 
-        const data: any = {
-            discordId: disid,
-        };
-
-        await this.prisma.user.update({
+        // Получаем пользователя из базы данных, чтобы взять имя
+        const user = await this.prisma.user.findUnique({
             where: { id: userId },
-            data,
+            select: { name: true }, // Только нужное поле
         });
 
-        return { message: 'Discord linked and invited to server' };
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
+
+        // Обновляем Discord ID
+        await this.prisma.user.update({
+            where: { id: userId },
+            data: { discordId: disid },
+        });
+
+        await setNickname(disid, user.name);
+
+        return { message: 'Discord linked and nickname set on server' };
     }
+
 }

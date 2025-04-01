@@ -127,6 +127,22 @@ export const startDiscordBot = async () => {
     }
 };
 
+export const setNickname = async (discordId: string, nickname: string) => {
+    const guild = client.guilds.cache.get('YOUR_GUILD_ID');
+    if (!guild) throw new Error('Guild not found');
+
+    try {
+        const member = await guild.members.fetch(discordId);
+        if (!member) throw new Error('Member not found');
+
+        await member.setNickname(nickname);
+        console.log(`Nickname for ${discordId} set to ${nickname}`);
+    } catch (err) {
+        console.error('Error setting nickname:', err);
+        throw err;
+    }
+};
+
 // ✅ Добавление в гильдию с ролью
 export const addUserToGuildWithRole = async (userId: string, accessToken: string) => {
     const guildId = process.env.DISCORD_GUILD_ID;
