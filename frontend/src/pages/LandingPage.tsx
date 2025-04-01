@@ -14,7 +14,7 @@ const api = new Api({
     },
 })
 
-const targetDate = new Date(Date.UTC(2025, 3, 14, 11, 0, 0)) // 14 апреля, 11:00 UTC
+const targetDate = new Date(Date.UTC(2025, 4, 0, 11, 0, 0)) // 14 апреля, 11:00 UTC
 
 const getTimeLeft = () => {
     const now = new Date()
@@ -53,7 +53,7 @@ const LandingPage = () => {
                 console.log(event.data)
                 api.auth.authControllerLinkDiscord({ id: event.data.payload.id })
                     .then(() => window.location.reload())
-                    .catch((err) => {
+                    .catch((err: never) => {
                         console.error('❌ Failed to link Discord:', err)
                         alert('❌ Failed to link Discord')
                     })
@@ -74,7 +74,8 @@ const LandingPage = () => {
         <div className="landing">
             <div className="landing__content">
                 <h1><span>EVE Board</span> is coming</h1>
-                <p className="tagline">Next-gen mission hub for EVE pilots. Fully player-driven. Zero bullshit.</p>
+                <p className="tagline">A refined contract system for elite EVE pilots. Built by players, for
+                    players.</p>
 
                 <div className="countdown">
                     <div><span>{timeLeft.days}</span><label>d</label></div>

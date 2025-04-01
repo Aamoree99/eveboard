@@ -9,7 +9,6 @@ import {startDiscordBot} from "./discordBot";
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
-    app.setGlobalPrefix('api');
     // Валидация DTO
     app.useGlobalPipes(
         new ValidationPipe({
@@ -35,6 +34,7 @@ async function bootstrap() {
         .setDescription('API для заказов и исполнителей в EVE Online')
         .setVersion('1.0')
         .addBearerAuth()
+        .addServer('/api')
         .build();
 
     const document = SwaggerModule.createDocument(app, config);
