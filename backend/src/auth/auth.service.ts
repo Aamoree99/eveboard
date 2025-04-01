@@ -168,7 +168,12 @@ export class AuthService {
 
         const { id, username, discriminator, avatar } = userResponse.data;
 
-        await addUserToGuildWithRole(id, accessToken);
+        try {
+            await addUserToGuildWithRole(id, accessToken);
+        } catch (err) {
+            console.warn('⚠️ Failed to add user to guild:', err);
+            return; // ← без этого будет undefined (но всё равно завершится)
+        }
 
         const avatarUrl = avatar
             ? `https://cdn.discordapp.com/avatars/${id}/${avatar}.${avatar.startsWith('a_') ? 'gif' : 'png'}`
