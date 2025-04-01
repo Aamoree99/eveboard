@@ -128,10 +128,14 @@ export const startDiscordBot = async () => {
 };
 
 export const setNickname = async (discordId: string, nickname: string) => {
-    const guild = client.guilds.cache.get('YOUR_GUILD_ID');
-    if (!guild) throw new Error('Guild not found');
+    const guildId = process.env.DISCORD_GUILD_ID;
+    if (!guildId) {
+        console.error('❌ DISCORD_GUILD_ID not найден в .env');
+        return;
+    }
 
     try {
+        const guild = await client.guilds.fetch(guildId);
         const member = await guild.members.fetch(discordId);
         if (!member) throw new Error('Member not found');
 

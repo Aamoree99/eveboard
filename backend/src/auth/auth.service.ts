@@ -43,14 +43,12 @@ export class AuthService {
     getEveLoginUrl(): string {
         const callback = process.env.EVE_CALLBACK_URL;
         const clientId = process.env.EVE_CLIENT_ID;
-        const scope = 'publicData';
+        const scope = process.env.EVE_SCOPES;
         const state = Math.random().toString(36).substring(2); // можно использовать uuid
 
         if (!callback || !clientId) {
             throw new InternalServerErrorException('EVE OAuth env vars not set');
         }
-
-        // Возможно, стоит сохранить state в сессии или Redis, чтобы потом сверить
 
         return `https://login.eveonline.com/v2/oauth/authorize?response_type=code&redirect_uri=${encodeURIComponent(
             callback,
