@@ -9,6 +9,7 @@ import {startDiscordBot} from "./discordBot";
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
+    app.setGlobalPrefix('api');
     // Валидация DTO
     app.useGlobalPipes(
         new ValidationPipe({

@@ -252,14 +252,14 @@ export class HttpClient<SecurityDataType = unknown> {
  * API для заказов и исполнителей в EVE Online
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-  user = {
+  api = {
     /**
      * No description
      *
      * @tags Users
      * @name UserControllerGetAll
      * @summary Get users (all or filtered)
-     * @request GET:/user
+     * @request GET:/api/user
      */
     userControllerGetAll: (
       query?: {
@@ -269,7 +269,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<object[], any>({
-        path: `/user`,
+        path: `/api/user`,
         method: "GET",
         query: query,
         format: "json",
@@ -282,12 +282,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Users
      * @name UserControllerGetMe
      * @summary Get full profile of the authenticated user
-     * @request GET:/user/me
+     * @request GET:/api/user/me
      * @secure
      */
     userControllerGetMe: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/user/me`,
+        path: `/api/user/me`,
         method: "GET",
         secure: true,
         ...params,
@@ -297,13 +297,38 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Users
+     * @name UserControllerSearchUsers
+     * @summary Search users
+     * @request GET:/api/user/search
+     */
+    userControllerSearchUsers: (
+      query: {
+        /**
+         * Search query
+         * @example "eve"
+         */
+        q: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/api/user/search`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Users
      * @name UserControllerGetOne
      * @summary Get user by ID
-     * @request GET:/user/{id}
+     * @request GET:/api/user/{id}
      */
     userControllerGetOne: (id: string, params: RequestParams = {}) =>
       this.request<SetReferralDto, any>({
-        path: `/user/${id}`,
+        path: `/api/user/${id}`,
         method: "GET",
         format: "json",
         ...params,
@@ -315,7 +340,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Users
      * @name UserControllerGetMyTransactions
      * @summary Get transactions of the authenticated user
-     * @request GET:/user/transactions
+     * @request GET:/api/user/transactions
      * @secure
      */
     userControllerGetMyTransactions: (
@@ -326,7 +351,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/user/transactions`,
+        path: `/api/user/transactions`,
         method: "GET",
         query: query,
         secure: true,
@@ -338,12 +363,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Users
      * @name UserControllerSetReferral
-     * @request POST:/user/set-referral
+     * @request POST:/api/user/set-referral
      * @secure
      */
     userControllerSetReferral: (data: SetReferralDto, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/user/set-referral`,
+        path: `/api/user/set-referral`,
         method: "POST",
         body: data,
         secure: true,
@@ -357,12 +382,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Users
      * @name UserControllerBecomeExecutor
      * @summary Become executor
-     * @request POST:/user/become-executor
+     * @request POST:/api/user/become-executor
      * @secure
      */
     userControllerBecomeExecutor: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/user/become-executor`,
+        path: `/api/user/become-executor`,
         method: "POST",
         secure: true,
         ...params,
@@ -371,41 +396,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags Users
-     * @name UserControllerSearchUsers
-     * @summary Search users by name
-     * @request GET:/user/search
-     */
-    userControllerSearchUsers: (
-      query: {
-        /**
-         * Search query
-         * @example "eve"
-         */
-        q: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<void, any>({
-        path: `/user/search`,
-        method: "GET",
-        query: query,
-        ...params,
-      }),
-  };
-  transaction = {
-    /**
-     * No description
-     *
      * @tags Transactions
      * @name TransactionControllerCreate
      * @summary Create a deposit request to top up your balance
-     * @request POST:/transaction/deposit
+     * @request POST:/api/transaction/deposit
      * @secure
      */
     transactionControllerCreate: (data: CreateDepositDto, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/transaction/deposit`,
+        path: `/api/transaction/deposit`,
         method: "POST",
         body: data,
         secure: true,
@@ -419,7 +418,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Transactions
      * @name TransactionControllerGetAll
      * @summary Get your transaction history
-     * @request GET:/transaction
+     * @request GET:/api/transaction
      * @secure
      */
     transactionControllerGetAll: (
@@ -432,7 +431,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/transaction`,
+        path: `/api/transaction`,
         method: "GET",
         query: query,
         secure: true,
@@ -445,7 +444,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Transactions
      * @name TransactionControllerRequestWithdraw
      * @summary Request a withdrawal from your internal balance
-     * @request POST:/transaction/withdraw
+     * @request POST:/api/transaction/withdraw
      * @secure
      */
     transactionControllerRequestWithdraw: (
@@ -456,7 +455,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/transaction/withdraw`,
+        path: `/api/transaction/withdraw`,
         method: "POST",
         body: data,
         secure: true,
@@ -470,29 +469,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Transactions
      * @name TransactionControllerCancelWithdraw
      * @summary Cancel a pending withdrawal request
-     * @request DELETE:/transaction/withdraw/{id}
+     * @request DELETE:/api/transaction/withdraw/{id}
      * @secure
      */
     transactionControllerCancelWithdraw: (id: string, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/transaction/withdraw/${id}`,
+        path: `/api/transaction/withdraw/${id}`,
         method: "DELETE",
         secure: true,
         ...params,
       }),
-  };
-  order = {
+
     /**
      * No description
      *
      * @tags Orders
      * @name OrderControllerGetTypes
      * @summary Get available order types (enum values)
-     * @request GET:/order/types
+     * @request GET:/api/order/types
      */
     orderControllerGetTypes: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/order/types`,
+        path: `/api/order/types`,
         method: "GET",
         ...params,
       }),
@@ -503,7 +501,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Orders
      * @name OrderControllerGetAll
      * @summary Get orders (optionally filtered)
-     * @request GET:/order
+     * @request GET:/api/order
      */
     orderControllerGetAll: (
       query?: {
@@ -528,7 +526,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/order`,
+        path: `/api/order`,
         method: "GET",
         query: query,
         ...params,
@@ -540,12 +538,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Orders
      * @name OrderControllerCreate
      * @summary Create a new order
-     * @request POST:/order
+     * @request POST:/api/order
      * @secure
      */
     orderControllerCreate: (data: CreateOrderDto, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/order`,
+        path: `/api/order`,
         method: "POST",
         body: data,
         secure: true,
@@ -559,11 +557,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Orders
      * @name OrderControllerGetOne
      * @summary Get order by ID
-     * @request GET:/order/{id}
+     * @request GET:/api/order/{id}
      */
     orderControllerGetOne: (id: string, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/order/${id}`,
+        path: `/api/order/${id}`,
         method: "GET",
         ...params,
       }),
@@ -574,12 +572,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Orders
      * @name OrderControllerDelete
      * @summary Delete order (creator only)
-     * @request DELETE:/order/{id}
+     * @request DELETE:/api/order/{id}
      * @secure
      */
     orderControllerDelete: (id: string, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/order/${id}`,
+        path: `/api/order/${id}`,
         method: "DELETE",
         secure: true,
         ...params,
@@ -591,12 +589,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Orders
      * @name OrderControllerTake
      * @summary Take order as executor
-     * @request POST:/order/{id}/take
+     * @request POST:/api/order/{id}/take
      * @secure
      */
     orderControllerTake: (id: string, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/order/${id}/take`,
+        path: `/api/order/${id}/take`,
         method: "POST",
         secure: true,
         ...params,
@@ -608,7 +606,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Orders
      * @name OrderControllerUpdateStatus
      * @summary Update order status (DONE or CANCELED)
-     * @request PATCH:/order/{id}/status
+     * @request PATCH:/api/order/{id}/status
      * @secure
      */
     orderControllerUpdateStatus: (
@@ -619,7 +617,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/order/${id}/status`,
+        path: `/api/order/${id}/status`,
         method: "PATCH",
         query: query,
         secure: true,
@@ -632,7 +630,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Orders
      * @name OrderControllerSendMessage
      * @summary Send message to order chat
-     * @request POST:/order/{id}/message
+     * @request POST:/api/order/{id}/message
      * @secure
      */
     orderControllerSendMessage: (
@@ -643,7 +641,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/order/${id}/message`,
+        path: `/api/order/${id}/message`,
         method: "POST",
         query: query,
         secure: true,
@@ -656,11 +654,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Orders
      * @name OrderControllerGetMessages
      * @summary Get messages for order
-     * @request GET:/order/{id}/messages
+     * @request GET:/api/order/{id}/messages
      */
     orderControllerGetMessages: (id: string, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/order/${id}/messages`,
+        path: `/api/order/${id}/messages`,
         method: "GET",
         ...params,
       }),
@@ -671,7 +669,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Orders
      * @name OrderControllerComplain
      * @summary Submit a complaint for an order
-     * @request POST:/order/{id}/complain
+     * @request POST:/api/order/{id}/complain
      * @secure
      */
     orderControllerComplain: (
@@ -682,7 +680,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/order/${id}/complain`,
+        path: `/api/order/${id}/complain`,
         method: "POST",
         query: query,
         secure: true,
@@ -695,12 +693,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Reviews
      * @name ReviewControllerCreate
      * @summary Leave a review for a completed order
-     * @request POST:/order/{id}/review
+     * @request POST:/api/order/{id}/review
      * @secure
      */
     reviewControllerCreate: (id: string, data: CreateReviewDto, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/order/${id}/review`,
+        path: `/api/order/${id}/review`,
         method: "POST",
         body: data,
         secure: true,
@@ -714,29 +712,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Reviews
      * @name ReviewControllerGetUserReviews
      * @summary Get reviews for a specific user
-     * @request GET:/order/{id}/review/user/{userId}
+     * @request GET:/api/order/{id}/review/user/{userId}
      * @secure
      */
     reviewControllerGetUserReviews: (userId: string, id: string, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/order/${id}/review/user/${userId}`,
+        path: `/api/order/${id}/review/user/${userId}`,
         method: "GET",
         secure: true,
         ...params,
       }),
-  };
-  auth = {
+
     /**
      * No description
      *
      * @tags Auth
      * @name AuthControllerRedirectToEve
      * @summary Редирект на EVE Online SSO
-     * @request GET:/auth/eve
+     * @request GET:/api/auth/eve
      */
     authControllerRedirectToEve: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/auth/eve`,
+        path: `/api/auth/eve`,
         method: "GET",
         ...params,
       }),
@@ -746,7 +743,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Auth
      * @name AuthControllerEveGetCallback
-     * @request GET:/auth/eve/callback
+     * @request GET:/api/auth/eve/callback
      */
     authControllerEveGetCallback: (
       query: {
@@ -755,7 +752,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/auth/eve/callback`,
+        path: `/api/auth/eve/callback`,
         method: "GET",
         query: query,
         ...params,
@@ -767,7 +764,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Auth
      * @name AuthControllerEveCallback
      * @summary Получить JWT по коду от EVE
-     * @request POST:/auth/eve/callback
+     * @request POST:/api/auth/eve/callback
      */
     authControllerEveCallback: (
       data: {
@@ -783,7 +780,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         },
         any
       >({
-        path: `/auth/eve/callback`,
+        path: `/api/auth/eve/callback`,
         method: "POST",
         body: data,
         type: ContentType.Json,
@@ -797,12 +794,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Auth
      * @name AuthControllerGetMe
      * @summary Получить текущего пользователя по JWT
-     * @request GET:/auth/me
+     * @request GET:/api/auth/me
      * @secure
      */
     authControllerGetMe: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/auth/me`,
+        path: `/api/auth/me`,
         method: "GET",
         secure: true,
         ...params,
@@ -813,7 +810,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Auth
      * @name AuthControllerDiscordCallback
-     * @request GET:/auth/discord/callback
+     * @request GET:/api/auth/discord/callback
      */
     authControllerDiscordCallback: (
       query: {
@@ -822,7 +819,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/auth/discord/callback`,
+        path: `/api/auth/discord/callback`,
         method: "GET",
         query: query,
         ...params,
@@ -834,7 +831,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Auth
      * @name AuthControllerLinkDiscord
      * @summary Link Discord account to current user
-     * @request POST:/auth/link
+     * @request POST:/api/auth/link
      * @secure
      */
     authControllerLinkDiscord: (
@@ -845,26 +842,25 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, void>({
-        path: `/auth/link`,
+        path: `/api/auth/link`,
         method: "POST",
         body: data,
         secure: true,
         type: ContentType.Json,
         ...params,
       }),
-  };
-  system = {
+
     /**
      * No description
      *
      * @tags Systems
      * @name SystemControllerGetAll
      * @summary Get all systems
-     * @request GET:/system
+     * @request GET:/api/system
      */
     systemControllerGetAll: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/system`,
+        path: `/api/system`,
         method: "GET",
         ...params,
       }),
@@ -875,7 +871,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Systems
      * @name SystemControllerSearch
      * @summary Search systems by name (min 3 chars)
-     * @request GET:/system/search
+     * @request GET:/api/system/search
      */
     systemControllerSearch: (
       query: {
@@ -884,7 +880,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/system/search`,
+        path: `/api/system/search`,
         method: "GET",
         query: query,
         ...params,
