@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Api } from '../../api/Api'
 import { Transaction } from '../../types/models'
-import './UserTransactions.scss'
+import './UserProfile.scss'
 import { FaCopy } from 'react-icons/fa'
 
 const api = new Api({
