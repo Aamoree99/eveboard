@@ -147,6 +147,40 @@ const HomePage: React.FC = () => {
                         <li>Easy to use platform</li>
                     </ul>
                 </div>
+                <div className="home-roadmap">
+                    <h2>Product Roadmap</h2>
+                    <p>We’re building the future of contract management in EVE Online. Here’s what’s coming next:</p>
+                    <ul>
+                        <li>
+                            <strong>Multi-language support</strong><br />
+                            Global access with localized UI in English, Russian, and more.
+                        </li>
+                        <li>
+                            <strong>Faster withdrawals</strong><br />
+                            Improved payout speeds and enhanced transaction clarity.
+                        </li>
+                        <li>
+                            <strong>ZKillboard integration</strong><br />
+                            Automated kill verification for bounty contracts.
+                        </li>
+                        <li>
+                            <strong>Mobile optimization</strong><br />
+                            Seamless experience on phones and tablets.
+                        </li>
+                        <li>
+                            <strong>Order analytics</strong><br />
+                            Insights into your performance, earnings, and activity.
+                        </li>
+                        <li>
+                            <strong>Trust & reputation improvements</strong><br />
+                            Enhanced rating systems to build trust between users.
+                        </li>
+                    </ul>
+                    <p className="roadmap-feedback">
+                        Have suggestions? Reach out at <a href="https://discord.gg/UFbKTnnCw3">our Discord</a>.
+                    </p>
+                </div>
+
             </div>
         </Layout>
     )
