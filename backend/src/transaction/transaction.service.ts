@@ -37,7 +37,8 @@ export class TransactionService {
         const user = await this.prisma.user.findUnique({ where: { id: userId } });
         if (!user) throw new NotFoundException('User not found');
 
-        const reason = `EVEBOARD:${dto.reference || user.name}`;
+        const reason = `EVEBOARD:${dto.reference || user.name}-${Math.floor(Math.random() * 1000000)}`;
+
 
         const transaction = await this.prisma.transaction.create({
             data: {
