@@ -1,0 +1,83 @@
+.my-orders-page {
+  padding: 4rem 2rem;
+  background: #0e0e0e;
+  color: var(--main-text);
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease both;
+
+  .orders-block {
+    margin-bottom: 4rem;
+    background: rgba(25, 25, 35, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    backdrop-filter: blur(14px);
+    box-shadow:
+            0 0 18px rgba(14, 165, 233, 0.04),
+            0 0 30px rgba(14, 165, 233, 0.08);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(30, 30, 40, 0.85);
+      box-shadow:
+              0 0 28px rgba(14, 165, 233, 0.12),
+              0 0 40px rgba(14, 165, 233, 0.16);
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+
+      h2 {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 700;
+        background: linear-gradient(90deg, var(--accent-color), #aaa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      button {
+        background: var(--accent-color);
+        color: var(--button-text, #fff);
+        padding: 0.6rem 1.4rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 0 12px rgba(14, 165, 233, 0.4);
+        transition: all 0.25s ease;
+
+        &:hover {
+          background: var(--accent-color-hover, #38bdf8);
+          box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+          transform: translateY(-1px);
+        }
+      }
+    }
+
+    .orders-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    p {
+      color: rgba(200, 200, 210, 0.65);
+      font-style: italic;
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+  }
+}
+
+// Опционально можно добавить fadeIn, если ещё не было
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

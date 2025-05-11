@@ -1,0 +1,211 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/client"
+  binaryTargets = ["native", "darwin-arm64"]
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  EXECUTOR
+  ADMIN
+  TESTER
+  PENDING
+  EARLY_BIRD
+}
+
+enum OrderStatus {
+  ACTIVE
+  TAKEN
+  DONE
+  CANCELED
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  PAYMENT
+  REWARD
+  BONUS
+}
+
+enum OrderType {
+  KILL_TARGET
+  SCAN_WORMHOLE
+  SCOUT_SYSTEM
+  LOGISTICS
+  ESCORT
+  STRUCTURE_WORK
+  CHARACTER_INFO
+  ROUTE_PLANNING
+  COUNTER_INTEL
+  EVENT_FARMING
+  PVP_ASSIST
+  OTHER
+}
+
+enum ComplaintReason {
+  SCAM
+  SPAM
+  HARASSMENT
+  ABUSE_OF_POWER
+  OTHER
+}
+
+model User {
+  id           String   @id
+  characterId  Int      @unique
+  name         String
+  avatar       String?
+  role         Role     @default(USER)
+  isBanned     Boolean  @default(false)
+  balance      BigInt      @default(0)
+  rating       Float    @default(0.0)
+  accessToken  String
+  refreshToken String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  discordId String?
+
+  referralId     String?
+  referral       Referral?  @relation(fields: [referralId], references: [id])
+
+  createdOrders   Order[]        @relation("CreatedOrders")
+  takenOrders     Order[]        @relation("TakenOrders")
+  reviewsGiven    Review[]       @relation("ReviewsGiven")
+  reviewsReceived Review[]       @relation("ReviewsReceived")
+  transactions    Transaction[]
+  messages        OrderMessage[] @relation("UserMessages")
+  complaints Complaint[]
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  title        String
+  description  String
+  requirements String?
+  language     String
+
+  price        Int
+  deadline     DateTime?
+  status       OrderStatus @default(ACTIVE)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  isAnonymous  Boolean     @default(false)
+  minRating Float @default(0.0)
+
+  isPromoting     Boolean   @default(false)
+  promotingUntil  DateTime?
+
+  type         OrderType
+
+  systemId     Int?
+  system       System?    @relation("OrderSystem", fields: [systemId], references: [id])
+
+  creatorId String
+  creator   User   @relation("CreatedOrders", fields: [creatorId], references: [id])
+
+  executorId String?
+  executor   User?   @relation("TakenOrders", fields: [executorId], references: [id])
+
+  reviews   Review[]
+
+  complaints Complaint[]
+
+  messages OrderMessage[]
+}
+
+model System {
+  id       Int     @id
+  name     String
+  orders   Order[] @relation("OrderSystem")
+
+  @@map("System")
+}
+
+
+model OrderMessage {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  author   User   @relation("UserMessages", fields: [authorId], references: [id])
+  authorId String
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  text      String?
+  createdAt DateTime @default(now())
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  fromId String
+  from   User   @relation("ReviewsGiven", fields: [fromId], references: [id])
+
+  toId String
+  to   User   @relation("ReviewsReceived", fields: [toId], references: [id])
+
+  @@unique([orderId, fromId]) // ✅ Чтобы один юзер мог оставить только 1 отзыв на заказ
+}
+
+
+model Transaction {
+  id         String   @id @default(cuid())
+  amount     Int
+  reason     String
+  type       TransactionType
+  createdAt  DateTime @default(now())
+  confirmed  Boolean  @default(false)
+  externalId BigInt?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Complaint {
+  id        String   @id @default(cuid())
+  reason    ComplaintReason
+  comment   String?
+  createdAt DateTime @default(now())
+
+  userId  String
+  user    User  @relation(fields: [userId], references: [id])
+
+  orderId String
+  order   Order @relation(fields: [orderId], references: [id])
+}
+
+model CorporationTransaction {
+  id         String   @id @default(cuid())
+  externalId BigInt   @unique // ID из EVE
+  amount     BigInt
+  balance    BigInt
+  date       DateTime
+  createdAt  DateTime @default(now())
+}
+
+model Tester {
+  id           String   @id @default(uuid())
+  characterId  String   @unique
+  addedAt      DateTime @default(now())
+}
+
+model Referral {
+  id           String   @id @default(uuid())
+  streamerName String
+  code         String   @unique
+  createdAt    DateTime @default(now())
+
+  referredUsers User[]
+}

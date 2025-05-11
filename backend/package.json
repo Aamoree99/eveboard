@@ -1,0 +1,59 @@
+{
+  "name": "backend",
+  "version": "0.4.0-beta",
+  "description": "EVE Board backend",
+  "author": "Aamoree99",
+  "license": "ISC",
+  "main": "dist/main.js",
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
+    "start": "node dist/main.js",
+    "build": "tsc",
+    "start:prod": "npm run build && node dist/main.js",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "seed:systems": "ts-node src/scripts/seedSystems.ts",
+    "studio": "prisma studio --schema=src/prisma/schema.prisma",
+    "check-wallet": "ts-node src/scripts/check-wallet.ts"
+  },
+  "dependencies": {
+    "@nestjs/axios": "^4.0.0",
+    "@nestjs/common": "^11.0.12",
+    "@nestjs/config": "^4.0.1",
+    "@nestjs/core": "^11.0.12",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/mapped-types": "*",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/platform-express": "^11.0.12",
+    "@nestjs/schedule": "^5.0.1",
+    "@nestjs/swagger": "^11.1.0",
+    "@prisma/client": "^6.7.0",
+    "axios": "^1.8.4",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "date-fns": "^4.1.0",
+    "discord.js": "^14.19.3",
+    "dotenv": "^16.4.7",
+    "franc": "^6.2.0",
+    "langdetect": "^0.2.1",
+    "langs": "^2.0.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.9.36",
+    "@types/cron": "^2.0.1",
+    "@types/langdetect": "^0.2.2",
+    "@types/node": "^22.13.14",
+    "@types/passport-jwt": "^4.0.1",
+    "prisma": "^6.7.0",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.2"
+  }
+}

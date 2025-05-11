@@ -1,0 +1,161 @@
+.order-card {
+  background: var(--card-bg); /* темный фон */
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 6px solid var(--accent-color); /* толще рамка */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  &.active {
+    border-left-color: #28a745; /* зеленый для активных */
+  }
+
+  &.taken {
+    border-left-color: #ff9800; /* оранжевый для взятых */
+  }
+
+  &.done {
+    border-left-color: #2196f3; /* синий для завершенных */
+  }
+
+  &.canceled {
+    border-left-color: #f44336; /* красный для отмененных */
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  }
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .order-type {
+    font-size: 12px;
+    color: var(--accent-color);
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .order-status {
+    font-size: 12px;
+    color: var(--accent-color);
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 8px;
+    padding: 4px 8px;
+    margin-left: 12px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .order-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .order-desc {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 12px;
+  }
+
+  .order-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 12px;
+
+    img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .footer-info {
+      display: flex;
+      flex-direction: column;
+
+      .creator-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      .order-price {
+        font-size: 1rem;
+        font-weight: bold;
+        color: var(--accent-color);
+      }
+    }
+  }
+}
+
+.order-card.active {
+  background: rgba(40, 167, 69, 0.05); /* светлый зеленый фон для активных */
+}
+
+.order-card.taken {
+  background: rgba(255, 152, 0, 0.05); /* светлый оранжевый фон для взятых */
+}
+
+.order-card.done {
+  background: rgba(33, 150, 243, 0.05); /* светлый синий фон для завершенных */
+}
+
+.order-card.canceled {
+  background: rgba(244, 67, 54, 0.05); /* светлый красный фон для отмененных */
+}
+
+.order-card.promoted {
+  position: relative;
+  border-left-width: 8px;
+  border-left-color: gold;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 255, 255, 0.03));
+  box-shadow:
+          0 0 12px rgba(255, 215, 0, 0.4),
+          0 0 30px rgba(255, 255, 255, 0.05),
+          inset 0 0 12px rgba(255, 215, 0, 0.2);
+  animation: glowPulse 2.5s infinite ease-in-out;
+
+  &::after {
+    content: '🚀 Promoted';
+    position: absolute;
+    top: -10px;
+    right: 12px;
+    background: linear-gradient(to right, gold, orange);
+    color: black;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+  }
+
+  .order-type,
+  .order-status,
+  .order-price {
+    color: gold !important;
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow:
+            0 0 12px rgba(255, 215, 0, 0.4),
+            0 0 30px rgba(255, 255, 255, 0.05),
+            inset 0 0 12px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    box-shadow:
+            0 0 20px rgba(255, 255, 150, 0.6),
+            0 0 40px rgba(255, 255, 255, 0.1),
+            inset 0 0 20px rgba(255, 255, 150, 0.4);
+  }
+}

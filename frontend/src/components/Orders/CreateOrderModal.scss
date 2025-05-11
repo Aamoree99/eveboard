@@ -1,0 +1,28 @@
+.create-order-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  padding: 16px; // чуть-чуть отступов, чтобы не прилипало к краям
+}
+
+.create-order-container {
+  padding: 24px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+
+  height: 100%; // 👈 делает контейнер равным высоте overlay
+  max-height: 100vh; // 👈 убираем 90vh — теперь до краёв
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+}
+

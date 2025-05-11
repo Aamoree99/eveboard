@@ -1,0 +1,25 @@
+# Игнорировать node_modules в любых директориях
+**/node_modules/
+
+# Игнорировать dist в любых директориях
+**/dist/
+
+# Игнорировать package-lock.json в любых директориях
+**/package-lock.json
+
+**/.env*
+
+# Игнорировать npm-debug лог
+npm-debug.log*
+
+# Игнорировать yarn lock, если используешь yarn
+**/yarn.lock
+
+# IDE-штуки
+.vscode/
+.idea/
+
+# OS специфичное
+.DS_Store
+Thumbs.db
+
