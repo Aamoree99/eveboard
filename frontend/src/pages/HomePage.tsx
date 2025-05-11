@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
                     balData.transactions.map(tx => ({
                         amount: Number(tx.amount),
                         type: tx.externalId,                   // или tx.type, как у тебя
-                        date: new Date(tx.createdAt).toLocaleString(),
+                        date: tx.date ? new Date(tx.date.replace(' ', 'T') + 'Z').toLocaleString() : "Invalid Date",
                     }))
                 )
             } catch (e) {

@@ -25,7 +25,7 @@ const DepositModal = ({ onClose }: Props) => {
     } | null>(null)
 
     const handleSubmit = async () => {
-        if (amount < 10_000_000) {
+        if (amount < 100_000_000) {
             alert('Minimum deposit is 100,000,000 ISK')
             return
         }
