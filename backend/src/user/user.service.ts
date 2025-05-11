@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable, NotFoundException} from '@nestjs/common';
+import {BadRequestException, Injectable, Logger, NotFoundException} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { convertBigIntToString } from '../common/bigIntToString'; // ← путь адаптируй
@@ -56,14 +56,22 @@ export class UserService {
             where: { id: userId },
         });
 
-        if (!user) throw new Error('User not found');
-        if (user.referralId) throw new Error('Referral already set');
+        if (!user) {
+            throw new BadRequestException('User not found');
+        }
+
+        if (user.referralId) {
+            throw new BadRequestException('Referral already set');
+        }
 
         const referral = await this.prisma.referral.findUnique({
             where: { code },
         });
 
-        if (!referral) throw new Error('Referral code not found');
+        if (!referral) {
+            throw new BadRequestException('Referral code not found');
+        }
+
 
         await this.prisma.user.update({
             where: { id: userId },
@@ -73,6 +81,7 @@ export class UserService {
                 },
             },
         });
+
 
         return { success: true, message: 'Referral code linked successfully' };
     }

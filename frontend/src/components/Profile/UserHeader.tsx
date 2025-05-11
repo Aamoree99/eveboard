@@ -29,22 +29,23 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
     const [referralError, setReferralError] = useState<string | null>(null)
 
     const handleSubmitReferral = async () => {
-        if (!referralCode.trim()) return
+        if (!referralCode.trim()) return;
         try {
-            await api.user.userControllerSetReferral({ code: referralCode.trim() })
-            setReferralSubmitted(true)
-            setReferralError(null)
-        } catch (err: unknown) {
-            if (err instanceof Error) {
-                setReferralError(err.message)
-            } else if (typeof err === 'object' && err !== null && 'error' in err) {
-                const maybe = err as { error?: { message?: string } }
-                setReferralError(maybe.error?.message || 'Unknown error occurred')
-            } else {
-                setReferralError('Unexpected error')
-            }
+            await api.user.userControllerSetReferral({ code: referralCode.trim() });
+            setReferralSubmitted(true);
+            setReferralError(null);
+            reloadUser(); // 👈 чтобы обновился referralId
+        } catch (err: any) {
+            console.error('Referral error:', err);
+            const message =
+                err?.response?.message ||
+                err?.statusText ||
+                'Unknown error occurred';
+
+            setReferralError(message);
         }
-    }
+    };
+
 
 
     return (

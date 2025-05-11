@@ -80,13 +80,19 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Post('set-referral')
   @ApiBearerAuth()
-  async setReferral(@Request() req: any, @Body() dto: SetReferralDto) {
+  @ApiOperation({ summary: 'Set referral code for the current user' })
+  @ApiResponse({ status: 200, description: 'Referral code set successfully' })
+  async setReferral(
+      @CurrentUser() user: { id: string },
+      @Body() dto: SetReferralDto,
+  ) {
     try {
-      return await this.userService.setReferral(req.user.sub, dto.code)
+      return await this.userService.setReferral(user.id, dto.code);
     } catch (err: any) {
-      throw new BadRequestException(err.message)
+      throw new BadRequestException(err.message);
     }
   }
+
 
   @UseGuards(JwtAuthGuard)
   @Post('become-executor')
