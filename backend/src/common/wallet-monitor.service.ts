@@ -27,7 +27,7 @@ export class WalletMonitorService {
         private readonly http: HttpService,
     ) {}
 
-    @Cron('30 * * * *') // каждый 30 минут
+    @Cron('0 * * * *') // каждый час в 00 минут
     async checkWalletJournal() {
         this.logger.log('🔄 Wallet journal check started');
 
