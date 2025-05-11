@@ -52,15 +52,21 @@ export class UserService {
     }
 
     async setReferral(userId: string, code: string) {
+        const logger = new Logger('UserService.setReferral');
+
+        logger.log(`Called with userId: ${userId}, code: ${code}`);
+
         const user = await this.prisma.user.findUnique({
             where: { id: userId },
         });
 
         if (!user) {
+            logger.warn(`User not found for ID: ${userId}`);
             throw new BadRequestException('User not found');
         }
 
         if (user.referralId) {
+            logger.warn(`Referral already set for user ID: ${userId}`);
             throw new BadRequestException('Referral already set');
         }
 
@@ -69,9 +75,11 @@ export class UserService {
         });
 
         if (!referral) {
+            logger.warn(`Referral code not found: ${code}`);
             throw new BadRequestException('Referral code not found');
         }
 
+        logger.log(`Linking referral ${referral.id} to user ${user.id}`);
 
         await this.prisma.user.update({
             where: { id: userId },
@@ -82,6 +90,7 @@ export class UserService {
             },
         });
 
+        logger.log(`Referral code linked successfully for user ${user.id}`);
 
         return { success: true, message: 'Referral code linked successfully' };
     }
