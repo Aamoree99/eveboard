@@ -4,7 +4,8 @@ import { Api } from '../../api/Api'
 import type { OrderType } from '../../types/models'
 import './CreateOrderForm.scss'
 import { useAuth } from '../../context/AuthContext'
-import FancyDatePicker from "../ui/FancyDatePicker.tsx";
+import FancyDatePicker from "../ui/FancyDatePicker.tsx"
+import { useTranslation } from 'react-i18next'
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -27,6 +28,7 @@ const ANONYMITY_EXTRA = 50_000_000
 const PROMOTION_WEEKLY_COST = 100_000_000
 
 const CreateOrderForm = ({ onClose, onCreated }: Props) => {
+    const { t } = useTranslation()
     const navigate = useNavigate()
     const { user } = useAuth()
 
@@ -134,11 +136,11 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
         setError('')
 
         if (numericPrice < MIN_ORDER_PRICE) {
-            return setError(`Minimum price is ${MIN_ORDER_PRICE.toLocaleString()} ISK`)
+            return setError(t('createOrderForm.minPriceError', { amount: MIN_ORDER_PRICE.toLocaleString() }))
         }
 
         if (totalPrice > localBalance) {
-            return setError(`Not enough ISK. You need ${totalPrice.toLocaleString()} ISK`)
+            return setError(t('createOrderForm.notEnoughISK', { amount: totalPrice.toLocaleString() }))
         }
 
         const payload = {
@@ -158,7 +160,7 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
             onCreated()
             navigate(`/order?orderId=${data.id}`)
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Unknown error')
+            setError(err instanceof Error ? err.message : t('createOrderForm.unknownError'))
         } finally {
             setLoading(false)
         }
@@ -168,25 +170,25 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
         <div className="create-order-modal-overlay" onClick={onClose}>
             <div className="create-order-modal" onClick={(e) => e.stopPropagation()}>
                 <button className="close-btn" onClick={onClose}>×</button>
-                <h2>Create New Order</h2>
+                <h2>{t('createOrderForm.title')}</h2>
 
                 <form className="create-order-form" onSubmit={handleSubmit}>
                     <label>
-                        Order Type
+                        {t('createOrderForm.type')}
                         <select name="type" value={form.type} onChange={handleChange} required>
-                            {orderTypes.map((t) => (
-                                <option key={t.value} value={t.value}>
-                                    {t.label}
+                            {orderTypes.map((type) => (
+                                <option key={type.value} value={type.value}>
+                                    {t(`orders.types.${type.value}`)}
                                 </option>
                             ))}
                         </select>
                     </label>
 
                     <label>
-                        Title
+                        {t('createOrderForm.name')}
                         <input
                             name="title"
-                            placeholder="Title"
+                            placeholder={t('createOrderForm.name')}
                             value={form.title}
                             onChange={handleChange}
                             required
@@ -194,10 +196,10 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
                     </label>
 
                     <label>
-                        Description
+                        {t('createOrderForm.description')}
                         <textarea
                             name="description"
-                            placeholder="Detailed description"
+                            placeholder={t('createOrderForm.descriptionPlaceholder')}
                             value={form.description}
                             onChange={handleChange}
                             required
@@ -205,20 +207,20 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
                     </label>
 
                     <label>
-                        Requirements
+                        {t('createOrderForm.requirements')}
                         <textarea
                             name="requirements"
-                            placeholder="Any specific requirements?"
+                            placeholder={t('createOrderForm.requirementsPlaceholder')}
                             value={form.requirements}
                             onChange={handleChange}
                         />
                     </label>
 
                     <label>
-                        System (optional)
+                        {t('createOrderForm.system')}
                         <div className="relative-wrapper">
                             <input
-                                placeholder="System"
+                                placeholder={t('createOrderForm.systemPlaceholder')}
                                 value={selectedSystem?.name || systemQuery}
                                 onChange={(e) => {
                                     setSystemQuery(e.target.value)
@@ -242,7 +244,7 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
 
                     <div className="double-row">
                         <label>
-                            Deadline
+                            {t('createOrderForm.deadline')}
                             <FancyDatePicker
                                 value={form.deadline}
                                 onChange={(date) => {
@@ -253,7 +255,7 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
                         </label>
 
                         <label>
-                            Price
+                            {t('createOrderForm.price')}
                             <div className="price-isk">
                                 <input
                                     type="number"
@@ -261,7 +263,7 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
                                     value={form.price}
                                     onChange={handlePriceChange}
                                     onBlur={handlePriceBlur}
-                                    placeholder="Price"
+                                    placeholder={t('createOrderForm.price')}
                                     required
                                     min={MIN_ORDER_PRICE}
                                 />
@@ -280,7 +282,7 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
                             className="styled-checkbox"
                         />
                         <label htmlFor="isAnonymous">
-                            Post as Anonymous (Costs +50M ISK)
+                            {t('createOrderForm.anonymous')}
                         </label>
                     </div>
 
@@ -296,13 +298,13 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
                                     className="styled-checkbox"
                                 />
                                 <label htmlFor="isPromoting">
-                                    Promote to Top (100M ISK per 7 days)
+                                    {t('createOrderForm.promoting')}
                                 </label>
                             </div>
 
                             {form.isPromoting && (
                                 <label>
-                                    Promote Until
+                                    {t('createOrderForm.promotingUntil')}
                                     <FancyDatePicker
                                         value={form.promotingUntil}
                                         onChange={(date) => {
@@ -320,8 +322,8 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
 
                     <button type="submit" disabled={loading || totalPrice < MIN_ORDER_PRICE}>
                         {loading
-                            ? 'Creating...'
-                            : `Create for ${totalPrice.toLocaleString()} ISK`}
+                            ? t('createOrderForm.creating')
+                            : t('createOrderForm.createFor', { amount: totalPrice.toLocaleString() })}
                     </button>
                 </form>
             </div>

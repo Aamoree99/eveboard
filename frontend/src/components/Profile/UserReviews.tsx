@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Api } from '../../api/Api'
 import { Review } from '../../types/models'
+import { useTranslation } from 'react-i18next'
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -14,7 +15,6 @@ interface UserReviewsProps {
     userId: string
 }
 
-// Тип обёртки ответа от сервера
 interface Wrapper<T> {
     success: boolean
     message: string
@@ -22,6 +22,7 @@ interface Wrapper<T> {
 }
 
 const UserReviews: React.FC<UserReviewsProps> = ({ userId }) => {
+    const { t } = useTranslation()
     const [reviews, setReviews] = useState<Review[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -35,36 +36,32 @@ const UserReviews: React.FC<UserReviewsProps> = ({ userId }) => {
         api.order
             .reviewControllerGetUserReviews(userId, '0', { format: 'json' })
             .then((res) => {
-                // сначала превращаем res.data в нашу обёртку
-                // TS-каст через unknown, чтобы обойти строгий generic
-                const wrapper = (res.data as unknown) as Wrapper<Review[]>
-                console.log('Wrapped response:', wrapper)
-                // теперь внутри wrapper.data — массив Review
+                const wrapper = res.data as unknown as Wrapper<Review[]>
                 setReviews(wrapper.data ?? [])
             })
             .catch((err) => {
                 console.error('Failed to fetch reviews:', err)
-                setError('Failed to load reviews.')
+                setError(t('reviews.loadError'))
                 setReviews([])
             })
             .finally(() => {
                 setLoading(false)
             })
-    }, [userId])
+    }, [userId, t])
 
-    if (loading) return <p>Loading reviews…</p>
+    if (loading) return <p>{t('reviews.loading')}</p>
     if (error) return <p>{error}</p>
-    if (!reviews.length) return <p>No reviews yet.</p>
+    if (!reviews.length) return <p>{t('reviews.empty')}</p>
 
     return (
         <div className="user-reviews">
-            <h3>Reviews</h3>
+            <h3>{t('reviews.title')}</h3>
             <div className="review-list">
                 {reviews.map((review) => (
                     <div key={review.id} className="review">
                         <div className="review-rating">★ {review.rating}</div>
                         <div className="review-text">
-                            {review.text?.trim() ? review.text : 'No comment.'}
+                            {review.text?.trim() ? review.text : t('reviews.noComment')}
                         </div>
                     </div>
                 ))}

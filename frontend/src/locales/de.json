@@ -1,0 +1,403 @@
+{
+  "home": {
+    "title": "Willkommen bei der EVE Online Auftragsplattform",
+    "subtitle": "Hier kannst du Aufträge erstellen und annehmen, deine Transaktionen verwalten und mehr.",
+    "featured": "🔥 Vorgestellte beworbene Aufträge",
+    "noPromoted": "Zurzeit keine beworbenen Aufträge.",
+    "whatDo": "Was möchtest du tun?",
+    "viewOrders": "Aufträge ansehen",
+    "goProfile": "Zu deinem Profil",
+    "startOrders": "Mit Aufträgen beginnen",
+    "balanceTitle": "📊 EVE Board Guthaben",
+    "available": "Verfügbar",
+    "locked": "Gesperrt",
+    "transactions": "Letzte Transaktionen",
+    "noTransactions": "Keine aktuellen Transaktionen.",
+    "whyTitle": "Warum wir?",
+    "whyText": "Wir bieten eine sichere und zuverlässige Plattform zur Erstellung und Erfüllung von Aufträgen im EVE Online Universum. Mit unserem Service sind deine Transaktionen sicher, deine Arbeit wird anerkannt und dein Fortschritt belohnt.",
+    "why1": "Sichere und geschützte Transaktionen",
+    "why2": "Große Auswahl an Aufträgen",
+    "why3": "Bewertungen und Rezensionen für Vertrauen",
+    "why4": "Bezahlung nach Abschluss der Aufgaben",
+    "why5": "Benutzerfreundliche Plattform",
+    "roadmapTitle": "Produkt-Roadmap",
+    "roadmapIntro": "Wir gestalten die Zukunft des Vertragsmanagements in EVE Online. Das kommt als Nächstes:",
+    "roadmapLang": "Mehrsprachige Unterstützung",
+    "roadmapLangText": "Weltweiter Zugriff mit lokalisierter Benutzeroberfläche in Englisch, Russisch und mehr.",
+    "roadmapWithdraw": "Schnellere Auszahlungen",
+    "roadmapWithdrawText": "Verbesserte Auszahlungsgeschwindigkeit und transparente Transaktionen.",
+    "roadmapZkill": "ZKillboard-Integration",
+    "roadmapZkillText": "Automatische Kill-Verifikation für Kopfgeldaufträge.",
+    "roadmapMobile": "Mobiloptimierung",
+    "roadmapMobileText": "Nahtloses Erlebnis auf Smartphones und Tablets.",
+    "roadmapAnalytics": "Auftragsanalysen",
+    "roadmapAnalyticsText": "Einblicke in Leistung, Einnahmen und Aktivität.",
+    "roadmapTrust": "Vertrauen & Ruf",
+    "roadmapTrustText": "Verbesserte Bewertungssysteme für mehr Vertrauen zwischen den Nutzern.",
+    "roadmapFeedback": "Vorschläge? Kontaktiere uns unter",
+    "roadmapInfra": "Infrastruktur & Server",
+    "roadmapInfraText": "Servereinrichtung, Datenbanken, Deployment, CI/CD.",
+    "roadmapUi": "Erste Benutzeroberfläche",
+    "roadmapUiText": "Kern-UI mit Routing und API-Integration erstellt.",
+    "roadmapBeta": "CBT (Geschlossener Betatest)",
+    "roadmapBetaText": "Erste Nutzer, Fehlerberichte, Flow-Anpassungen."
+  },
+  "header": {
+    "orders": "Aufträge",
+    "my": "Meine",
+    "search": "Benutzer suchen..."
+  },
+  "footer": {
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutzrichtlinie",
+    "madeBy": "Erstellt von",
+    "rights": "Alle Rechte gehören CCP Games"
+  },
+  "login": {
+    "agree1": "Mit dem Einloggen stimmst du unseren",
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutzrichtlinien",
+    "and": "und"
+  },
+  "orders": {
+    "title": "Aufträge",
+    "create": "Auftrag erstellen",
+    "status": {
+      "all": "Alle Status",
+      "active": "Aktiv",
+      "taken": "Angenommen",
+      "done": "Abgeschlossen",
+      "canceled": "Abgebrochen"
+    },
+    "sort": {
+      "newest": "Neueste zuerst",
+      "oldest": "Älteste zuerst",
+      "lowHigh": "Preis (aufsteigend)",
+      "highLow": "Preis (absteigend)"
+    },
+    "typeAll": "Alle Arten",
+    "types": {
+      "KILL_TARGET": "Ziel eliminieren",
+      "SCAN_WORMHOLE": "Wurmloch scannen",
+      "SCOUT_SYSTEM": "System auskundschaften",
+      "LOGISTICS": "Logistik",
+      "ESCORT": "Eskorte",
+      "STRUCTURE_WORK": "Strukturarbeit",
+      "CHARACTER_INFO": "Charakterinfo",
+      "ROUTE_PLANNING": "Routenplanung",
+      "COUNTER_INTEL": "Gegenspionage",
+      "EVENT_FARMING": "Event-Farming",
+      "PVP_ASSIST": "PvP-Unterstützung",
+      "OTHER": "Sonstiges"
+    },
+    "notFound": "Keine Aufträge gefunden.",
+    "loadMore": "Mehr laden"
+  },
+  "privacy": {
+    "title": "Datenschutzrichtlinie",
+    "updated": "Zuletzt aktualisiert: 2. April 2025",
+    "access": {
+      "title": "Worauf wir zugreifen",
+      "desc": "Wir fordern über ESI-Scopes nur die Daten an, die für die Funktion der Plattform erforderlich sind:",
+      "list": [
+        {
+          "scope": "publicData",
+          "desc": "Grundlegende Charakterinformationen: ID, Name, Avatar."
+        },
+        {
+          "scope": "esi-location.read_location.v1",
+          "desc": "Aktuelles System (für Live-Updates und optionales Tracking)."
+        },
+        {
+          "scope": "esi-location.read_ship_type.v1",
+          "desc": "Aktueller Schiffstyp (optional, für zukünftige Funktionen)."
+        },
+        {
+          "scope": "esi-location.read_online.v1",
+          "desc": "Online-Status (zur Anzeige der Verfügbarkeit in Einsätzen)."
+        },
+        {
+          "scope": "esi-wallet.read_character_wallet.v1",
+          "desc": "Dein ISK-Guthaben (zum Erstellen/Annehmen von Aufträgen)."
+        },
+        {
+          "scope": "esi-wallet.read_corporation_wallets.v1",
+          "desc": "Standardmäßig für alle Benutzer angefragt. Wird jedoch nur verwendet, wenn dein Konto über die ADMIN-Rolle verfügt, um ISK-Auszahlungen auf Unternehmensebene zu validieren. Für alle anderen Benutzer werden die Unternehmensdaten ignoriert und nie gespeichert."
+        },
+        {
+          "scope": "esi-killmails.read_killmails.v1",
+          "desc": "Bestätigt Abschüsse, wenn vom Auftrag gefordert."
+        },
+        {
+          "scope": "esi-ui.open_window.v1",
+          "desc": "Erlaubt uns, Informationen im Spiel zu öffnen (z. B. Ziele oder Orte im EVE-Client anzeigen)."
+        },
+        {
+          "scope": "esi-ui.write_waypoint.v1",
+          "desc": "Erlaubt uns, automatisch Wegpunkte im Client hinzuzufügen."
+        }
+      ]
+    },
+    "why": {
+      "title": "Warum wir die Daten nutzen",
+      "desc": "Wir nutzen diese Daten ausschließlich, um:",
+      "list": [
+        "Deinen Charakter zu authentifizieren und dein Profil anzuzeigen",
+        "In-Game-Aufträge und Wallet-Operationen zu aktivieren und zu überprüfen",
+        "Echtzeit-Updates und Client-Interaktionen zu unterstützen"
+      ]
+    },
+    "no": {
+      "title": "Was wir nicht tun",
+      "list": [
+        "Wir lesen <strong>keine</strong> Mails, Chats, Assets oder PLEX",
+        "Wir nutzen Unternehmenswallet-Daten <strong>nur</strong>, wenn du ein autorisierter Admin bist.",
+        "Wir teilen oder verkaufen <strong>keine</strong> deiner Daten"
+      ]
+    },
+    "storage": {
+      "title": "Speicherung & Sicherheit",
+      "desc": "Zugriffstokens werden sicher gespeichert und über OAuth automatisch aktualisiert. Alle Charakterdaten werden ausschließlich innerhalb von EVE Board verwendet und niemals an Dritte weitergegeben."
+    }
+  },
+  "terms": {
+    "title": "Nutzungsbedingungen",
+    "updated": "Zuletzt aktualisiert: 2. April 2025",
+    "sections": [
+      {
+        "title": "Nutzung der Plattform",
+        "text": "Durch den Zugriff auf EVE Board stimmst du zu, die Plattform verantwortungsbewusst und im Einklang mit diesen Bedingungen zu nutzen. Wenn du diese Bedingungen nicht akzeptierst, nutze die Plattform nicht."
+      },
+      {
+        "title": "Konten & Zugang",
+        "text": "Der Zugang erfordert eine Authentifizierung über EVE Online. Du bist für alle Handlungen verantwortlich, die über dein Konto erfolgen, einschließlich erstellter oder angenommener Aufträge."
+      },
+      {
+        "title": "Aufträge & Zahlungen",
+        "text": "Alle Verträge sind endgültig, sobald sie erstellt oder angenommen wurden. Auszahlungen erfolgen über das interne Wallet-System. Es können Plattformgebühren anfallen. Aufträge können bei Missbrauch, Betrug oder Fehlern von Admins moderiert oder storniert werden."
+      },
+      {
+        "title": "Wallet & Auszahlungen",
+        "text": "ISK, das über die Plattform verdient wurde, wird auf deinem internen Guthaben gespeichert. Auszahlungen unterliegen einer Servicegebühr und können eine Identitätsprüfung erfordern. Die Plattform haftet nicht für Verluste durch falsche Wallet-Informationen oder In-Game-Sperren."
+      },
+      {
+        "title": "Verhalten & Einschränkungen",
+        "text": "Missbräuchliches Verhalten, Multi-Accounting, Betrug oder der Missbrauch von Plattformfunktionen führen zu einer Sperrung oder einem dauerhaften Bann. Wir behalten uns das Recht vor, den Zugang jederzeit zu entziehen."
+      },
+      {
+        "title": "Verfügbarkeit & Betriebszeit",
+        "text": "Wir bemühen uns um eine stabile Leistung, garantieren jedoch keine Betriebszeit, Fehlerfreiheit oder Datenverfügbarkeit. Geplante oder ungeplante Ausfälle können auftreten."
+      },
+      {
+        "title": "Streitfälle",
+        "text": "Im Falle eines Vertragsstreits können Nutzer eine Beschwerde einreichen. Streitfälle werden manuell von Plattformmoderatoren geprüft. Alle Entscheidungen sind endgültig."
+      },
+      {
+        "title": "Änderungen der Bedingungen",
+        "text": "Diese Bedingungen können jederzeit aktualisiert werden. Die fortgesetzte Nutzung der Plattform nach Änderungen gilt als Zustimmung zu den aktualisierten Bedingungen."
+      }
+    ]
+  },
+  "myOrders": {
+    "created": "Erstellte Aufträge",
+    "accepted": "Angenommene Aufträge",
+    "completed": "Abgeschlossene Aufträge",
+    "canceled": "Stornierte Aufträge",
+    "create": "Auftrag erstellen",
+    "noCreated": "Noch keine erstellten Aufträge.",
+    "noAccepted": "Noch keine angenommenen Aufträge.",
+    "noCompleted": "Noch keine abgeschlossenen Aufträge.",
+    "noCanceled": "Noch keine stornierten Aufträge."
+  },
+  "auth": {
+    "hint": {
+      "loggingIn": "Anmeldung läuft...",
+      "verifying": "Capsuleer wird überprüft...",
+      "ready": "Erfolgreich!"
+    }
+  },
+  "withdraw": {
+    "title": "ISK auszahlen",
+    "amountLabel": "Betrag (max: {{max}} ISK)",
+    "fee": "10 % Gebühr: {{fee}} ISK",
+    "youWillReceive": "Du erhältst:",
+    "limits": "Min: {{min}} ISK, Max: {{max}} ISK",
+    "button": "Auszahlung anfordern",
+    "processing": "Wird verarbeitet...",
+    "success": "Auszahlungsanforderung erstellt!",
+    "sent": "wird dir gesendet",
+    "feeLabel": "Gebühr",
+    "reason": "Grund für die ISK-Überweisung:",
+    "close": "Schließen",
+    "failed": "Auszahlungsanforderung konnte nicht erstellt werden."
+  },
+  "transactions": {
+    "title": "Transaktionen",
+    "confirmed": "✔ Bestätigt",
+    "pending": "⌛ Ausstehend",
+    "loadMore": "Mehr laden",
+    "loading": "Lädt...",
+    "details": "Transaktionsdetails",
+    "type": "Typ",
+    "amount": "Betrag",
+    "reason": "Grund",
+    "externalId": "Externe ID",
+    "status": "Status",
+    "date": "Datum",
+    "close": "Schließen",
+    "copied": "Kopiert!"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "discord": "Discord:",
+    "linkDiscord": "Discord verknüpfen",
+    "becomeExecutor": "Ausführer werden",
+    "logout": "Abmelden",
+    "logoutConfirmTitle": "Möchtest du dich wirklich abmelden?",
+    "logoutConfirmText": "Du wirst von deinem Konto abgemeldet und zur Startseite weitergeleitet.",
+    "logoutYes": "Ja, abmelden",
+    "cancel": "Abbrechen",
+    "executorConfirmTitle": "Möchtest du Ausführer werden?",
+    "executorConfirmText": "Das kostet dich 100.000.000 ISK. Du kannst weiterhin wie gewohnt Aufträge erstellen.",
+    "submitting": "Wird übermittelt...",
+    "confirm": "Bestätigen"
+  },
+  "reviews": {
+    "title": "Bewertungen",
+    "loading": "Bewertungen werden geladen…",
+    "loadError": "Bewertungen konnten nicht geladen werden.",
+    "empty": "Noch keine Bewertungen.",
+    "noComment": "Kein Kommentar."
+  },
+  "profile": {
+    "tabs": {
+      "orders": "Aufträge",
+      "reviews": "Bewertungen",
+      "transactions": "Transaktionen"
+    }
+  },
+  "user": {
+    "noName": "Kein Name",
+    "discordRequired": "Discord erforderlich",
+    "pleaseLinkDiscord": "Bitte verknüpfe deinen Discord-Account",
+    "topUp": "Guthaben aufladen",
+    "withdraw": "Auszahlen",
+    "haveReferral": "Du hast einen Empfehlungscode?",
+    "enterCode": "Code eingeben",
+    "apply": "Anwenden",
+    "referralSuccess": "Empfehlungscode erfolgreich angewendet!",
+    "referralUnknownError": "Unbekannter Fehler ist aufgetreten"
+  },
+  "deposit": {
+    "title": "ISK einzahlen",
+    "min": "Mindesteinzahlung: 100.000.000 ISK",
+    "autoConfirm": "Nach dem Senden wird deine Einzahlung innerhalb einer Stunde automatisch bestätigt.",
+    "trackStatus": "Du kannst den Status im Tab „Transaktionen“ verfolgen.",
+    "amount": "Betrag",
+    "to": "ISK senden an",
+    "reason": "Verwendungszweck",
+    "create": "Einzahlungsanfrage erstellen",
+    "creating": "Wird erstellt...",
+    "minAlert": "Mindesteinzahlung beträgt 100.000.000 ISK",
+    "invalidResponse": "Fehler beim Erstellen der Einzahlungsanfrage. Ungültige Serverantwort.",
+    "failed": "Einzahlungsanfrage konnte nicht erstellt werden.",
+    "copied": "In die Zwischenablage kopiert!"
+  },
+  "orderModal": {
+    "loading": "Auftrag wird geladen...",
+    "error": "Auftrag konnte nicht geladen werden.",
+    "close": "Schließen",
+    "selectReason": "Bitte wähle einen Grund",
+    "complaintSubmitted": "Beschwerde eingereicht. Danke.",
+    "complaintFailed": "Beschwerde konnte nicht übermittelt werden",
+    "reviewSubmitted": "✅ Bewertung übermittelt, danke!",
+    "reviewFailed": "❌ Bewertung konnte nicht übermittelt werden",
+    "takeOrder": "Auftrag annehmen",
+    "taking": "Wird übernommen...",
+    "loginToTake": "Logge dich ein, um diesen Auftrag anzunehmen",
+    "lowRating": "Deine Bewertung ist zu niedrig",
+    "executorRequired": "Du musst dich als Ausführer bewerben",
+    "requirements": "Anforderungen",
+    "system": "System",
+    "status": "Status",
+    "price": "Preis",
+    "deadline": "Frist",
+    "routeSet": "Route wurde in deinem EVE-Client gesetzt.",
+    "routeFailed": "Route konnte nicht gesetzt werden.",
+    "cancelOrder": "Auftrag stornieren",
+    "cancelOrderConfirm": "Diesen Auftrag stornieren? Eine Gebühr von 10 % wird einbehalten.",
+    "orderCancelled": "Auftrag storniert",
+    "orderCancelFailed": "Auftrag konnte nicht storniert werden",
+    "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten",
+    "markAsDone": "Als erledigt markieren",
+    "markAsDoneConfirm": "Diesen Auftrag als ERLEDIGT markieren? ISK wird übertragen.",
+    "markAsDoneFailed": "Konnte nicht als erledigt markiert werden",
+    "createdBy": "Erstellt von:",
+    "anonymous": "Anonym",
+    "unknown": "Unbekannt",
+    "submitComplaint": "Beschwerde einreichen",
+    "reason": "Grund",
+    "selectReasonPlaceholder": "-- Grund auswählen --",
+    "scam": "Betrug",
+    "spam": "Spam",
+    "harassment": "Belästigung",
+    "abuseOfPower": "Machtmissbrauch",
+    "other": "Sonstiges",
+    "commentOptional": "Kommentar (optional):",
+    "send": "Senden",
+    "submitting": "Wird übermittelt...",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "review": "Bewertung",
+    "youRated": "Du hast bewertet:",
+    "shareExperience": "Teile deine Erfahrung...",
+    "submitReview": "Bewertung senden",
+    "typeMessage": "Nachricht eingeben..."
+  },
+  "orderCard": {
+    "status": {
+      "active": "Aktiv",
+      "taken": "Angenommen",
+      "done": "Erledigt",
+      "canceled": "Storniert"
+    },
+    "type": {
+      "kill_target": "Ziel eliminieren",
+      "scan_wormhole": "Wurmloch scannen",
+      "scout_system": "System auskundschaften",
+      "logistics": "Logistik",
+      "escort": "Eskorte",
+      "structure_work": "Strukturarbeit",
+      "character_info": "Charakterinfo",
+      "route_planning": "Routenplanung",
+      "counter_intel": "Gegenspionage",
+      "event_farming": "Event-Farming",
+      "pvp_assist": "PvP-Unterstützung",
+      "other": "Sonstiges"
+    }
+  },
+  "common": {
+    "anonymous": "Anonym"
+  },
+  "createOrderForm": {
+    "title": "Neuen Auftrag erstellen",
+    "type": "Auftragstyp",
+    "name": "Titel",
+    "description": "Beschreibung",
+    "descriptionPlaceholder": "Detaillierte Beschreibung",
+    "requirements": "Anforderungen",
+    "requirementsPlaceholder": "Spezielle Anforderungen?",
+    "system": "System (optional)",
+    "systemPlaceholder": "System",
+    "deadline": "Frist",
+    "price": "Preis",
+    "anonymous": "Anonym posten (kostet +50 Mio. ISK)",
+    "promoting": "An die Spitze befördern (100 Mio. ISK pro 7 Tage)",
+    "promotingUntil": "Bewerben bis",
+    "creating": "Wird erstellt...",
+    "createFor": "Erstellen für {{amount}} ISK",
+    "minPriceError": "Mindestpreis ist {{amount}} ISK",
+    "notEnoughISK": "Nicht genug ISK. Du benötigst {{amount}} ISK",
+    "unknownError": "Unbekannter Fehler"
+  }
+}

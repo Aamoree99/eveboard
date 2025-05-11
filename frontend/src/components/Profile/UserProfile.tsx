@@ -5,9 +5,10 @@ import UserHeader from './UserHeader'
 import UserOrders from './UserOrders'
 import UserReviews from './UserReviews'
 import UserSettings from './UserSettings'
+import UserTransactions from './UserTransactions'
 
 import { User } from '../../types/models'
-import UserTransactions from "./UserTransactions.tsx";
+import { useTranslation } from 'react-i18next'
 
 interface Props {
     user: User
@@ -15,6 +16,7 @@ interface Props {
 }
 
 const UserProfile = ({ user, isOwnProfile }: Props) => {
+    const { t } = useTranslation()
     const [activeTab, setActiveTab] = useState<'orders' | 'reviews' | 'transactions'>('orders')
 
     const handleRatingClick = () => {
@@ -38,36 +40,34 @@ const UserProfile = ({ user, isOwnProfile }: Props) => {
                         className={activeTab === 'orders' ? 'active' : ''}
                         onClick={() => setActiveTab('orders')}
                     >
-                        Orders
+                        {t('profile.tabs.orders')}
                     </button>
                     <button
                         className={activeTab === 'reviews' ? 'active' : ''}
                         onClick={() => setActiveTab('reviews')}
                     >
-                        Reviews
+                        {t('profile.tabs.reviews')}
                     </button>
                     {isOwnProfile && (
                         <button
                             className={activeTab === 'transactions' ? 'active' : ''}
                             onClick={() => setActiveTab('transactions')}
                         >
-                            Transactions
+                            {t('profile.tabs.transactions')}
                         </button>
                     )}
                 </div>
 
                 <div className="user-profile__content">
                     {activeTab === 'orders' && (
-                        <UserOrders user={user} isOwnProfile={isOwnProfile}/>
+                        <UserOrders user={user} isOwnProfile={isOwnProfile} />
                     )}
-                    {activeTab === 'reviews' && <UserReviews userId={user.id}/>}
+                    {activeTab === 'reviews' && <UserReviews userId={user.id} />}
                     {activeTab === 'transactions' && isOwnProfile && <UserTransactions />}
-
                 </div>
             </div>
         </div>
     )
 }
-
 
 export default UserProfile

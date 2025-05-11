@@ -3,7 +3,8 @@ import { Api } from '../../api/Api'
 import { Transaction } from '../../types/models'
 import './UserProfile.scss'
 import { FaCopy } from 'react-icons/fa'
-import Toast from "../ui/Toast.tsx";
+import Toast from "../ui/Toast.tsx"
+import { useTranslation } from 'react-i18next'
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -21,8 +22,8 @@ export const formatDateTime = (input?: string | Date): string => {
     return isNaN(date.getTime()) ? '—' : date.toLocaleString()
 }
 
-
 const UserTransactions = () => {
+    const { t } = useTranslation()
     const [transactions, setTransactions] = useState<Transaction[]>([])
     const [page, setPage] = useState(1)
     const [hasMore, setHasMore] = useState(true)
@@ -30,10 +31,8 @@ const UserTransactions = () => {
     const [selectedTx, setSelectedTx] = useState<Transaction | null>(null)
     const [toastMessage, setToastMessage] = useState<string | null>(null)
 
-
     const loadTransactions = (pageNumber = 1) => {
         if (loading) return
-
         setLoading(true)
 
         api.transaction.transactionControllerGetAll({ page: pageNumber, limit: LIMIT })
@@ -66,12 +65,12 @@ const UserTransactions = () => {
 
     const handleCopy = (value: string) => {
         navigator.clipboard.writeText(value)
-        setToastMessage('Copied!')
+        setToastMessage(t('transactions.copied'))
     }
 
     return (
         <div className="user-transactions">
-            <h3>Transactions</h3>
+            <h3>{t('transactions.title')}</h3>
             <div className="transaction-list">
                 {transactions.map((tx) => (
                     <div className="transaction" key={tx.id} onClick={() => setSelectedTx(tx)}>
@@ -80,8 +79,8 @@ const UserTransactions = () => {
                             <span className="amount">{tx.amount.toLocaleString()} ISK</span>
                         </div>
                         <div className="bottom-line">
-                            <span className="status">{tx.confirmed ? '✔ Confirmed' : '⌛ Pending'}</span>
-                            <span className="date">{new Date(tx.createdAt).toLocaleString()}</span>
+                            <span className="status">{tx.confirmed ? t('transactions.confirmed') : t('transactions.pending')}</span>
+                            <span className="date">{formatDateTime(tx.createdAt)}</span>
                         </div>
                     </div>
                 ))}
@@ -89,60 +88,59 @@ const UserTransactions = () => {
 
             {hasMore && (
                 <button className="load-more-btn" onClick={() => loadTransactions(page)} disabled={loading}>
-                    {loading ? 'Loading...' : 'Load More'}
+                    {loading ? t('transactions.loading') : t('transactions.loadMore')}
                 </button>
             )}
 
             {selectedTx && (
                 <div className="transaction-modal-backdrop" onClick={() => setSelectedTx(null)}>
                     <div className="transaction-modal" onClick={(e) => e.stopPropagation()}>
-                        <h3>Transaction Details</h3>
+                        <h3>{t('transactions.details')}</h3>
 
                         <div className="detail">
-                            <span>Type</span>
+                            <span>{t('transactions.type')}</span>
                             <code>{selectedTx.type}</code>
                         </div>
 
                         <div className="detail">
-                            <span>Amount</span>
+                            <span>{t('transactions.amount')}</span>
                             <code>{selectedTx.amount.toLocaleString()} ISK</code>
                             <button onClick={() => handleCopy(selectedTx.amount.toString())}><FaCopy /></button>
                         </div>
 
                         <div className="detail">
-                            <span>Reason</span>
+                            <span>{t('transactions.reason')}</span>
                             <code>{selectedTx.reason}</code>
                             <button onClick={() => handleCopy(selectedTx.reason)}><FaCopy /></button>
                         </div>
 
                         {selectedTx.externalId && (
                             <div className="detail">
-                                <span>External ID</span>
+                                <span>{t('transactions.externalId')}</span>
                                 <code>{selectedTx.externalId}</code>
-                                <button onClick={() => handleCopy(String(selectedTx.externalId))}><FaCopy/></button>
+                                <button onClick={() => handleCopy(String(selectedTx.externalId))}><FaCopy /></button>
                             </div>
                         )}
 
                         <div className="detail">
-                            <span>Status</span>
-                            <code>{selectedTx.confirmed ? 'Confirmed' : 'Pending'}</code>
+                            <span>{t('transactions.status')}</span>
+                            <code>{selectedTx.confirmed ? t('transactions.confirmed') : t('transactions.pending')}</code>
                         </div>
 
                         <div className="detail">
-                            <span>Date</span>
+                            <span>{t('transactions.date')}</span>
                             <code>{formatDateTime(selectedTx.createdAt)}</code>
                         </div>
 
-                        <button className="close-btn" onClick={() => setSelectedTx(null)}>Close</button>
+                        <button className="close-btn" onClick={() => setSelectedTx(null)}>{t('transactions.close')}</button>
                     </div>
                 </div>
             )}
+
             {toastMessage && (
                 <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
             )}
-
         </div>
-
     )
 }
 

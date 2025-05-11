@@ -122,6 +122,7 @@ export const startDiscordBot = async () => {
 
     try {
         await client.login(token);
+        console.log('🔑 Logged in with token:', token.slice(0, 5) + '...');
     } catch (err) {
         console.error('❌ Ошибка при логине Discord-бота:', err);
     }

@@ -3,6 +3,7 @@ import './TransModal.scss'
 import { Api } from '../../api/Api'
 import type { CreateDepositDto } from '../../types/models'
 import { FaCopy } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const DepositModal = ({ onClose }: Props) => {
+    const { t } = useTranslation()
     const [amount, setAmount] = useState(500_000_000)
     const [loading, setLoading] = useState(false)
     const [depositInfo, setDepositInfo] = useState<{
@@ -26,7 +28,7 @@ const DepositModal = ({ onClose }: Props) => {
 
     const handleSubmit = async () => {
         if (amount < 100_000_000) {
-            alert('Minimum deposit is 100,000,000 ISK')
+            alert(t('deposit.minAlert'))
             return
         }
 
@@ -36,25 +38,19 @@ const DepositModal = ({ onClose }: Props) => {
                 amount,
             } satisfies CreateDepositDto)
 
-            // Явно парсим JSON, если ответ не соответствует ожиданиям
-            const json = await res.json();
-            console.log('Parsed JSON:', json); // Проверяем структуру ответа
+            const json = await res.json()
+            const transactionData = json?.data
 
-            const transactionData = json?.data;
             if (transactionData && transactionData.reason) {
-                const { reason } = transactionData;
-
-                setDepositInfo({
-                    amount,
-                    reason,
-                })
+                const { reason } = transactionData
+                setDepositInfo({ amount, reason })
             } else {
-                console.error('[DepositModal] Unexpected response structure:', json);
-                alert('Failed to create deposit request. Invalid response from server.');
+                console.error('[DepositModal] Invalid response:', json)
+                alert(t('deposit.invalidResponse'))
             }
         } catch (e) {
-            console.error('[DepositModal] Failed to create deposit', e)
-            alert('Failed to create deposit request.')
+            console.error('[DepositModal] Failed:', e)
+            alert(t('deposit.failed'))
         } finally {
             setLoading(false)
         }
@@ -62,7 +58,7 @@ const DepositModal = ({ onClose }: Props) => {
 
     const handleCopy = (text: string) => {
         navigator.clipboard.writeText(text)
-        alert('Text copied to clipboard')
+        alert(t('deposit.copied'))
     }
 
     return (
@@ -70,21 +66,33 @@ const DepositModal = ({ onClose }: Props) => {
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <button className="close-btn" onClick={onClose}>×</button>
 
-                <h2>Deposit ISK</h2>
+                <h2>{t('deposit.title')}</h2>
 
                 {!depositInfo ? (
                     <>
+                        <div className="deposit-info-box">
+                            <p><strong>{t('deposit.min')}</strong></p>
+                            <p>{t('deposit.autoConfirm')}</p>
+                            <p>{t('deposit.trackStatus')}</p>
+                        </div>
+
                         <label>
-                            Amount (ISK):
+                            {t('deposit.amount')}:
                             <input
-                                type="number"
-                                value={amount}
-                                min={500_000_000}
-                                onChange={(e) => setAmount(Number(e.target.value))}
+                                type="text"
+                                value={amount.toLocaleString('en-US').replace(/,/g, ' ')}
+                                onChange={(e) => {
+                                    const raw = e.target.value.replace(/\s/g, '')
+                                    const parsed = Number(raw)
+                                    if (!isNaN(parsed)) setAmount(parsed)
+                                }}
+                                inputMode="numeric"
+                                pattern="[0-9\s]*"
                             />
                         </label>
+
                         <button onClick={handleSubmit} disabled={loading}>
-                            {loading ? 'Creating...' : 'Create Deposit Request'}
+                            {loading ? t('deposit.creating') : t('deposit.create')}
                         </button>
                     </>
                 ) : (
@@ -96,31 +104,30 @@ const DepositModal = ({ onClose }: Props) => {
                         />
                         <div className="deposit-details">
                             <div className="detail-line">
-                                <span className="label">Send ISK to:</span>
+                                <span className="label">{t('deposit.to')}:</span>
                                 <span className="value">EVE Board [EVEBD]</span>
                                 <button className="copy-btn" onClick={() => handleCopy('EVE Board')}>
-                                    <FaCopy/>
+                                    <FaCopy />
                                 </button>
                             </div>
 
                             <div className="detail-line">
-                                <span className="label">Amount:</span>
+                                <span className="label">{t('deposit.amount')}:</span>
                                 <span className="value">{depositInfo.amount.toLocaleString()} ISK</span>
                                 <button className="copy-btn"
                                         onClick={() => handleCopy(depositInfo.amount.toLocaleString())}>
-                                    <FaCopy/>
+                                    <FaCopy />
                                 </button>
                             </div>
 
                             <div className="detail-line">
-                                <span className="label">Reason:</span>
+                                <span className="label">{t('deposit.reason')}:</span>
                                 <code className="value">{depositInfo.reason}</code>
                                 <button className="copy-btn" onClick={() => handleCopy(depositInfo.reason)}>
-                                    <FaCopy/>
+                                    <FaCopy />
                                 </button>
                             </div>
                         </div>
-
                     </div>
                 )}
             </div>

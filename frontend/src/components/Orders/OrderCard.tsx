@@ -1,12 +1,14 @@
 import './OrderCard.scss'
 import type { Order } from '../../types/models.ts'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const OrderCard = ({ order }: { order: Order }) => {
+    const { t } = useTranslation()
     const navigate = useNavigate()
     const location = useLocation()
 
-    const creatorName = order.isAnonymous ? 'Anonymous' : order.creator?.name
+    const creatorName = order.isAnonymous ? t('common.anonymous') : order.creator?.name
     const creatorAvatar = order.creator?.avatar || '/fallback-avatar.png'
 
     const handleClick = () => {
@@ -19,21 +21,17 @@ const OrderCard = ({ order }: { order: Order }) => {
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ISK'
 
-    // Determine order status class
     const statusClass = order.status.toLowerCase()
-    const promotedClass = order.isPromoting ? 'promoted' : ''
+    const promotedClass = order.isPromoting && order.status === 'ACTIVE' ? 'promoted' : ''
 
     return (
         <div className={`order-card ${statusClass} ${promotedClass}`} onClick={handleClick}>
             <div className="order-header">
                 <div className={`order-type ${statusClass}`}>
-                    {order.type
-                        .toLowerCase()
-                        .replace(/_/g, ' ')
-                        .replace(/\b\w/g, (l) => l.toUpperCase())}
+                    {t(`orderCard.type.${order.type.toLowerCase()}`)}
                 </div>
                 <div className={`order-status ${statusClass}`}>
-                    {order.status}
+                    {t(`orderCard.status.${order.status.toLowerCase()}`)}
                 </div>
             </div>
 

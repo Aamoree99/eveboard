@@ -3,8 +3,8 @@ import type { User } from '../../types/models'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
 import { Api } from '../../api/Api'
-import {useAuth} from "../../context/AuthContext.tsx"; // 👈 правильный путь, как у тебя в других файлах
-
+import { useAuth } from '../../context/AuthContext.tsx'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
     user: User
@@ -27,26 +27,22 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
     const [referralCode, setReferralCode] = useState('')
     const [referralSubmitted, setReferralSubmitted] = useState(false)
     const [referralError, setReferralError] = useState<string | null>(null)
+    const { t } = useTranslation()
 
     const handleSubmitReferral = async () => {
-        if (!referralCode.trim()) return;
+        if (!referralCode.trim()) return
         try {
-            await api.user.userControllerSetReferral({ code: referralCode.trim() });
-            setReferralSubmitted(true);
-            setReferralError(null);
-            reloadUser(); // 👈 чтобы обновился referralId
+            await api.user.userControllerSetReferral({ code: referralCode.trim() })
+            setReferralSubmitted(true)
+            setReferralError(null)
+            reloadUser()
         } catch (err: any) {
-            console.error('Referral error:', err);
+            console.error('Referral error:', err)
             const message =
-                err?.response?.message ||
-                err?.statusText ||
-                'Unknown error occurred';
-
-            setReferralError(message);
+                err?.response?.message || err?.statusText || t('user.referralUnknownError')
+            setReferralError(message)
         }
-    };
-
-
+    }
 
     return (
         <>
@@ -58,16 +54,16 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
                         className="avatar"
                     />
                     <div className="user-main-info">
-                        <h2>{user.name || 'No name'}</h2>
+                        <h2>{user.name || t('user.noName')}</h2>
                         <div className="role-tag-wrapper">
                             <p className="role-tag">
                                 {user.role}
                                 {user.role === 'PENDING' && (
-                                    <span className="emoji-warning" title="Подключите Discord">❗</span>
+                                    <span className="emoji-warning" title={t('user.discordRequired')}>❗</span>
                                 )}
                             </p>
                             {user.role === 'PENDING' && (
-                                <div className="tooltip">Please link your Discord account</div>
+                                <div className="tooltip">{t('user.pleaseLinkDiscord')}</div>
                             )}
                         </div>
                         <div
@@ -77,7 +73,6 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
                             ★ {typeof user.rating === 'number' ? user.rating.toFixed(2) : 'N/A'}
                         </div>
                     </div>
-
                 </div>
 
                 {isOwnProfile && (
@@ -88,9 +83,13 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
                                 : '0 ISK'}
                         </div>
                         <div className="buttons">
-                            <button onClick={() => setShowDepositModal(true)}>Top Up</button>
+                            <button onClick={() => setShowDepositModal(true)}>
+                                {t('user.topUp')}
+                            </button>
                             {Number(user.balance) >= 500_000_000 && (
-                                <button onClick={() => setShowWithdrawModal(true)}>Withdraw</button>
+                                <button onClick={() => setShowWithdrawModal(true)}>
+                                    {t('user.withdraw')}
+                                </button>
                             )}
                         </div>
                     </div>
@@ -98,15 +97,15 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
 
                 {isOwnProfile && !user.referralId && !referralSubmitted && (
                     <div className="referral-block">
-                        <p className="referral-label">Have a referral code?</p>
+                        <p className="referral-label">{t('user.haveReferral')}</p>
                         <div className="referral-form">
                             <input
                                 type="text"
-                                placeholder="Enter code"
+                                placeholder={t('user.enterCode')}
                                 value={referralCode}
                                 onChange={(e) => setReferralCode(e.target.value)}
                             />
-                            <button onClick={handleSubmitReferral}>Apply</button>
+                            <button onClick={handleSubmitReferral}>{t('user.apply')}</button>
                         </div>
                         {referralError && <p className="referral-error">{referralError}</p>}
                     </div>
@@ -114,7 +113,7 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
 
                 {isOwnProfile && referralSubmitted && (
                     <div className="referral-success">
-                        ✅ Referral code successfully applied!
+                        ✅ {t('user.referralSuccess')}
                     </div>
                 )}
             </div>
@@ -137,7 +136,6 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
                     userBalance={Number(user.balance)}
                 />
             )}
-
         </>
     )
 }

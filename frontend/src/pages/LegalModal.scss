@@ -1,8 +1,8 @@
 .legal-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(10, 10, 20, 0.4);
-  backdrop-filter: blur(20px) brightness(0.8);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px) brightness(0.85);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,8 +12,8 @@
 
 .legal-modal {
   position: relative;
-  background: rgba(20, 20, 30, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--search-border);
   border-radius: 24px;
   padding: 2.5rem 2rem;
   width: 90%;
@@ -21,8 +21,8 @@
   max-height: 80vh;
   overflow-y: auto;
   box-shadow:
-          0 0 30px rgba(0, 0, 0, 0.4),
-          0 0 60px rgba(14, 165, 233, 0.08);
+          0 0 30px rgba(0, 0, 0, 0.2),
+          0 0 60px rgba(14, 165, 233, 0.06);
   animation: fadeInUp 0.35s ease;
   transition: all 0.3s ease;
   scrollbar-width: none;
@@ -36,7 +36,7 @@
 .legal-modal h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
-  background: linear-gradient(90deg, var(--accent-color), #bbb);
+  background: linear-gradient(90deg, var(--accent-color), var(--search-placeholder));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 700;
@@ -51,28 +51,26 @@
   font-weight: 600;
 }
 
-.legal-modal p {
+.legal-modal p,
+.legal-modal li {
   font-size: 0.95rem;
   line-height: 1.7;
-  margin-top: 0.5rem;
-  color: rgba(230, 230, 240, 0.85);
+  color: var(--main-text);
+  opacity: 0.85;
 }
 
 .legal-modal li {
   margin-left: 1.2rem;
   margin-bottom: 0.6rem;
-  line-height: 1.6;
-  color: rgba(230, 230, 240, 0.85);
   list-style: disc;
 }
-
 
 .legal-modal .close-btn {
   position: absolute;
   top: 1.2rem;
   right: 1.2rem;
   font-size: 1.8rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--search-bg);
   border: none;
   color: var(--accent-color);
   border-radius: 50%;
@@ -85,8 +83,8 @@
   justify-content: center;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: var(--search-bg-focus);
+    color: var(--main-text);
   }
 }
 

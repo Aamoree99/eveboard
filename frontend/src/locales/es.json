@@ -1,0 +1,403 @@
+{
+  "home": {
+    "title": "Bienvenido a la Plataforma de Órdenes de EVE Online",
+    "subtitle": "Aquí puedes crear y aceptar órdenes, gestionar tus transacciones y mucho más.",
+    "featured": "🔥 Órdenes Destacadas Promocionadas",
+    "noPromoted": "No hay órdenes promocionadas en este momento.",
+    "whatDo": "¿Qué te gustaría hacer?",
+    "viewOrders": "Ver Órdenes",
+    "goProfile": "Ir a tu Perfil",
+    "startOrders": "Comenzar a Aceptar Órdenes",
+    "balanceTitle": "📊 Balance de EVE Board",
+    "available": "Disponible",
+    "locked": "Bloqueado",
+    "transactions": "Transacciones Recientes",
+    "noTransactions": "No hay transacciones recientes.",
+    "whyTitle": "¿Por qué elegirnos?",
+    "whyText": "Ofrecemos una plataforma segura y confiable para crear y completar órdenes en el universo de EVE Online. Con nuestro servicio, puedes estar seguro de que tus transacciones son seguras, tu trabajo es reconocido y tu progreso es recompensado.",
+    "why1": "Transacciones seguras y protegidas",
+    "why2": "Gran variedad de órdenes disponibles",
+    "why3": "Valoraciones y reseñas para generar confianza",
+    "why4": "Pago al completar las tareas",
+    "why5": "Plataforma fácil de usar",
+    "roadmapTitle": "Hoja de Ruta del Producto",
+    "roadmapIntro": "Estamos construyendo el futuro de la gestión de contratos en EVE Online. Esto es lo que viene:",
+    "roadmapLang": "Soporte multilingüe",
+    "roadmapLangText": "Acceso global con interfaz localizada en inglés, ruso y más.",
+    "roadmapWithdraw": "Retiros más rápidos",
+    "roadmapWithdrawText": "Mayor velocidad en pagos y claridad en las transacciones.",
+    "roadmapZkill": "Integración con ZKillboard",
+    "roadmapZkillText": "Verificación automática de muertes para contratos de recompensa.",
+    "roadmapMobile": "Optimización móvil",
+    "roadmapMobileText": "Experiencia fluida en teléfonos y tabletas.",
+    "roadmapAnalytics": "Analíticas de Órdenes",
+    "roadmapAnalyticsText": "Información sobre tu rendimiento, ganancias y actividad.",
+    "roadmapTrust": "Mejoras de confianza y reputación",
+    "roadmapTrustText": "Sistemas de calificación mejorados para generar confianza entre los usuarios.",
+    "roadmapFeedback": "¿Tienes sugerencias? Contáctanos en",
+    "roadmapInfra": "Infraestructura y Servidores",
+    "roadmapInfraText": "Configuración de servidores, bases de datos, implementación, CI/CD.",
+    "roadmapUi": "Interfaz Inicial",
+    "roadmapUiText": "Interfaz central creada con enrutamiento e integración inicial de la API.",
+    "roadmapBeta": "CBT (Prueba Beta Cerrada)",
+    "roadmapBetaText": "Primeros usuarios, reportes de errores, ajustes en el flujo."
+  },
+  "header": {
+    "orders": "Órdenes",
+    "my": "Mis",
+    "search": "Buscar usuarios..."
+  },
+  "footer": {
+    "terms": "Términos de Uso",
+    "privacy": "Política de Privacidad",
+    "madeBy": "Creado por",
+    "rights": "Todos los derechos pertenecen a CCP Games"
+  },
+  "login": {
+    "agree1": "Al iniciar sesión, aceptas nuestros",
+    "terms": "Términos de Uso",
+    "privacy": "Política de Privacidad",
+    "and": "y"
+  },
+  "orders": {
+    "title": "Órdenes",
+    "create": "Crear Orden",
+    "status": {
+      "all": "Todos los estados",
+      "active": "Activa",
+      "taken": "Tomada",
+      "done": "Completada",
+      "canceled": "Cancelada"
+    },
+    "sort": {
+      "newest": "Más recientes",
+      "oldest": "Más antiguas",
+      "lowHigh": "Precio (de menor a mayor)",
+      "highLow": "Precio (de mayor a menor)"
+    },
+    "typeAll": "Todos los tipos",
+    "types": {
+      "KILL_TARGET": "Eliminar Objetivo",
+      "SCAN_WORMHOLE": "Escanear Agujero de Gusano",
+      "SCOUT_SYSTEM": "Explorar Sistema",
+      "LOGISTICS": "Logística",
+      "ESCORT": "Escolta",
+      "STRUCTURE_WORK": "Trabajo en Estructura",
+      "CHARACTER_INFO": "Información de Personaje",
+      "ROUTE_PLANNING": "Planificación de Ruta",
+      "COUNTER_INTEL": "Contrainteligencia",
+      "EVENT_FARMING": "Farming de Eventos",
+      "PVP_ASSIST": "Asistencia PvP",
+      "OTHER": "Otro"
+    },
+    "notFound": "No se encontraron órdenes.",
+    "loadMore": "Cargar más"
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "updated": "Última actualización: 2 de abril de 2025",
+    "access": {
+      "title": "A qué accedemos",
+      "desc": "Solicitamos datos limitados de tu personaje de EVE Online a través de permisos ESI — solo lo necesario para el funcionamiento de la plataforma:",
+      "list": [
+        {
+          "scope": "publicData",
+          "desc": "información básica del personaje: ID, nombre, avatar."
+        },
+        {
+          "scope": "esi-location.read_location.v1",
+          "desc": "sistema actual (para actualizaciones en vivo y seguimiento opcional)."
+        },
+        {
+          "scope": "esi-location.read_ship_type.v1",
+          "desc": "tu tipo de nave activa (opcional, para funciones futuras)."
+        },
+        {
+          "scope": "esi-location.read_online.v1",
+          "desc": "estado en línea (para mostrar disponibilidad en operaciones)."
+        },
+        {
+          "scope": "esi-wallet.read_character_wallet.v1",
+          "desc": "tu saldo ISK (usado para crear/aceptar contratos)."
+        },
+        {
+          "scope": "esi-wallet.read_corporation_wallets.v1",
+          "desc": "solicitado por defecto para todos los usuarios. Solo se usa si tu cuenta tiene el rol ADMIN, para validar y procesar retiros a nivel corporativo. Los datos del monedero corporativo de otros usuarios se ignoran y nunca se almacenan."
+        },
+        {
+          "scope": "esi-killmails.read_killmails.v1",
+          "desc": "confirma muertes cuando lo requiere un contrato."
+        },
+        {
+          "scope": "esi-ui.open_window.v1",
+          "desc": "nos permite abrir información en el juego (por ejemplo, mostrar objetivos o ubicaciones en el cliente de EVE)."
+        },
+        {
+          "scope": "esi-ui.write_waypoint.v1",
+          "desc": "nos permite añadir puntos de ruta automáticamente en tu cliente."
+        }
+      ]
+    },
+    "why": {
+      "title": "Por qué lo usamos",
+      "desc": "Usamos estos datos únicamente para:",
+      "list": [
+        "Autenticar tu personaje de EVE y mostrar tu perfil",
+        "Habilitar y verificar contratos y operaciones del monedero en el juego",
+        "Apoyar actualizaciones en tiempo real e interacciones en el cliente"
+      ]
+    },
+    "no": {
+      "title": "Lo que no hacemos",
+      "list": [
+        "No <strong>leemos</strong> tus correos, chats, activos o PLEX",
+        "No <strong>usamos</strong> los datos del monedero corporativo a menos que seas un administrador autorizado",
+        "No <strong>compartimos</strong> ni vendemos ninguno de tus datos"
+      ]
+    },
+    "storage": {
+      "title": "Almacenamiento y seguridad",
+      "desc": "Los tokens de acceso se almacenan de forma segura y se actualizan automáticamente mediante OAuth. Todos los datos relacionados con el personaje se usan exclusivamente dentro de EVE Board y nunca se exponen a terceros."
+    }
+  },
+  "terms": {
+    "title": "Términos de Servicio",
+    "updated": "Última actualización: 2 de abril de 2025",
+    "sections": [
+      {
+        "title": "Uso de la plataforma",
+        "text": "Al acceder a EVE Board, aceptas usar la plataforma de manera responsable y conforme a estos términos. Si no aceptas estos términos, no uses la plataforma."
+      },
+      {
+        "title": "Cuentas y acceso",
+        "text": "El acceso requiere autenticación a través de EVE Online. Eres responsable de todas las acciones realizadas bajo tu cuenta, incluidos los contratos que crees o aceptes."
+      },
+      {
+        "title": "Órdenes y pagos",
+        "text": "Todos los contratos son definitivos una vez creados o aceptados. Los pagos se procesan mediante el sistema de monedero interno. Pueden aplicarse comisiones. Las órdenes pueden ser moderadas o canceladas por los administradores en casos de abuso, fraude o error."
+      },
+      {
+        "title": "Monedero y retiros",
+        "text": "El ISK ganado en la plataforma se almacena en tu saldo interno. Los retiros están sujetos a una comisión de servicio y pueden requerir verificación de identidad. La plataforma no se hace responsable de pérdidas por información de monedero incorrecta o sanciones en el juego."
+      },
+      {
+        "title": "Conducta y restricciones",
+        "text": "El comportamiento abusivo, uso de múltiples cuentas, estafas o mal uso de funciones resultará en suspensión o baneo permanente. Nos reservamos el derecho de revocar el acceso en cualquier momento."
+      },
+      {
+        "title": "Disponibilidad y tiempo activo",
+        "text": "Nos esforzamos por ofrecer un rendimiento estable pero no garantizamos tiempo activo, funcionamiento sin errores o disponibilidad de datos. Pueden ocurrir interrupciones programadas o no programadas."
+      },
+      {
+        "title": "Disputas",
+        "text": "Si surge una disputa sobre un contrato, los usuarios pueden enviar una queja. Las disputas son revisadas manualmente por moderadores de la plataforma. Todas las decisiones son finales."
+      },
+      {
+        "title": "Cambios en los términos",
+        "text": "Estos términos pueden actualizarse en cualquier momento. El uso continuo de la plataforma después de los cambios implica la aceptación de los términos actualizados."
+      }
+    ]
+  },
+  "myOrders": {
+    "created": "Órdenes Creadas",
+    "accepted": "Órdenes Aceptadas",
+    "completed": "Órdenes Completadas",
+    "canceled": "Órdenes Canceladas",
+    "create": "Crear Orden",
+    "noCreated": "Aún no has creado órdenes.",
+    "noAccepted": "Aún no has aceptado órdenes.",
+    "noCompleted": "Aún no has completado órdenes.",
+    "noCanceled": "Aún no has cancelado órdenes."
+  },
+  "auth": {
+    "hint": {
+      "loggingIn": "Iniciando sesión...",
+      "verifying": "Verificando capsuleer...",
+      "ready": "¡Éxito!"
+    }
+  },
+  "withdraw": {
+    "title": "Retirar ISK",
+    "amountLabel": "Cantidad (máx: {{max}} ISK)",
+    "fee": "Comisión del 10%: {{fee}} ISK",
+    "youWillReceive": "Recibirás:",
+    "limits": "Mín: {{min}} ISK, Máx: {{max}} ISK",
+    "button": "Solicitar Retiro",
+    "processing": "Procesando...",
+    "success": "¡Solicitud de retiro creada!",
+    "sent": "será enviada a ti",
+    "feeLabel": "Comisión",
+    "reason": "Motivo de la transferencia de ISK:",
+    "close": "Cerrar",
+    "failed": "No se pudo crear la solicitud de retiro."
+  },
+  "transactions": {
+    "title": "Transacciones",
+    "confirmed": "✔ Confirmada",
+    "pending": "⌛ Pendiente",
+    "loadMore": "Cargar más",
+    "loading": "Cargando...",
+    "details": "Detalles de la Transacción",
+    "type": "Tipo",
+    "amount": "Cantidad",
+    "reason": "Motivo",
+    "externalId": "ID Externa",
+    "status": "Estado",
+    "date": "Fecha",
+    "close": "Cerrar",
+    "copied": "¡Copiado!"
+  },
+  "settings": {
+    "title": "Configuraciones",
+    "discord": "Discord:",
+    "linkDiscord": "Vincular Discord",
+    "becomeExecutor": "Convertirse en Ejecutor",
+    "logout": "Cerrar sesión",
+    "logoutConfirmTitle": "¿Estás seguro de que deseas cerrar sesión?",
+    "logoutConfirmText": "Se cerrará tu sesión y serás redirigido a la página de inicio.",
+    "logoutYes": "Sí, cerrar sesión",
+    "cancel": "Cancelar",
+    "executorConfirmTitle": "¿Quieres convertirte en ejecutor?",
+    "executorConfirmText": "Esto te costará 100,000,000 ISK. Aún podrás crear órdenes como siempre.",
+    "submitting": "Enviando...",
+    "confirm": "Confirmar"
+  },
+  "reviews": {
+    "title": "Reseñas",
+    "loading": "Cargando reseñas…",
+    "loadError": "No se pudieron cargar las reseñas.",
+    "empty": "Aún no hay reseñas.",
+    "noComment": "Sin comentario."
+  },
+  "profile": {
+    "tabs": {
+      "orders": "Órdenes",
+      "reviews": "Reseñas",
+      "transactions": "Transacciones"
+    }
+  },
+  "user": {
+    "noName": "Sin nombre",
+    "discordRequired": "Se requiere Discord",
+    "pleaseLinkDiscord": "Por favor, vincula tu cuenta de Discord",
+    "topUp": "Recargar",
+    "withdraw": "Retirar",
+    "haveReferral": "¿Tienes un código de referido?",
+    "enterCode": "Introduce el código",
+    "apply": "Aplicar",
+    "referralSuccess": "¡Código de referido aplicado con éxito!",
+    "referralUnknownError": "Ocurrió un error desconocido"
+  },
+  "deposit": {
+    "title": "Depositar ISK",
+    "min": "Depósito mínimo: 100.000.000 ISK",
+    "autoConfirm": "Después de enviar ISK, tu depósito se confirmará automáticamente en una hora.",
+    "trackStatus": "Puedes seguir el estado en la pestaña de Transacciones.",
+    "amount": "Cantidad",
+    "to": "Enviar ISK a",
+    "reason": "Motivo",
+    "create": "Crear Solicitud de Depósito",
+    "creating": "Creando...",
+    "minAlert": "El depósito mínimo es de 100.000.000 ISK",
+    "invalidResponse": "No se pudo crear la solicitud. Respuesta no válida del servidor.",
+    "failed": "No se pudo crear la solicitud de depósito.",
+    "copied": "¡Copiado al portapapeles!"
+  },
+  "orderModal": {
+    "loading": "Cargando orden...",
+    "error": "No se pudo cargar la orden.",
+    "close": "Cerrar",
+    "selectReason": "Por favor, selecciona un motivo",
+    "complaintSubmitted": "Queja enviada. Gracias.",
+    "complaintFailed": "No se pudo enviar la queja",
+    "reviewSubmitted": "✅ Reseña enviada, ¡gracias!",
+    "reviewFailed": "❌ No se pudo enviar la reseña",
+    "takeOrder": "Tomar Orden",
+    "taking": "Tomando...",
+    "loginToTake": "Inicia sesión para tomar esta orden",
+    "lowRating": "Tu calificación es demasiado baja",
+    "executorRequired": "Debes postularte como ejecutor",
+    "requirements": "Requisitos",
+    "system": "Sistema",
+    "status": "Estado",
+    "price": "Precio",
+    "deadline": "Plazo",
+    "routeSet": "La ruta ha sido establecida en tu cliente de EVE.",
+    "routeFailed": "No se pudo establecer la ruta en el cliente de EVE.",
+    "cancelOrder": "Cancelar Orden",
+    "cancelOrderConfirm": "¿Cancelar esta orden? Se cobrará una comisión del 10%.",
+    "orderCancelled": "Orden cancelada",
+    "orderCancelFailed": "No se pudo cancelar la orden",
+    "unexpectedError": "Ocurrió un error inesperado",
+    "markAsDone": "Marcar como Completada",
+    "markAsDoneConfirm": "¿Marcar esta orden como COMPLETADA? El ISK será transferido.",
+    "markAsDoneFailed": "No se pudo marcar como completada",
+    "createdBy": "Creada por:",
+    "anonymous": "Anónimo",
+    "unknown": "Desconocido",
+    "submitComplaint": "Enviar Queja",
+    "reason": "Motivo",
+    "selectReasonPlaceholder": "-- Selecciona un motivo --",
+    "scam": "Estafa",
+    "spam": "Spam",
+    "harassment": "Acoso",
+    "abuseOfPower": "Abuso de poder",
+    "other": "Otro",
+    "commentOptional": "Comentario (opcional):",
+    "send": "Enviar",
+    "submitting": "Enviando...",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "review": "Reseña",
+    "youRated": "Calificaste con:",
+    "shareExperience": "Comparte tu experiencia...",
+    "submitReview": "Enviar Reseña",
+    "typeMessage": "Escribe un mensaje..."
+  },
+  "orderCard": {
+    "status": {
+      "active": "Activa",
+      "taken": "Tomada",
+      "done": "Completada",
+      "canceled": "Cancelada"
+    },
+    "type": {
+      "kill_target": "Eliminar Objetivo",
+      "scan_wormhole": "Escanear Agujero de Gusano",
+      "scout_system": "Explorar Sistema",
+      "logistics": "Logística",
+      "escort": "Escolta",
+      "structure_work": "Trabajo en Estructura",
+      "character_info": "Información de Personaje",
+      "route_planning": "Planificación de Ruta",
+      "counter_intel": "Contrainteligencia",
+      "event_farming": "Farming de Eventos",
+      "pvp_assist": "Asistencia PvP",
+      "other": "Otro"
+    }
+  },
+  "common": {
+    "anonymous": "Anónimo"
+  },
+  "createOrderForm": {
+    "title": "Crear Nueva Orden",
+    "type": "Tipo de Orden",
+    "name": "Título",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Descripción detallada",
+    "requirements": "Requisitos",
+    "requirementsPlaceholder": "¿Algún requisito específico?",
+    "system": "Sistema (opcional)",
+    "systemPlaceholder": "Sistema",
+    "deadline": "Plazo",
+    "price": "Precio",
+    "anonymous": "Publicar como Anónimo (Cuesta +50M ISK)",
+    "promoting": "Promocionar al Inicio (100M ISK por 7 días)",
+    "promotingUntil": "Promocionar Hasta",
+    "creating": "Creando...",
+    "createFor": "Crear por {{amount}} ISK",
+    "minPriceError": "El precio mínimo es {{amount}} ISK",
+    "notEnoughISK": "No tienes suficiente ISK. Necesitas {{amount}} ISK",
+    "unknownError": "Error desconocido"
+  }
+}

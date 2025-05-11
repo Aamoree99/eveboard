@@ -1,6 +1,403 @@
 {
-  "title": "EVE Orders",
-  "orders": "Orders",
-  "profile": "Profile",
-  "balance": "Balance"
+  "home": {
+    "title": "Welcome to EVE Online Order Platform",
+    "subtitle": "Here you can create and take orders, manage your transactions, and more.",
+    "featured": "🔥 Featured Promoted Orders",
+    "noPromoted": "No promoted orders at the moment.",
+    "whatDo": "What would you like to do?",
+    "viewOrders": "View Orders",
+    "goProfile": "Go to Your Profile",
+    "startOrders": "Start Taking Orders",
+    "balanceTitle": "📊 EVE Board Balance",
+    "available": "Available",
+    "locked": "Locked",
+    "transactions": "Recent Transactions",
+    "noTransactions": "No recent transactions.",
+    "whyTitle": "Why Choose Us?",
+    "whyText": "We provide a secure and reliable platform for creating and completing orders in the EVE Online universe. With our service, you can be sure that your transactions are safe, your work is recognized, and your progress is rewarded.",
+    "why1": "Safe and secure transactions",
+    "why2": "Wide variety of orders available",
+    "why3": "Ratings and reviews to ensure trust",
+    "why4": "Payment on completion of tasks",
+    "why5": "Easy to use platform",
+    "roadmapTitle": "Product Roadmap",
+    "roadmapIntro": "We’re building the future of contract management in EVE Online. Here’s what’s coming next:",
+    "roadmapLang": "Multi-language support",
+    "roadmapLangText": "Global access with localized UI in English, Russian, and more.",
+    "roadmapWithdraw": "Faster withdrawals",
+    "roadmapWithdrawText": "Improved payout speeds and enhanced transaction clarity.",
+    "roadmapZkill": "ZKillboard integration",
+    "roadmapZkillText": "Automated kill verification for bounty contracts.",
+    "roadmapMobile": "Mobile optimization",
+    "roadmapMobileText": "Seamless experience on phones and tablets.",
+    "roadmapAnalytics": "Order analytics",
+    "roadmapAnalyticsText": "Insights into your performance, earnings, and activity.",
+    "roadmapTrust": "Trust & reputation improvements",
+    "roadmapTrustText": "Enhanced rating systems to build trust between users.",
+    "roadmapFeedback": "Have suggestions? Reach out at",
+    "roadmapInfra": "Infrastructure & Server",
+    "roadmapInfraText": "Server setup, databases, deployment, CI/CD.",
+    "roadmapUi": "Initial Interface",
+    "roadmapUiText": "Core UI created with routing and initial API integration.",
+    "roadmapBeta": "CBT (Closed Beta Testing)",
+    "roadmapBetaText": "First users, bug reports, flow adjustments."
+  },
+  "header": {
+    "orders": "Orders",
+    "my": "My",
+    "search": "Search users..."
+  },
+  "footer": {
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "madeBy": "Made by",
+    "rights": "All rights belong to CCP Games"
+  },
+  "login": {
+    "agree1": "By logging in, you agree to our",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "and": "and"
+  },
+  "orders": {
+    "title": "Orders",
+    "create": "Create Order",
+    "status": {
+      "all": "All statuses",
+      "active": "Active",
+      "taken": "Taken",
+      "done": "Done",
+      "canceled": "Canceled"
+    },
+    "sort": {
+      "newest": "Newest",
+      "oldest": "Oldest",
+      "lowHigh": "Price (Low to High)",
+      "highLow": "Price (High to Low)"
+    },
+    "typeAll": "All types",
+    "types": {
+      "KILL_TARGET": "Kill Target",
+      "SCAN_WORMHOLE": "Scan Wormhole",
+      "SCOUT_SYSTEM": "Scout System",
+      "LOGISTICS": "Logistics",
+      "ESCORT": "Escort",
+      "STRUCTURE_WORK": "Structure Work",
+      "CHARACTER_INFO": "Character Info",
+      "ROUTE_PLANNING": "Route Planning",
+      "COUNTER_INTEL": "Counter-Intel",
+      "EVENT_FARMING": "Event Farming",
+      "PVP_ASSIST": "PvP Assist",
+      "OTHER": "Other"
+    },
+    "notFound": "No orders found.",
+    "loadMore": "Load More"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: April 2, 2025",
+    "access": {
+      "title": "What we access",
+      "desc": "We request limited data from your EVE Online character via ESI scopes — only what's required for platform functionality:",
+      "list": [
+        {
+          "scope": "publicData",
+          "desc": "basic character info: ID, name, avatar."
+        },
+        {
+          "scope": "esi-location.read_location.v1",
+          "desc": "current system (for live contract updates and optional tracking)."
+        },
+        {
+          "scope": "esi-location.read_ship_type.v1",
+          "desc": "your active ship type (optional, for future features)."
+        },
+        {
+          "scope": "esi-location.read_online.v1",
+          "desc": "online status (to help show availability in ops)."
+        },
+        {
+          "scope": "esi-wallet.read_character_wallet.v1",
+          "desc": "your ISK balance (used to create/accept contracts)."
+        },
+        {
+          "scope": "esi-wallet.read_corporation_wallets.v1",
+          "desc": "requested by default for all users. However, it's only used if your account has the ADMIN role, to validate and process corp-level ISK withdrawals. All other users’ corp wallet data is ignored and never stored."
+        },
+        {
+          "scope": "esi-killmails.read_killmails.v1",
+          "desc": "confirms kills when required by a contract."
+        },
+        {
+          "scope": "esi-ui.open_window.v1",
+          "desc": "lets us open in-game info (e.g., show targets or locations via the EVE client)."
+        },
+        {
+          "scope": "esi-ui.write_waypoint.v1",
+          "desc": "lets us add waypoints automatically in your client."
+        }
+      ]
+    },
+    "why": {
+      "title": "Why we use it",
+      "desc": "We use this data only to:",
+      "list": [
+        "Authenticate your EVE character and display your profile",
+        "Enable and verify in-game contracts and wallet operations",
+        "Support real-time updates and in-client interactions"
+      ]
+    },
+    "no": {
+      "title": "What we don’t do",
+      "list": [
+        "We do <strong>not</strong> read your mails, chats, assets, or PLEX",
+        "We do <strong>not</strong> use corporate wallet data unless you're an authorized admin on the platform.",
+        "We do <strong>not</strong> share or sell any of your data"
+      ]
+    },
+    "storage": {
+      "title": "Storage & security",
+      "desc": "Access tokens are stored securely and automatically refreshed via OAuth. All character-related data is used strictly within EVE Board and never exposed to third parties."
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "updated": "Last updated: April 2, 2025",
+    "sections": [
+      {
+        "title": "Using the platform",
+        "text": "By accessing EVE Board, you agree to use the platform responsibly and in accordance with these terms. If you do not accept these terms, do not use the platform."
+      },
+      {
+        "title": "Accounts & access",
+        "text": "Access requires authentication via EVE Online. You are responsible for all actions taken under your account, including contracts you create or accept."
+      },
+      {
+        "title": "Orders & payments",
+        "text": "All contracts are final once created or accepted. Payouts are processed through the internal wallet system. Platform fees may apply. Orders can be moderated or canceled by admins in case of abuse, fraud, or error."
+      },
+      {
+        "title": "Wallet & withdrawals",
+        "text": "ISK earned on the platform is stored in your internal balance. Withdrawals are subject to a service commission and may require identity verification. The platform is not liable for losses due to incorrect wallet info or in-game bans."
+      },
+      {
+        "title": "Conduct & restrictions",
+        "text": "Abusive behavior, multi-accounting, scamming, or misuse of platform features will result in suspension or permanent ban. We reserve the right to revoke access at any time."
+      },
+      {
+        "title": "Uptime & availability",
+        "text": "We strive for stable performance but do not guarantee uptime, error-free operation, or data availability. Scheduled or unscheduled downtime may occur."
+      },
+      {
+        "title": "Disputes",
+        "text": "If a dispute arises regarding a contract, users can submit a complaint. Disputes are reviewed manually by platform moderators. All decisions are final."
+      },
+      {
+        "title": "Changes to terms",
+        "text": "These terms may be updated at any time. Continued use of the platform after changes implies acceptance of the updated terms."
+      }
+    ]
+  },
+  "myOrders": {
+    "created": "Created Orders",
+    "accepted": "Accepted Orders",
+    "completed": "Completed Orders",
+    "canceled": "Canceled Orders",
+    "create": "Create Order",
+    "noCreated": "No created orders yet.",
+    "noAccepted": "No accepted orders yet.",
+    "noCompleted": "No completed orders yet.",
+    "noCanceled": "No canceled orders yet."
+  },
+  "auth": {
+    "hint": {
+      "loggingIn": "Logging in...",
+      "verifying": "Verifying capsuleer...",
+      "ready": "Success!"
+    }
+  },
+  "withdraw": {
+    "title": "Withdraw ISK",
+    "amountLabel": "Amount (max: {{max}} ISK)",
+    "fee": "10% fee: {{fee}} ISK",
+    "youWillReceive": "You will receive:",
+    "limits": "Min: {{min}} ISK, max: {{max}} ISK",
+    "button": "Request Withdrawal",
+    "processing": "Processing...",
+    "success": "Withdrawal request created!",
+    "sent": "will be sent to you",
+    "feeLabel": "Fee",
+    "reason": "Reason for ISK transfer:",
+    "close": "Close",
+    "failed": "Failed to create withdrawal request."
+  },
+  "transactions": {
+    "title": "Transactions",
+    "confirmed": "✔ Confirmed",
+    "pending": "⌛ Pending",
+    "loadMore": "Load More",
+    "loading": "Loading...",
+    "details": "Transaction Details",
+    "type": "Type",
+    "amount": "Amount",
+    "reason": "Reason",
+    "externalId": "External ID",
+    "status": "Status",
+    "date": "Date",
+    "close": "Close",
+    "copied": "Copied!"
+  },
+  "settings": {
+    "title": "Settings",
+    "discord": "Discord:",
+    "linkDiscord": "Link Discord",
+    "becomeExecutor": "Become an Executor",
+    "logout": "Logout",
+    "logoutConfirmTitle": "Are you sure you want to log out?",
+    "logoutConfirmText": "You will be logged out of your account and redirected to the home page.",
+    "logoutYes": "Yes, Log Out",
+    "cancel": "Cancel",
+    "executorConfirmTitle": "Do you want to become an executor?",
+    "executorConfirmText": "This will cost you 100,000,000 ISK. You will still be able to create orders as usual.",
+    "submitting": "Submitting...",
+    "confirm": "Confirm"
+  },
+  "reviews": {
+    "title": "Reviews",
+    "loading": "Loading reviews…",
+    "loadError": "Failed to load reviews.",
+    "empty": "No reviews yet.",
+    "noComment": "No comment."
+  },
+  "profile": {
+    "tabs": {
+      "orders": "Orders",
+      "reviews": "Reviews",
+      "transactions": "Transactions"
+    }
+  },
+  "user": {
+    "noName": "No name",
+    "discordRequired": "Discord required",
+    "pleaseLinkDiscord": "Please link your Discord account",
+    "topUp": "Top Up",
+    "withdraw": "Withdraw",
+    "haveReferral": "Have a referral code?",
+    "enterCode": "Enter code",
+    "apply": "Apply",
+    "referralSuccess": "Referral code successfully applied!",
+    "referralUnknownError": "Unknown error occurred"
+  },
+  "deposit": {
+    "title": "Deposit ISK",
+    "min": "Minimum deposit: 100,000,000 ISK",
+    "autoConfirm": "After sending ISK, your deposit will be automatically confirmed within an hour.",
+    "trackStatus": "You can track its status in the Transactions tab.",
+    "amount": "Amount",
+    "to": "Send ISK to",
+    "reason": "Reason",
+    "create": "Create Deposit Request",
+    "creating": "Creating...",
+    "minAlert": "Minimum deposit is 100,000,000 ISK",
+    "invalidResponse": "Failed to create deposit request. Invalid response from server.",
+    "failed": "Failed to create deposit request.",
+    "copied": "Copied to clipboard!"
+  },
+  "orderModal": {
+    "loading": "Loading order...",
+    "error": "Failed to load order.",
+    "close": "Close",
+    "selectReason": "Please select a reason",
+    "complaintSubmitted": "Complaint submitted. Thank you.",
+    "complaintFailed": "Failed to submit complaint",
+    "reviewSubmitted": "✅ Review submitted, thank you!",
+    "reviewFailed": "❌ Failed to submit review",
+    "takeOrder": "Take Order",
+    "taking": "Taking...",
+    "loginToTake": "Log in to take this order",
+    "lowRating": "Your rating is too low",
+    "executorRequired": "You must apply as an executor",
+    "requirements": "Requirements",
+    "system": "System",
+    "status": "Status",
+    "price": "Price",
+    "deadline": "Deadline",
+    "routeSet": "Route has been set in your EVE client.",
+    "routeFailed": "Failed to set route in EVE client.",
+    "cancelOrder": "Cancel Order",
+    "cancelOrderConfirm": "Cancel this order? 10% commission will be charged.",
+    "orderCancelled": "Order canceled",
+    "orderCancelFailed": "Failed to cancel order",
+    "unexpectedError": "Unexpected error occurred",
+    "markAsDone": "Mark as Done",
+    "markAsDoneConfirm": "Mark this order as DONE? ISK will be transferred.",
+    "markAsDoneFailed": "Failed to mark as done",
+    "createdBy": "Created by:",
+    "anonymous": "Anonymous",
+    "unknown": "Unknown",
+    "submitComplaint": "Submit Complaint",
+    "reason": "Reason",
+    "selectReasonPlaceholder": "-- Select Reason --",
+    "scam": "Scam",
+    "spam": "Spam",
+    "harassment": "Harassment",
+    "abuseOfPower": "Abuse of Power",
+    "other": "Other",
+    "commentOptional": "Comment (optional):",
+    "send": "Send",
+    "submitting": "Submitting...",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "review": "Review",
+    "youRated": "You rated:",
+    "shareExperience": "Share your experience...",
+    "submitReview": "Submit Review",
+    "typeMessage": "Type message..."
+  },
+  "orderCard": {
+    "status": {
+      "active": "Active",
+      "taken": "Taken",
+      "done": "Done",
+      "canceled": "Canceled"
+    },
+    "type": {
+      "kill_target": "Kill Target",
+      "scan_wormhole": "Scan Wormhole",
+      "scout_system": "Scout System",
+      "logistics": "Logistics",
+      "escort": "Escort",
+      "structure_work": "Structure Work",
+      "character_info": "Character Info",
+      "route_planning": "Route Planning",
+      "counter_intel": "Counter-Intel",
+      "event_farming": "Event Farming",
+      "pvp_assist": "PvP Assist",
+      "other": "Other"
+    }
+  },
+  "common": {
+    "anonymous": "Anonymous"
+  },
+  "createOrderForm": {
+    "title": "Create New Order",
+    "type": "Order Type",
+    "name": "Title",
+    "description": "Description",
+    "descriptionPlaceholder": "Detailed description",
+    "requirements": "Requirements",
+    "requirementsPlaceholder": "Any specific requirements?",
+    "system": "System (optional)",
+    "systemPlaceholder": "System",
+    "deadline": "Deadline",
+    "price": "Price",
+    "anonymous": "Post as Anonymous (Costs +50M ISK)",
+    "promoting": "Promote to Top (100M ISK per 7 days)",
+    "promotingUntil": "Promote Until",
+    "creating": "Creating...",
+    "createFor": "Create for {{amount}} ISK",
+    "minPriceError": "Minimum price is {{amount}} ISK",
+    "notEnoughISK": "Not enough ISK. You need {{amount}} ISK",
+    "unknownError": "Unknown error"
+  }
 }

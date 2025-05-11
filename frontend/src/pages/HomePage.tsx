@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
 import Layout from '../components/Layout'
 import OrderCard from '../components/Orders/OrderCard'
 import { Api } from '../api/Api'
 import type { Order } from '../types/models'
 import type { CorpBalanceResponse } from '../types/api'
 import './HomePage.scss'
+import { useTranslation } from 'react-i18next'
+
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -23,7 +23,8 @@ interface Wrapper<T> {
 }
 
 const HomePage: React.FC = () => {
-    const { user } = useAuth()
+    const { t } = useTranslation()
+    //const { user } = useAuth()
     const [promotedOrders, setPromotedOrders] = useState<Order[]>([])
     const [corpBalance, setCorpBalance] = useState<number>(0)
     const [lockedBalance, setLockedBalance] = useState<number>(0)
@@ -72,15 +73,11 @@ const HomePage: React.FC = () => {
     return (
         <Layout>
             <div className="home-page">
-                <h1>Welcome to EVE Online Order Platform</h1>
-                <p>
-                    Here you can create and take orders, manage your transactions, and
-                    more.
-                </p>
+                <h1>{t('home.title')}</h1>
+                <p>{t('home.subtitle')}</p>
 
-                {/* Featured promoted orders at the top */}
                 <div className="home-promo-orders">
-                    <h2>🔥 Featured Promoted Orders</h2>
+                    <h2>{t('home.featured')}</h2>
                     {promotedOrders.length ? (
                         <div className="orders-grid">
                             {promotedOrders.map((order) => (
@@ -88,34 +85,30 @@ const HomePage: React.FC = () => {
                             ))}
                         </div>
                     ) : (
-                        <p className="empty-state">No promoted orders at the moment.</p>
+                        <p className="empty-state">{t('home.noPromoted')}</p>
                     )}
                 </div>
-
+                {/*
                 <div className="home-actions">
-                    <h2>What would you like to do?</h2>
+                    <h2>{t('home.whatDo')}</h2>
                     <div className="home-buttons">
                         <Link to="/orders">
-                            <button className="primary-btn">View Orders</button>
+                            <button className="primary-btn">{t('home.viewOrders')}</button>
                         </Link>
                         <Link to="/profile">
                             <button className="secondary-btn">
-                                {user ? 'Go to Your Profile' : 'Start Taking Orders'}
+                                {user ? t('home.goProfile') : t('home.startOrders')}
                             </button>
                         </Link>
                     </div>
                 </div>
-
+                */}
                 <div className="home-corp-section">
-                    <h2>📊 EVE Board Balance</h2>
-                    <p>
-                        <strong>Available:</strong> {corpBalance.toLocaleString()} ISK
-                    </p>
-                    <p>
-                        <strong>Locked:</strong> {lockedBalance.toLocaleString()} ISK
-                    </p>
+                    <h2>{t('home.balanceTitle')}</h2>
+                    <p><strong>{t('home.available')}:</strong> {corpBalance.toLocaleString()} ISK</p>
+                    <p><strong>{t('home.locked')}:</strong> {lockedBalance.toLocaleString()} ISK</p>
 
-                    <h3>Recent Transactions</h3>
+                    <h3>{t('home.transactions')}</h3>
                     {transactions.length ? (
                         <ul className="corp-transactions">
                             {transactions.map((tx, i) => (
@@ -127,60 +120,106 @@ const HomePage: React.FC = () => {
                             ))}
                         </ul>
                     ) : (
-                        <p className="empty-state">No recent transactions.</p>
+                        <p className="empty-state">{t('home.noTransactions')}</p>
                     )}
                 </div>
 
                 <div className="home-why">
-                    <h2>Why Choose Us?</h2>
-                    <p>
-                        We provide a secure and reliable platform for creating and
-                        completing orders in the EVE Online universe. With our service, you
-                        can be sure that your transactions are safe, your work is
-                        recognized, and your progress is rewarded.
-                    </p>
+                    <h2>{t('home.whyTitle')}</h2>
+                    <p>{t('home.whyText')}</p>
                     <ul>
-                        <li>Safe and secure transactions</li>
-                        <li>Wide variety of orders available</li>
-                        <li>Ratings and reviews to ensure trust</li>
-                        <li>Payment on completion of tasks</li>
-                        <li>Easy to use platform</li>
+                        <li>{t('home.why1')}</li>
+                        <li>{t('home.why2')}</li>
+                        <li>{t('home.why3')}</li>
+                        <li>{t('home.why4')}</li>
+                        <li>{t('home.why5')}</li>
                     </ul>
-                </div>
-                <div className="home-roadmap">
-                    <h2>Product Roadmap</h2>
-                    <p>We’re building the future of contract management in EVE Online. Here’s what’s coming next:</p>
-                    <ul>
-                        <li>
-                            <strong>Multi-language support</strong><br />
-                            Global access with localized UI in English, Russian, and more.
-                        </li>
-                        <li>
-                            <strong>Faster withdrawals</strong><br />
-                            Improved payout speeds and enhanced transaction clarity.
-                        </li>
-                        <li>
-                            <strong>ZKillboard integration</strong><br />
-                            Automated kill verification for bounty contracts.
-                        </li>
-                        <li>
-                            <strong>Mobile optimization</strong><br />
-                            Seamless experience on phones and tablets.
-                        </li>
-                        <li>
-                            <strong>Order analytics</strong><br />
-                            Insights into your performance, earnings, and activity.
-                        </li>
-                        <li>
-                            <strong>Trust & reputation improvements</strong><br />
-                            Enhanced rating systems to build trust between users.
-                        </li>
-                    </ul>
-                    <p className="roadmap-feedback">
-                        Have suggestions? Reach out at <a href="https://discord.gg/UFbKTnnCw3">our Discord</a>.
-                    </p>
                 </div>
 
+                <div className="home-roadmap-timeline">
+                    <h2>{t('home.roadmapTitle')}</h2>
+                    <p>{t('home.roadmapIntro')}</p>
+                    <div className="timeline">
+
+                        {/* 🔧 До релиза: базовые фичи */}
+                        <div className="timeline-item" data-status="done">
+                            <div className="timeline-dot"></div>
+                            <div className="timeline-content">
+                                <strong>{t('home.roadmapInfra')}</strong>
+                                <p>{t('home.roadmapInfraText')}</p>
+                            </div>
+                        </div>
+
+                        <div className="timeline-item" data-status="done">
+                            <div className="timeline-dot"></div>
+                            <div className="timeline-content">
+                                <strong>{t('home.roadmapUi')}</strong>
+                                <p>{t('home.roadmapUiText')}</p>
+                            </div>
+                        </div>
+
+                        <div className="timeline-item" data-status="done">
+                            <div className="timeline-dot"></div>
+                            <div className="timeline-content">
+                                <strong>{t('home.roadmapBeta')}</strong>
+                                <p>{t('home.roadmapBetaText')}</p>
+                            </div>
+                        </div>
+
+                        {/* 🟢 Остальные пункты */}
+                        <div className="timeline-item" data-status="done">
+                            <div className="timeline-dot"></div>
+                            <div className="timeline-content">
+                                <strong>{t('home.roadmapLang')}</strong>
+                                <p>{t('home.roadmapLangText')}</p>
+                            </div>
+                        </div>
+
+                        <div className="timeline-item" data-status="in-progress">
+                            <div className="timeline-dot"></div>
+                            <div className="timeline-content">
+                                <strong>{t('home.roadmapWithdraw')}</strong>
+                                <p>{t('home.roadmapWithdrawText')}</p>
+                            </div>
+                        </div>
+
+                        <div className="timeline-item" data-status="planned">
+                            <div className="timeline-dot"></div>
+                            <div className="timeline-content">
+                                <strong>{t('home.roadmapZkill')}</strong>
+                                <p>{t('home.roadmapZkillText')}</p>
+                            </div>
+                        </div>
+
+                        <div className="timeline-item" data-status="planned">
+                            <div className="timeline-dot"></div>
+                            <div className="timeline-content">
+                                <strong>{t('home.roadmapMobile')}</strong>
+                                <p>{t('home.roadmapMobileText')}</p>
+                            </div>
+                        </div>
+
+                        <div className="timeline-item" data-status="planned">
+                            <div className="timeline-dot"></div>
+                            <div className="timeline-content">
+                                <strong>{t('home.roadmapAnalytics')}</strong>
+                                <p>{t('home.roadmapAnalyticsText')}</p>
+                            </div>
+                        </div>
+
+                        <div className="timeline-item" data-status="planned">
+                            <div className="timeline-dot"></div>
+                            <div className="timeline-content">
+                                <strong>{t('home.roadmapTrust')}</strong>
+                                <p>{t('home.roadmapTrustText')}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p className="roadmap-feedback">
+                        {t('home.roadmapFeedback')} <a href="https://discord.gg/UFbKTnnCw3">Discord</a>.
+                    </p>
+                </div>
             </div>
         </Layout>
     )

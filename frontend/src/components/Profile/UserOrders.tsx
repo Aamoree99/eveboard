@@ -5,6 +5,7 @@ import { Api } from '../../api/Api'
 import type { Order, User } from '../../types/models'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import CreateOrderModal from '../Orders/CreateOrderModal.tsx'
+import { useTranslation } from 'react-i18next'
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -20,12 +21,12 @@ interface Props {
 }
 
 const UserOrders = ({ user, isOwnProfile }: Props) => {
+    const { t } = useTranslation()
     const [createdOrders, setCreatedOrders] = useState<Order[]>([])
     const [completedOrders, setCompletedOrders] = useState<Order[]>([])
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [activeTab, setActiveTab] = useState<'created' | 'completed'>('created')
-
 
     const [searchParams] = useSearchParams()
     const navigate = useNavigate()
@@ -37,8 +38,6 @@ const UserOrders = ({ user, isOwnProfile }: Props) => {
                 const res = await api.order.orderControllerGetAll({ userId: user.id })
                 const json = await res.json()
                 const data: Order[] = json?.data?.items ?? []
-
-
                 const userRating = user.rating ?? 0
 
                 const created = data
@@ -76,14 +75,14 @@ const UserOrders = ({ user, isOwnProfile }: Props) => {
 
     const closeModal = () => {
         setSelectedOrder(null)
-        navigate(window.location.pathname, { replace: true }) // очищаем orderId без смены страницы
+        navigate(window.location.pathname, { replace: true })
     }
 
     return (
         <div className="user-orders">
             <section>
                 <div className="orders-header">
-                    <h3>Orders</h3>
+                    <h3>{t('profile.tabs.orders')}</h3>
 
                     <div className="order-tabs-wrapper">
                         <div className="order-tabs">
@@ -91,19 +90,19 @@ const UserOrders = ({ user, isOwnProfile }: Props) => {
                                 className={activeTab === 'created' ? 'active' : ''}
                                 onClick={() => setActiveTab('created')}
                             >
-                                Created
+                                {t('myOrders.created')}
                             </button>
                             <button
                                 className={activeTab === 'completed' ? 'active' : ''}
                                 onClick={() => setActiveTab('completed')}
                             >
-                                Completed
+                                {t('myOrders.completed')}
                             </button>
                         </div>
 
                         {isOwnProfile && (
                             <button className="create-order-btn" onClick={() => setShowCreateModal(true)}>
-                                + Create Order
+                                + {t('myOrders.create')}
                             </button>
                         )}
                     </div>
@@ -113,22 +112,22 @@ const UserOrders = ({ user, isOwnProfile }: Props) => {
             <div className="orders-list">
                 {activeTab === 'created' && (
                     createdOrders.length > 0 ? (
-                        createdOrders.map((order) => <OrderCard key={order.id} order={order}/>)
+                        createdOrders.map((order) => <OrderCard key={order.id} order={order} />)
                     ) : (
-                        <p>No created orders.</p>
+                        <p>{t('myOrders.noCreated')}</p>
                     )
                 )}
 
                 {activeTab === 'completed' && (
                     completedOrders.length > 0 ? (
-                        completedOrders.map((order) => <OrderCard key={order.id} order={order}/>)
+                        completedOrders.map((order) => <OrderCard key={order.id} order={order} />)
                     ) : (
-                        <p>No completed orders.</p>
+                        <p>{t('myOrders.noCompleted')}</p>
                     )
                 )}
             </div>
 
-            {selectedOrder && <OrderModal order={selectedOrder} onClose={closeModal}/>}
+            {selectedOrder && <OrderModal order={selectedOrder} onClose={closeModal} />}
 
             {showCreateModal && (
                 <CreateOrderModal

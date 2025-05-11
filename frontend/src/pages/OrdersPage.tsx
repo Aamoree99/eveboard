@@ -9,6 +9,7 @@ import './OrdersPage.scss'
 import CreateOrderModal from '../components/Orders/CreateOrderModal'
 import CustomSelect from '../components/CustomSelect'
 import { useAuth } from '../context/AuthContext.tsx'
+import { useTranslation } from 'react-i18next'
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -20,23 +21,9 @@ const api = new Api({
 
 type OrderStatus = 'ACTIVE' | 'TAKEN' | 'DONE' | 'CANCELED'
 
-const ORDER_TYPE_LABELS: Record<OrderType, string> = {
-    KILL_TARGET: 'Kill Target',
-    SCAN_WORMHOLE: 'Scan Wormhole',
-    SCOUT_SYSTEM: 'Scout System',
-    LOGISTICS: 'Logistics',
-    ESCORT: 'Escort',
-    STRUCTURE_WORK: 'Structure Work',
-    CHARACTER_INFO: 'Character Info',
-    ROUTE_PLANNING: 'Route Planning',
-    COUNTER_INTEL: 'Counter-Intel',
-    EVENT_FARMING: 'Event Farming',
-    PVP_ASSIST: 'PvP Assist',
-    OTHER: 'Other',
-}
-
 const OrdersPage = () => {
     const { user } = useAuth()
+    const { t } = useTranslation()
     const [orders, setOrders] = useState<Order[]>([])
     const [status, setStatus] = useState<OrderStatus | undefined>()
     const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'priceAsc' | 'priceDesc'>('newest')
@@ -51,6 +38,44 @@ const OrdersPage = () => {
     const [page, setPage] = useState(1)
     const [hasMore, setHasMore] = useState(true)
     const userRating = user?.rating ?? 0
+
+    const ORDER_TYPE_LABELS: Record<OrderType, string> = {
+        KILL_TARGET: t('orders.types.KILL_TARGET'),
+        SCAN_WORMHOLE: t('orders.types.SCAN_WORMHOLE'),
+        SCOUT_SYSTEM: t('orders.types.SCOUT_SYSTEM'),
+        LOGISTICS: t('orders.types.LOGISTICS'),
+        ESCORT: t('orders.types.ESCORT'),
+        STRUCTURE_WORK: t('orders.types.STRUCTURE_WORK'),
+        CHARACTER_INFO: t('orders.types.CHARACTER_INFO'),
+        ROUTE_PLANNING: t('orders.types.ROUTE_PLANNING'),
+        COUNTER_INTEL: t('orders.types.COUNTER_INTEL'),
+        EVENT_FARMING: t('orders.types.EVENT_FARMING'),
+        PVP_ASSIST: t('orders.types.PVP_ASSIST'),
+        OTHER: t('orders.types.OTHER'),
+    }
+
+    const statusOptions = [
+        { value: '', label: t('orders.status.all') },
+        { value: 'ACTIVE', label: t('orders.status.active') },
+        { value: 'TAKEN', label: t('orders.status.taken') },
+        { value: 'DONE', label: t('orders.status.done') },
+        { value: 'CANCELED', label: t('orders.status.canceled') },
+    ]
+
+    const sortOptions = [
+        { value: 'newest', label: t('orders.sort.newest') },
+        { value: 'oldest', label: t('orders.sort.oldest') },
+        { value: 'priceAsc', label: t('orders.sort.lowHigh') },
+        { value: 'priceDesc', label: t('orders.sort.highLow') },
+    ]
+
+    const typeOptions = [
+        { value: '', label: t('orders.typeAll') },
+        ...Object.entries(ORDER_TYPE_LABELS).map(([value, label]) => ({
+            value: value as OrderType,
+            label,
+        })),
+    ]
 
     useEffect(() => {
         setPage(1)
@@ -132,36 +157,13 @@ const OrdersPage = () => {
         setPage(prevPage => prevPage + 1)
     }
 
-    const statusOptions = [
-        { value: '', label: 'All statuses' },
-        { value: 'ACTIVE', label: 'Active' },
-        { value: 'TAKEN', label: 'Taken' },
-        { value: 'DONE', label: 'Done' },
-        { value: 'CANCELED', label: 'Canceled' },
-    ]
-
-    const sortOptions = [
-        { value: 'newest', label: 'Newest' },
-        { value: 'oldest', label: 'Oldest' },
-        { value: 'priceAsc', label: 'Price (Low to High)' },
-        { value: 'priceDesc', label: 'Price (High to Low)' },
-    ]
-
-    const typeOptions = [
-        { value: '', label: 'All types' },
-        ...Object.entries(ORDER_TYPE_LABELS).map(([value, label]) => ({
-            value: value as OrderType,
-            label,
-        })),
-    ]
-
     return (
         <Layout>
             <div className="orders-page">
                 <div className="orders-page__header">
-                    <h1>Orders</h1>
+                    <h1>{t('orders.title')}</h1>
                     <button className="create-order-btn" onClick={() => setShowCreateModal(true)}>
-                        + Create Order
+                        + {t('orders.create')}
                     </button>
                 </div>
 
@@ -171,17 +173,15 @@ const OrdersPage = () => {
                         value={status ?? ''}
                         onChange={(val) => setStatus(val === '' ? undefined : val as OrderStatus)}
                     />
-
                     <CustomSelect
                         options={typeOptions}
                         value={selectedType ?? ''}
                         onChange={(val) => setSelectedType(val === '' ? undefined : val as OrderType)}
                     />
-
                     <CustomSelect
                         options={sortOptions}
                         value={sortBy}
-                        onChange={(val) => setSortBy(val as 'newest' | 'oldest' | 'priceAsc' | 'priceDesc')}
+                        onChange={(val) => setSortBy(val as typeof sortBy)}
                     />
                 </div>
 
@@ -189,12 +189,12 @@ const OrdersPage = () => {
                     {orders.map((order) => (
                         <OrderCard key={order.id} order={order} />
                     ))}
-                    {orders.length === 0 && <p>No orders found.</p>}
+                    {orders.length === 0 && <p>{t('orders.notFound')}</p>}
                 </div>
 
                 {hasMore && (
                     <button className="load-more-btn" onClick={loadMoreOrders}>
-                        Load More
+                        {t('orders.loadMore')}
                     </button>
                 )}
 

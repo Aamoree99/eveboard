@@ -1,0 +1,66 @@
+.auth-success-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--main-bg);
+  color: var(--main-text);
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.auth-loader {
+  text-align: center;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.loader-circle {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  border: 6px solid rgba(255, 255, 255, 0.1);
+  border-top: 6px solid var(--accent-color);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  box-shadow: 0 0 10px var(--accent-color-hover);
+}
+
+.check-icon {
+  margin-bottom: 20px;
+  animation: popIn 0.3s ease-out;
+}
+
+.auth-message {
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  transition: opacity 0.3s;
+}
+
+.loading-text {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--main-text);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './TransModal.scss'
 import { Api } from '../../api/Api'
+import { useTranslation } from 'react-i18next'
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -27,6 +28,7 @@ const MIN_WITHDRAW = 500_000_000
 const FEE_PERCENT = 10
 
 const WithdrawModal = ({ onClose, userBalance }: Props) => {
+    const { t } = useTranslation()
     const [amountStr, setAmountStr] = useState('500000000')
     const [loading, setLoading] = useState(false)
     const [response, setResponse] = useState<WithdrawResponseData | null>(null)
@@ -40,14 +42,12 @@ const WithdrawModal = ({ onClose, userBalance }: Props) => {
         if (!isValid) return
         setLoading(true)
         try {
-            const res = await api.transaction.transactionControllerRequestWithdraw({
-                amount,
-            })
+            const res = await api.transaction.transactionControllerRequestWithdraw({ amount })
             const data = res.data as unknown as WithdrawResponseData
             setResponse(data)
         } catch (e) {
             console.error('[WithdrawModal] Withdraw failed:', e)
-            alert('Failed to create withdrawal request.')
+            alert(t('withdraw.failed'))
         } finally {
             setLoading(false)
         }
@@ -64,12 +64,12 @@ const WithdrawModal = ({ onClose, userBalance }: Props) => {
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <button className="close-btn" onClick={onClose}>×</button>
-                <h2>Withdraw ISK</h2>
+                <h2>{t('withdraw.title')}</h2>
 
                 {!response ? (
                     <>
                         <label>
-                            Amount (max: {userBalance.toLocaleString()} ISK)
+                            {t('withdraw.amountLabel', { max: userBalance.toLocaleString() })}
                             <input
                                 type="text"
                                 inputMode="numeric"
@@ -83,36 +83,39 @@ const WithdrawModal = ({ onClose, userBalance }: Props) => {
                         </label>
 
                         <div className="fee-info">
-                            10% fee: {fee.toLocaleString()} ISK
+                            {t('withdraw.fee', { fee: fee.toLocaleString() })}
                         </div>
 
                         <div className="payout">
-                            You will receive: <strong>{payout.toLocaleString()} ISK</strong>
+                            {t('withdraw.youWillReceive')} <strong>{payout.toLocaleString()} ISK</strong>
                         </div>
 
                         {!isValid && (
                             <p className="error">
-                                Min: {MIN_WITHDRAW.toLocaleString()} ISK, max: {userBalance.toLocaleString()} ISK
+                                {t('withdraw.limits', {
+                                    min: MIN_WITHDRAW.toLocaleString(),
+                                    max: userBalance.toLocaleString()
+                                })}
                             </p>
                         )}
 
                         <button onClick={handleSubmit} disabled={loading || !isValid}>
-                            {loading ? 'Processing...' : 'Request Withdrawal'}
+                            {loading ? t('withdraw.processing') : t('withdraw.button')}
                         </button>
                     </>
                 ) : (
                     <div className="withdraw-success">
-                        <p>Withdrawal request created!</p>
+                        <p>{t('withdraw.success')}</p>
                         <p>
-                            <strong>{response.payout.toLocaleString()} ISK</strong> will be sent to you
+                            <strong>{response.payout.toLocaleString()} ISK</strong> {t('withdraw.sent')}
                             <br />
-                            <small>(Fee: {response.fee.toLocaleString()} ISK)</small>
+                            <small>({t('withdraw.feeLabel')}: {response.fee.toLocaleString()} ISK)</small>
                         </p>
                         <p className="reason">
-                            Reason for ISK transfer:<br />
+                            {t('withdraw.reason')}<br />
                             <code>{response.reason}</code>
                         </p>
-                        <button onClick={onClose}>Close</button>
+                        <button onClick={onClose}>{t('withdraw.close')}</button>
                     </div>
                 )}
             </div>

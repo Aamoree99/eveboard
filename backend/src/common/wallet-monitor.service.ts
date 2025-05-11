@@ -110,7 +110,11 @@ export class WalletMonitorService {
                             tx.type === 'DEPOSIT'
                                 ? `✅ **Deposit confirmed!**\n+${tx.amount.toLocaleString()} ISK on your balance.`
                                 : `💸 **Withdrawal confirmed!**\n-${tx.amount.toLocaleString()} ISK has been sent.`;
-                        await sendDM(user.discordId, msg);
+                        try {
+                            await sendDM(user.discordId, msg);
+                        } catch (err) {
+                            this.logger.warn(`⚠️ Failed to send DM to user ${user.discordId}: ${err}`);
+                        }
                     }
                 }
             }

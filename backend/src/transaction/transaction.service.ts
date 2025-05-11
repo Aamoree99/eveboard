@@ -224,6 +224,7 @@ export class TransactionService {
     async getCorpBalanceData(): Promise<CorpBalanceResponse> {
         const transactions = await this.prisma.corporationTransaction.findMany({
             orderBy: { date: 'desc' },
+            take: 10,
         });
 
         const latest = transactions[0];

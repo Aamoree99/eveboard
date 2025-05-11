@@ -1,7 +1,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(10, 10, 20, 0.5);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(16px) brightness(0.85);
   display: flex;
   justify-content: center;
@@ -11,8 +11,8 @@
 }
 
 .modal-content {
-  background: rgba(30, 30, 40, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--card-bg);
+  border: 1px solid var(--search-border);
   border-radius: 16px;
   padding: 2rem;
   max-width: 460px;
@@ -52,16 +52,16 @@
   background: var(--header-bg);
   color: var(--main-text);
   transition: all 0.2s ease;
+}
 
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--accent-color-hover);
-  }
+.modal-content input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-color-hover);
 }
 
 .modal-content button:not(.close-btn) {
   background-color: var(--accent-color);
-  color: var(--main-bg);
+  color: var(--button-text);
   border: none;
   border-radius: 10px;
   padding: 0.75rem;
@@ -69,11 +69,11 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+}
 
-  &:hover {
-    background-color: var(--accent-color-hover);
-    box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
-  }
+.modal-content button:not(.close-btn):hover {
+  background-color: var(--accent-color-hover);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
 }
 
 .close-btn {
@@ -82,7 +82,7 @@
   right: 10px;
   font-size: 1.5rem;
   color: var(--accent-color);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--search-bg);
   border: none;
   border-radius: 50%;
   width: 36px;
@@ -92,11 +92,11 @@
   justify-content: center;
   cursor: pointer;
   transition: background 0.2s;
+}
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: white;
-  }
+.close-btn:hover {
+  background: var(--search-bg-focus);
+  color: var(--main-text);
 }
 
 .deposit-info {
@@ -105,82 +105,81 @@
   align-items: center;
   gap: 1.6rem;
   text-align: center;
-
-  .deposit-portrait {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 2px solid var(--accent-color);
-    box-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
-  }
-
-  .deposit-details {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    .detail-line {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: background 0.2s ease;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .label {
-        font-weight: 600;
-        font-size: 0.95rem;
-        color: var(--text-color);
-      }
-
-      .value {
-        font-size: 0.95rem;
-        color: var(--accent-color);
-        word-break: break-word;
-        margin-left: 8px;
-      }
-
-      code.value {
-        background: rgba(255, 255, 255, 0.06);
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-family: monospace;
-        color: var(--accent-color);
-      }
-
-      .copy-btn {
-        margin-left: 12px;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 6px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s ease;
-
-        svg {
-          width: 16px;
-          height: 16px;
-          color: var(--text-color);
-        }
-
-        &:hover {
-          background: rgba(255, 255, 255, 0.1);
-        }
-      }
-    }
-  }
 }
 
+.deposit-portrait {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-color);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.4);
+}
+
+.deposit-details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--search-bg);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--search-border);
+  transition: background 0.2s ease;
+}
+
+.detail-line:hover {
+  background: var(--search-bg-focus);
+}
+
+.detail-line .label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--main-text);
+}
+
+.detail-line .value {
+  font-size: 0.95rem;
+  color: var(--accent-color);
+  word-break: break-word;
+  margin-left: 8px;
+}
+
+.detail-line code.value {
+  background: var(--search-bg-focus);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: monospace;
+  color: var(--accent-color);
+}
+
+.detail-line .copy-btn {
+  margin-left: 12px;
+  background: var(--search-bg);
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.detail-line .copy-btn:hover {
+  background: var(--search-bg-focus);
+}
+
+.detail-line .copy-btn svg {
+  width: 16px;
+  height: 16px;
+  color: var(--main-text);
+}
 
 .error {
   color: #ff6b6b;
@@ -204,3 +203,25 @@
     transform: translateY(0);
   }
 }
+
+.deposit-info-box {
+  background: var(--search-bg);
+  border: 1px solid var(--search-border);
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--main-text);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: left;
+
+  p {
+    margin: 0.5rem 0;
+
+    strong {
+      color: var(--accent-color);
+    }
+  }
+}
+

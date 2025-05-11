@@ -3,6 +3,7 @@ import { FiSend } from 'react-icons/fi'
 import { Api } from '../../api/Api.ts'
 import './OrderChat.scss'
 import { useAuth } from '../../context/AuthContext.tsx'
+import { useTranslation } from 'react-i18next'
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -25,6 +26,7 @@ interface Message {
 }
 
 const OrderChat = ({ orderId }: { orderId: string }) => {
+    const { t } = useTranslation()
     const [messages, setMessages] = useState<Message[]>([])
     const [text, setText] = useState('')
     const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -99,7 +101,7 @@ const OrderChat = ({ orderId }: { orderId: string }) => {
                 <input
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    placeholder="Type message..."
+                    placeholder={t('orderModal.typeMessage')}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') void sendMessage()
                     }}

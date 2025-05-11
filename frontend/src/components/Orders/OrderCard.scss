@@ -116,33 +116,33 @@
 .order-card.promoted {
   position: relative;
   border-left-width: 8px;
-  border-left-color: gold;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 255, 255, 0.03));
+  border-left-color: var(--promoted-border);
+  background: var(--promoted-bg);
   box-shadow:
-          0 0 12px rgba(255, 215, 0, 0.4),
-          0 0 30px rgba(255, 255, 255, 0.05),
-          inset 0 0 12px rgba(255, 215, 0, 0.2);
+          0 0 12px var(--promoted-glow),
+          0 0 30px rgba(0, 0, 0, 0.05),
+          inset 0 0 12px var(--promoted-glow-inner);
   animation: glowPulse 2.5s infinite ease-in-out;
+}
 
-  &::after {
-    content: '🚀 Promoted';
-    position: absolute;
-    top: -10px;
-    right: 12px;
-    background: linear-gradient(to right, gold, orange);
-    color: black;
-    font-size: 10px;
-    font-weight: bold;
-    padding: 4px 8px;
-    border-radius: 12px;
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
-  }
+.order-card.promoted::after {
+  content: '🚀 Promoted';
+  position: absolute;
+  top: -10px;
+  right: 12px;
+  background: var(--promoted-label-bg);
+  color: var(--promoted-label-text);
+  font-size: 10px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px var(--promoted-label-glow);
+}
 
-  .order-type,
-  .order-status,
-  .order-price {
-    color: gold !important;
-  }
+.order-card.promoted .order-type,
+.order-card.promoted .order-status,
+.order-card.promoted .order-price {
+  color: var(--promoted-text) !important;
 }
 
 @keyframes glowPulse {

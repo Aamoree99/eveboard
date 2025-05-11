@@ -1,0 +1,403 @@
+{
+  "home": {
+    "title": "Vítejte na platformě objednávek EVE Online",
+    "subtitle": "Zde můžete vytvářet a přijímat objednávky, spravovat transakce a mnoho dalšího.",
+    "featured": "🔥 Zvýrazněné propagované objednávky",
+    "noPromoted": "Momentálně nejsou žádné propagované objednávky.",
+    "whatDo": "Co byste chtěli udělat?",
+    "viewOrders": "Zobrazit objednávky",
+    "goProfile": "Přejít na váš profil",
+    "startOrders": "Začít přijímat objednávky",
+    "balanceTitle": "📊 Zůstatek EVE Board",
+    "available": "Dostupné",
+    "locked": "Uzamčené",
+    "transactions": "Nedávné transakce",
+    "noTransactions": "Žádné nedávné transakce.",
+    "whyTitle": "Proč si vybrat nás?",
+    "whyText": "Poskytujeme bezpečnou a spolehlivou platformu pro vytváření a plnění zakázek ve světě EVE Online. Díky našim službám si můžete být jisti, že vaše transakce jsou v bezpečí, vaše práce je uznávána a váš pokrok odměňován.",
+    "why1": "Bezpečné a chráněné transakce",
+    "why2": "Široká škála dostupných objednávek",
+    "why3": "Hodnocení a recenze pro zajištění důvěry",
+    "why4": "Platba po dokončení úkolů",
+    "why5": "Uživatelsky přívětivá platforma",
+    "roadmapTitle": "Plán vývoje produktu",
+    "roadmapIntro": "Budujeme budoucnost správy zakázek v EVE Online. Tady je, co přijde dál:",
+    "roadmapLang": "Podpora více jazyků",
+    "roadmapLangText": "Globální přístup s lokalizovaným rozhraním v angličtině, ruštině a dalších jazycích.",
+    "roadmapWithdraw": "Rychlejší výběry",
+    "roadmapWithdrawText": "Zrychlené platby a větší přehlednost transakcí.",
+    "roadmapZkill": "Integrace se ZKillboard",
+    "roadmapZkillText": "Automatické ověření killů pro odměnové zakázky.",
+    "roadmapMobile": "Optimalizace pro mobily",
+    "roadmapMobileText": "Bezproblémové použití na telefonech a tabletech.",
+    "roadmapAnalytics": "Analytika objednávek",
+    "roadmapAnalyticsText": "Přehledy o vašem výkonu, výdělcích a aktivitě.",
+    "roadmapTrust": "Zlepšení důvěry a reputace",
+    "roadmapTrustText": "Vylepšené systémy hodnocení pro budování důvěry mezi uživateli.",
+    "roadmapFeedback": "Máte návrhy? Napište nám na",
+    "roadmapInfra": "Infrastruktura a server",
+    "roadmapInfraText": "Nastavení serverů, databází, nasazení, CI/CD.",
+    "roadmapUi": "Počáteční rozhraní",
+    "roadmapUiText": "Vytvoření základního UI s routováním a integrací API.",
+    "roadmapBeta": "CBT (Uzavřené beta testování)",
+    "roadmapBetaText": "První uživatelé, hlášení chyb, úpravy toku."
+  },
+  "header": {
+    "orders": "Objednávky",
+    "my": "Moje",
+    "search": "Hledat uživatele..."
+  },
+  "footer": {
+    "terms": "Podmínky použití",
+    "privacy": "Zásady ochrany osobních údajů",
+    "madeBy": "Vytvořil",
+    "rights": "Všechna práva patří společnosti CCP Games"
+  },
+  "login": {
+    "agree1": "Přihlášením souhlasíte s našimi",
+    "terms": "Podmínkami použití",
+    "privacy": "Zásadami ochrany osobních údajů",
+    "and": "a"
+  },
+  "orders": {
+    "title": "Objednávky",
+    "create": "Vytvořit objednávku",
+    "status": {
+      "all": "Všechny statusy",
+      "active": "Aktivní",
+      "taken": "Přijaté",
+      "done": "Dokončené",
+      "canceled": "Zrušené"
+    },
+    "sort": {
+      "newest": "Nejnovější",
+      "oldest": "Nejstarší",
+      "lowHigh": "Cena (od nejnižší)",
+      "highLow": "Cena (od nejvyšší)"
+    },
+    "typeAll": "Všechny typy",
+    "types": {
+      "KILL_TARGET": "Zabít cíl",
+      "SCAN_WORMHOLE": "Prozkoumat červí díru",
+      "SCOUT_SYSTEM": "Prozkoumat systém",
+      "LOGISTICS": "Logistika",
+      "ESCORT": "Doprovod",
+      "STRUCTURE_WORK": "Práce na struktuře",
+      "CHARACTER_INFO": "Informace o postavě",
+      "ROUTE_PLANNING": "Plánování trasy",
+      "COUNTER_INTEL": "Kontrarozvědka",
+      "EVENT_FARMING": "Farming událostí",
+      "PVP_ASSIST": "Asistence v PvP",
+      "OTHER": "Ostatní"
+    },
+    "notFound": "Žádné objednávky nenalezeny.",
+    "loadMore": "Načíst další"
+  },
+  "privacy": {
+    "title": "Zásady ochrany osobních údajů",
+    "updated": "Poslední aktualizace: 2. dubna 2025",
+    "access": {
+      "title": "K čemu máme přístup",
+      "desc": "Žádáme omezená data z vaší postavy v EVE Online prostřednictvím ESI oprávnění — pouze ta, která jsou nezbytná pro fungování platformy:",
+      "list": [
+        {
+          "scope": "publicData",
+          "desc": "základní informace o postavě: ID, jméno, avatar."
+        },
+        {
+          "scope": "esi-location.read_location.v1",
+          "desc": "aktuální systém (pro živé aktualizace kontraktů a volitelné sledování)."
+        },
+        {
+          "scope": "esi-location.read_ship_type.v1",
+          "desc": "typ vaší aktivní lodě (volitelné, pro budoucí funkce)."
+        },
+        {
+          "scope": "esi-location.read_online.v1",
+          "desc": "online status (pomáhá zobrazit dostupnost pro operace)."
+        },
+        {
+          "scope": "esi-wallet.read_character_wallet.v1",
+          "desc": "váš zůstatek ISK (používá se k vytvoření/přijetí kontraktů)."
+        },
+        {
+          "scope": "esi-wallet.read_corporation_wallets.v1",
+          "desc": "vyžadováno ve výchozím nastavení pro všechny uživatele. Používá se však pouze v případě, že má váš účet roli ADMIN, k ověření a zpracování výběrů ISK na úrovni korporace. Údaje o korporační peněžence ostatních uživatelů se ignorují a nikdy se neukládají."
+        },
+        {
+          "scope": "esi-killmails.read_killmails.v1",
+          "desc": "potvrzuje killy, když je to požadováno kontraktem."
+        },
+        {
+          "scope": "esi-ui.open_window.v1",
+          "desc": "umožňuje nám otevřít informace ve hře (např. zobrazit cíle nebo lokace prostřednictvím klienta EVE)."
+        },
+        {
+          "scope": "esi-ui.write_waypoint.v1",
+          "desc": "umožňuje nám automaticky přidat waypointy do vašeho klienta."
+        }
+      ]
+    },
+    "why": {
+      "title": "Proč je používáme",
+      "desc": "Tato data používáme pouze k tomu, abychom:",
+      "list": [
+        "Ověřili vaši postavu v EVE a zobrazili váš profil",
+        "Povolili a ověřili herní kontrakty a peněžní operace",
+        "Podporovali aktualizace v reálném čase a interakci v klientovi"
+      ]
+    },
+    "no": {
+      "title": "Co neděláme",
+      "list": [
+        "Nečteme vaše zprávy, chaty, majetek ani PLEX",
+        "Nepoužíváme korporační peněženku, pokud nejste autorizovaný administrátor na platformě.",
+        "Nikdy nesdílíme ani neprodáváme žádná vaše data"
+      ]
+    },
+    "storage": {
+      "title": "Ukládání a zabezpečení",
+      "desc": "Přístupové tokeny jsou bezpečně uloženy a automaticky obnovovány prostřednictvím OAuth. Veškerá data vztahující se k postavám jsou používána výhradně v rámci EVE Board a nikdy nejsou předávána třetím stranám."
+    }
+  },
+  "terms": {
+    "title": "Podmínky služby",
+    "updated": "Poslední aktualizace: 2. dubna 2025",
+    "sections": [
+      {
+        "title": "Používání platformy",
+        "text": "Přístupem k EVE Board souhlasíte s odpovědným používáním platformy v souladu s těmito podmínkami. Pokud s těmito podmínkami nesouhlasíte, nepoužívejte platformu."
+      },
+      {
+        "title": "Účty a přístup",
+        "text": "Přístup vyžaduje ověření přes EVE Online. Nesete odpovědnost za všechny akce provedené pod vaším účtem, včetně vytvořených nebo přijatých kontraktů."
+      },
+      {
+        "title": "Objednávky a platby",
+        "text": "Všechny kontrakty jsou po vytvoření nebo přijetí závazné. Platby jsou zpracovávány prostřednictvím interního peněžního systému. Mohou být účtovány poplatky za používání platformy. V případě zneužití, podvodu nebo chyby může administrátor objednávku upravit nebo zrušit."
+      },
+      {
+        "title": "Peněženka a výběry",
+        "text": "ISK získané na platformě jsou uloženy ve vašem interním zůstatku. Výběry podléhají servisnímu poplatku a mohou vyžadovat ověření totožnosti. Platforma nenese odpovědnost za ztráty způsobené chybnými informacemi o peněžence nebo herními bany."
+      },
+      {
+        "title": "Chování a omezení",
+        "text": "Zneužívající chování, více účtů, podvody nebo zneužívání funkcí platformy povede k pozastavení nebo trvalému zákazu. Vyhrazujeme si právo zrušit přístup kdykoli."
+      },
+      {
+        "title": "Dostupnost a provoz",
+        "text": "Usilujeme o stabilní provoz, ale negarantujeme dostupnost, bezchybnost ani nepřetržitý přístup k datům. Může dojít k plánovaným i neplánovaným výpadkům."
+      },
+      {
+        "title": "Spory",
+        "text": "V případě sporu ohledně kontraktu mohou uživatelé podat stížnost. Spory jsou ručně posuzovány moderátory platformy. Všechna rozhodnutí jsou konečná."
+      },
+      {
+        "title": "Změny podmínek",
+        "text": "Tyto podmínky mohou být kdykoli aktualizovány. Pokračováním v používání platformy po změnách vyjadřujete souhlas s novými podmínkami."
+      }
+    ]
+  },
+  "myOrders": {
+    "created": "Vytvořené objednávky",
+    "accepted": "Přijaté objednávky",
+    "completed": "Dokončené objednávky",
+    "canceled": "Zrušené objednávky",
+    "create": "Vytvořit objednávku",
+    "noCreated": "Zatím žádné vytvořené objednávky.",
+    "noAccepted": "Zatím žádné přijaté objednávky.",
+    "noCompleted": "Zatím žádné dokončené objednávky.",
+    "noCanceled": "Zatím žádné zrušené objednávky."
+  },
+  "auth": {
+    "hint": {
+      "loggingIn": "Přihlašuji...",
+      "verifying": "Ověřuji capsuleera...",
+      "ready": "Úspěch!"
+    }
+  },
+  "withdraw": {
+    "title": "Vybrat ISK",
+    "amountLabel": "Částka (max: {{max}} ISK)",
+    "fee": "Poplatek 10 %: {{fee}} ISK",
+    "youWillReceive": "Obdržíte:",
+    "limits": "Min: {{min}} ISK, max: {{max}} ISK",
+    "button": "Požádat o výběr",
+    "processing": "Zpracovávám...",
+    "success": "Žádost o výběr byla vytvořena!",
+    "sent": "bude vám zasláno",
+    "feeLabel": "Poplatek",
+    "reason": "Důvod převodu ISK:",
+    "close": "Zavřít",
+    "failed": "Nepodařilo se vytvořit žádost o výběr."
+  },
+  "transactions": {
+    "title": "Transakce",
+    "confirmed": "✔ Potvrzeno",
+    "pending": "⌛ Čeká na vyřízení",
+    "loadMore": "Načíst další",
+    "loading": "Načítání...",
+    "details": "Podrobnosti transakce",
+    "type": "Typ",
+    "amount": "Částka",
+    "reason": "Důvod",
+    "externalId": "Externí ID",
+    "status": "Stav",
+    "date": "Datum",
+    "close": "Zavřít",
+    "copied": "Zkopírováno!"
+  },
+  "settings": {
+    "title": "Nastavení",
+    "discord": "Discord:",
+    "linkDiscord": "Propojit Discord",
+    "becomeExecutor": "Stát se vykonavatelem",
+    "logout": "Odhlásit se",
+    "logoutConfirmTitle": "Opravdu se chcete odhlásit?",
+    "logoutConfirmText": "Budete odhlášeni a přesměrováni na úvodní stránku.",
+    "logoutYes": "Ano, odhlásit se",
+    "cancel": "Zrušit",
+    "executorConfirmTitle": "Chcete se stát vykonavatelem?",
+    "executorConfirmText": "Bude vás to stát 100 000 000 ISK. Objednávky budete moci vytvářet jako obvykle.",
+    "submitting": "Odesílám...",
+    "confirm": "Potvrdit"
+  },
+  "reviews": {
+    "title": "Recenze",
+    "loading": "Načítání recenzí…",
+    "loadError": "Nepodařilo se načíst recenze.",
+    "empty": "Zatím žádné recenze.",
+    "noComment": "Bez komentáře."
+  },
+  "profile": {
+    "tabs": {
+      "orders": "Objednávky",
+      "reviews": "Recenze",
+      "transactions": "Transakce"
+    }
+  },
+  "user": {
+    "noName": "Bez jména",
+    "discordRequired": "Vyžadován Discord",
+    "pleaseLinkDiscord": "Propojte prosím svůj účet Discord",
+    "topUp": "Dobít",
+    "withdraw": "Vybrat",
+    "haveReferral": "Máte referral kód?",
+    "enterCode": "Zadejte kód",
+    "apply": "Použít",
+    "referralSuccess": "Referral kód úspěšně použit!",
+    "referralUnknownError": "Došlo k neznámé chybě"
+  },
+  "deposit": {
+    "title": "Vložit ISK",
+    "min": "Minimální vklad: 100 000 000 ISK",
+    "autoConfirm": "Po odeslání ISK bude váš vklad automaticky potvrzen do jedné hodiny.",
+    "trackStatus": "Stav můžete sledovat na kartě Transakce.",
+    "amount": "Částka",
+    "to": "Odeslat ISK na",
+    "reason": "Důvod",
+    "create": "Vytvořit žádost o vklad",
+    "creating": "Vytváření...",
+    "minAlert": "Minimální vklad je 100 000 000 ISK",
+    "invalidResponse": "Nepodařilo se vytvořit žádost o vklad. Neplatná odpověď ze serveru.",
+    "failed": "Nepodařilo se vytvořit žádost o vklad.",
+    "copied": "Zkopírováno do schránky!"
+  },
+  "orderModal": {
+    "loading": "Načítání objednávky...",
+    "error": "Nepodařilo se načíst objednávku.",
+    "close": "Zavřít",
+    "selectReason": "Vyberte prosím důvod",
+    "complaintSubmitted": "Stížnost odeslána. Děkujeme.",
+    "complaintFailed": "Nepodařilo se odeslat stížnost",
+    "reviewSubmitted": "✅ Recenze odeslána, děkujeme!",
+    "reviewFailed": "❌ Nepodařilo se odeslat recenzi",
+    "takeOrder": "Přijmout objednávku",
+    "taking": "Přijímání...",
+    "loginToTake": "Přihlaste se pro přijetí této objednávky",
+    "lowRating": "Vaše hodnocení je příliš nízké",
+    "executorRequired": "Musíte se přihlásit jako vykonavatel",
+    "requirements": "Požadavky",
+    "system": "Systém",
+    "status": "Stav",
+    "price": "Cena",
+    "deadline": "Termín",
+    "routeSet": "Trasa byla nastavena ve vašem EVE klientu.",
+    "routeFailed": "Nepodařilo se nastavit trasu v EVE klientu.",
+    "cancelOrder": "Zrušit objednávku",
+    "cancelOrderConfirm": "Zrušit tuto objednávku? Bude účtována 10% provize.",
+    "orderCancelled": "Objednávka zrušena",
+    "orderCancelFailed": "Nepodařilo se zrušit objednávku",
+    "unexpectedError": "Došlo k neočekávané chybě",
+    "markAsDone": "Označit jako dokončené",
+    "markAsDoneConfirm": "Označit tuto objednávku jako DOKONČENOU? ISK bude převedeno.",
+    "markAsDoneFailed": "Nepodařilo se označit jako dokončené",
+    "createdBy": "Vytvořil:",
+    "anonymous": "Anonym",
+    "unknown": "Neznámý",
+    "submitComplaint": "Odeslat stížnost",
+    "reason": "Důvod",
+    "selectReasonPlaceholder": "-- Vyberte důvod --",
+    "scam": "Podvod",
+    "spam": "Spam",
+    "harassment": "Obtěžování",
+    "abuseOfPower": "Zneužití pravomoci",
+    "other": "Jiné",
+    "commentOptional": "Komentář (volitelný):",
+    "send": "Odeslat",
+    "submitting": "Odesílání...",
+    "cancel": "Zrušit",
+    "confirm": "Potvrdit",
+    "review": "Recenze",
+    "youRated": "Ohodnotili jste:",
+    "shareExperience": "Podělte se o svou zkušenost...",
+    "submitReview": "Odeslat recenzi",
+    "typeMessage": "Napište zprávu..."
+  },
+  "orderCard": {
+    "status": {
+      "active": "Aktivní",
+      "taken": "Přijaté",
+      "done": "Dokončené",
+      "canceled": "Zrušené"
+    },
+    "type": {
+      "kill_target": "Zabít cíl",
+      "scan_wormhole": "Prozkoumat červí díru",
+      "scout_system": "Prozkoumat systém",
+      "logistics": "Logistika",
+      "escort": "Doprovod",
+      "structure_work": "Práce na struktuře",
+      "character_info": "Informace o postavě",
+      "route_planning": "Plánování trasy",
+      "counter_intel": "Kontrarozvědka",
+      "event_farming": "Farming událostí",
+      "pvp_assist": "Asistence v PvP",
+      "other": "Ostatní"
+    }
+  },
+  "common": {
+    "anonymous": "Anonym"
+  },
+  "createOrderForm": {
+    "title": "Vytvořit novou objednávku",
+    "type": "Typ objednávky",
+    "name": "Název",
+    "description": "Popis",
+    "descriptionPlaceholder": "Podrobný popis",
+    "requirements": "Požadavky",
+    "requirementsPlaceholder": "Nějaké specifické požadavky?",
+    "system": "Systém (volitelné)",
+    "systemPlaceholder": "Systém",
+    "deadline": "Termín",
+    "price": "Cena",
+    "anonymous": "Zveřejnit anonymně (stojí +50M ISK)",
+    "promoting": "Propagovat na vrchol (100M ISK na 7 dní)",
+    "promotingUntil": "Propagovat do",
+    "creating": "Vytváření...",
+    "createFor": "Vytvořit za {{amount}} ISK",
+    "minPriceError": "Minimální cena je {{amount}} ISK",
+    "notEnoughISK": "Nedostatek ISK. Potřebujete {{amount}} ISK",
+    "unknownError": "Neznámá chyba"
+  }
+}
