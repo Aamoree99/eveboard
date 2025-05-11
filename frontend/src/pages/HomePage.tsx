@@ -107,7 +107,7 @@ const HomePage: React.FC = () => {
                 </div>
 
                 <div className="home-corp-section">
-                    <h2>📊 Corporation Balance</h2>
+                    <h2>📊 EVE Board Balance</h2>
                     <p>
                         <strong>Available:</strong> {corpBalance.toLocaleString()} ISK
                     </p>

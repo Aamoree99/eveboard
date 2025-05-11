@@ -1,6 +1,6 @@
 import './Header.scss'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { FiUser, FiSearch } from 'react-icons/fi'
+import {FiUser, FiSearch, FiCreditCard} from 'react-icons/fi'
 import { useAuth } from '../context/AuthContext'
 import { useState, useEffect } from 'react'
 import { Api } from '../api/Api'
@@ -24,6 +24,7 @@ const Header = () => {
     const [query, setQuery] = useState('')
     const [results, setResults] = useState<UserResult[]>([])
     const [showDropdown, setShowDropdown] = useState(false)
+    const [userBalance, setUserBalance] = useState<number | null>(null) // Состояние для баланса
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -45,6 +46,13 @@ const Header = () => {
 
         return () => clearTimeout(fetch)
     }, [query])
+
+    useEffect(() => {
+        const storedBalance = localStorage.getItem('balance')
+        if (storedBalance) {
+            setUserBalance(Number(storedBalance))
+        }
+    }, [])
 
     return (
         <header className="header">
@@ -84,7 +92,12 @@ const Header = () => {
                             </div>
                         )}
                     </div>
-
+                    {userBalance !== null && (
+                        <div className="user-balance">
+                            <FiCreditCard className="balance-icon" />
+                            <span>{userBalance.toLocaleString()} ISK</span>
+                        </div>
+                    )}
                     <Link to="/profile" className="profile">
                         {user?.avatar ? (
                             <img src={user.avatar} alt="avatar" className="avatar" />
