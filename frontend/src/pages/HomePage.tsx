@@ -53,8 +53,9 @@ const HomePage: React.FC = () => {
                 })
                 const balData = balRes.data as unknown as CorpBalanceResponse
                 console.log('Corp balance data:', balData)
-                setCorpBalance(balData.currentBalance)
-                setLockedBalance(balData.lockedBalance)
+                const finalBalance = Math.max(balData.currentBalance - balData.lockedBalance, 0);
+                setCorpBalance(finalBalance);
+                setLockedBalance(balData.lockedBalance);
                 setTransactions(
                     balData.transactions.map(tx => ({
                         amount: Number(tx.amount),

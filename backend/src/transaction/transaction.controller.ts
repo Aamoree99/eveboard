@@ -31,18 +31,19 @@ interface CorpTransactionDto {
 
 @ApiTags('Transactions')
 @ApiBearerAuth()
-@UseGuards(JwtAuthGuard)
 @Controller('transaction')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Post('deposit')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create a deposit request to top up your balance' })
   create(@CurrentUser() user: User, @Body() dto: CreateDepositDto) {
     return this.transactionService.createDeposit(user.id, dto);
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get your transaction history' })
   @ApiQuery({ name: 'page', required: false, type: Number, example: 1 })
   @ApiQuery({ name: 'limit', required: false, type: Number, example: 20 })
@@ -54,6 +55,7 @@ export class TransactionController {
   }
 
   @Post('withdraw')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Request a withdrawal from your internal balance' })
   @ApiBody({
     schema: {
@@ -87,6 +89,7 @@ export class TransactionController {
   */
 
   @Delete('withdraw/:id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Cancel a pending withdrawal request' })
   @ApiParam({ name: 'id', description: 'Transaction ID of the withdrawal' })
   cancelWithdraw(@Param('id') id: string) {
