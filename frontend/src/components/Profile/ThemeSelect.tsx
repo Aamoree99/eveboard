@@ -28,7 +28,7 @@ export const CustomSelect = ({ value, onChange }: {
         <div className="custom-select">
             <div className="custom-select__selected" onClick={() => setOpen(prev => !prev)}>
                 {selected}
-                <span className="custom-select__arrow">{open ? '▲' : '▼'}</span>
+                <span className={`custom-select__arrow ${open ? 'open' : ''}`}>▼</span>
             </div>
             {open && (
                 <div className="custom-select__options">

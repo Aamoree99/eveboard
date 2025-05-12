@@ -245,7 +245,10 @@
     "status": "Stav",
     "date": "Datum",
     "close": "Zavřít",
-    "copied": "Zkopírováno!"
+    "copied": "Zkopírováno!",
+    "cancelWithdraw": "Zrušit výběr",
+    "withdrawCanceled": "Výběr zrušen",
+    "cancelFailed": "Zrušení výběru se nezdařilo"
   },
   "settings": {
     "title": "Nastavení",

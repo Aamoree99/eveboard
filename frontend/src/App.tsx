@@ -9,7 +9,8 @@ import TermsModal from './pages/TermsModal'
 import PrivacyModal from './pages/PrivacyModal'
 import MyOrdersPage from './pages/MyOrdersPage'
 import UserPage from './pages/UserPage'
-// import ProtectedRoutes from './router/ProtectedRoutes' // временно не нужен
+import AdminWithdrawsPage from './pages/AdminWithdraws'
+import NotFoundPage from "./pages/NotFoundPage.tsx";
 
 const App = () => {
     const location = useLocation()
@@ -31,6 +32,11 @@ const App = () => {
                 <Route path="/my" element={<MyOrdersPage />} />
                 <Route path="/user/:userId" element={<UserPage />} />
                 <Route path="/orders" element={<OrdersPage />} />
+
+                <Route path="/admin/withdraws" element={<AdminWithdrawsPage />} />
+
+                <Route path="*" element={<NotFoundPage />} />
+
             </Routes>
 
             {/* Модалки */}

@@ -245,7 +245,10 @@
     "status": "Estado",
     "date": "Fecha",
     "close": "Cerrar",
-    "copied": "¡Copiado!"
+    "copied": "¡Copiado!",
+    "cancelWithdraw": "Cancelar retiro",
+    "withdrawCanceled": "Retiro cancelado",
+    "cancelFailed": "No se pudo cancelar el retiro"
   },
   "settings": {
     "title": "Configuraciones",

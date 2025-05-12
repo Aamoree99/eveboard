@@ -162,7 +162,7 @@ model Review {
 
 model Transaction {
   id         String   @id @default(cuid())
-  amount     Int
+  amount     BigInt
   reason     String
   type       TransactionType
   createdAt  DateTime @default(now())

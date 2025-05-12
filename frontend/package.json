@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:api": "swagger-typescript-api -p ./swagger.json -o ./src/api -n src/api/Api.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.69.0",
@@ -29,6 +30,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
+    "openapi-typescript-codegen": "^0.29.0",
     "sass": "^1.86.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",

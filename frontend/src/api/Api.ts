@@ -58,16 +58,22 @@ export interface FullRequestParams extends Omit<RequestInit, "body"> {
   cancelToken?: CancelToken;
 }
 
-export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
+export type RequestParams = Omit<
+  FullRequestParams,
+  "body" | "method" | "query" | "path"
+>;
 
 export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
   baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
-  securityWorker?: (securityData: SecurityDataType | null) => Promise<RequestParams | void> | RequestParams | void;
+  securityWorker?: (
+    securityData: SecurityDataType | null,
+  ) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
 
-export interface HttpResponse<D extends unknown, E extends unknown = unknown> extends Response {
+export interface HttpResponse<D extends unknown, E extends unknown = unknown>
+  extends Response {
   data: D;
   error: E;
 }
@@ -86,7 +92,8 @@ export class HttpClient<SecurityDataType = unknown> {
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private abortControllers = new Map<CancelToken, AbortController>();
-  private customFetch = (...fetchParams: Parameters<typeof fetch>) => fetch(...fetchParams);
+  private customFetch = (...fetchParams: Parameters<typeof fetch>) =>
+    fetch(...fetchParams);
 
   private baseApiParams: RequestParams = {
     credentials: "same-origin",
@@ -119,9 +126,15 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected toQueryString(rawQuery?: QueryParamsType): string {
     const query = rawQuery || {};
-    const keys = Object.keys(query).filter((key) => "undefined" !== typeof query[key]);
+    const keys = Object.keys(query).filter(
+      (key) => "undefined" !== typeof query[key],
+    );
     return keys
-      .map((key) => (Array.isArray(query[key]) ? this.addArrayQueryParam(query, key) : this.addQueryParam(query, key)))
+      .map((key) =>
+        Array.isArray(query[key])
+          ? this.addArrayQueryParam(query, key)
+          : this.addQueryParam(query, key),
+      )
       .join("&");
   }
 
@@ -132,8 +145,13 @@ export class HttpClient<SecurityDataType = unknown> {
 
   private contentFormatters: Record<ContentType, (input: any) => any> = {
     [ContentType.Json]: (input: any) =>
-      input !== null && (typeof input === "object" || typeof input === "string") ? JSON.stringify(input) : input,
-    [ContentType.Text]: (input: any) => (input !== null && typeof input !== "string" ? JSON.stringify(input) : input),
+      input !== null && (typeof input === "object" || typeof input === "string")
+        ? JSON.stringify(input)
+        : input,
+    [ContentType.Text]: (input: any) =>
+      input !== null && typeof input !== "string"
+        ? JSON.stringify(input)
+        : input,
     [ContentType.FormData]: (input: any) =>
       Object.keys(input || {}).reduce((formData, key) => {
         const property = input[key];
@@ -150,7 +168,10 @@ export class HttpClient<SecurityDataType = unknown> {
     [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
   };
 
-  protected mergeRequestParams(params1: RequestParams, params2?: RequestParams): RequestParams {
+  protected mergeRequestParams(
+    params1: RequestParams,
+    params2?: RequestParams,
+  ): RequestParams {
     return {
       ...this.baseApiParams,
       ...params1,
@@ -163,7 +184,9 @@ export class HttpClient<SecurityDataType = unknown> {
     };
   }
 
-  protected createAbortSignal = (cancelToken: CancelToken): AbortSignal | undefined => {
+  protected createAbortSignal = (
+    cancelToken: CancelToken,
+  ): AbortSignal | undefined => {
     if (this.abortControllers.has(cancelToken)) {
       const abortController = this.abortControllers.get(cancelToken);
       if (abortController) {
@@ -207,15 +230,26 @@ export class HttpClient<SecurityDataType = unknown> {
     const payloadFormatter = this.contentFormatters[type || ContentType.Json];
     const responseFormat = format || requestParams.format;
 
-    return this.customFetch(`${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`, {
-      ...requestParams,
-      headers: {
-        ...(requestParams.headers || {}),
-        ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
+    return this.customFetch(
+      `${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`,
+      {
+        ...requestParams,
+        headers: {
+          ...(requestParams.headers || {}),
+          ...(type && type !== ContentType.FormData
+            ? { "Content-Type": type }
+            : {}),
+        },
+        signal:
+          (cancelToken
+            ? this.createAbortSignal(cancelToken)
+            : requestParams.signal) || null,
+        body:
+          typeof body === "undefined" || body === null
+            ? null
+            : payloadFormatter(body),
       },
-      signal: (cancelToken ? this.createAbortSignal(cancelToken) : requestParams.signal) || null,
-      body: typeof body === "undefined" || body === null ? null : payloadFormatter(body),
-    }).then(async (response) => {
+    ).then(async (response) => {
       const r = response.clone() as HttpResponse<T, E>;
       r.data = null as unknown as T;
       r.error = null as unknown as E;
@@ -254,7 +288,9 @@ export class HttpClient<SecurityDataType = unknown> {
  *
  * API для заказов и исполнителей в EVE Online
  */
-export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+export class Api<
+  SecurityDataType extends unknown,
+> extends HttpClient<SecurityDataType> {
   user = {
     /**
      * No description
@@ -366,10 +402,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Users
      * @name UserControllerSetReferral
+     * @summary Set referral code for the current user
      * @request POST:/user/set-referral
      * @secure
      */
-    userControllerSetReferral: (data: SetReferralDto, params: RequestParams = {}) =>
+    userControllerSetReferral: (
+      data: SetReferralDto,
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
         path: `/user/set-referral`,
         method: "POST",
@@ -406,7 +446,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/transaction/deposit
      * @secure
      */
-    transactionControllerCreate: (data: CreateDepositDto, params: RequestParams = {}) =>
+    transactionControllerCreate: (
+      data: CreateDepositDto,
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
         path: `/transaction/deposit`,
         method: "POST",
@@ -476,7 +519,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request DELETE:/transaction/withdraw/{id}
      * @secure
      */
-    transactionControllerCancelWithdraw: (id: string, params: RequestParams = {}) =>
+    transactionControllerCancelWithdraw: (
+      id: string,
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
         path: `/transaction/withdraw/${id}`,
         method: "DELETE",
@@ -709,7 +755,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/order/{id}/complain
      * @secure
      */
-    orderControllerComplain: (id: string, data: SubmitComplaintDto, params: RequestParams = {}) =>
+    orderControllerComplain: (
+      id: string,
+      data: SubmitComplaintDto,
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
         path: `/order/${id}/complain`,
         method: "POST",
@@ -728,7 +778,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/order/{id}/review
      * @secure
      */
-    reviewControllerCreate: (id: string, data: CreateReviewDto, params: RequestParams = {}) =>
+    reviewControllerCreate: (
+      id: string,
+      data: CreateReviewDto,
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
         path: `/order/${id}/review`,
         method: "POST",
@@ -747,7 +801,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/order/{id}/review/user/{userId}
      * @secure
      */
-    reviewControllerGetUserReviews: (userId: string, id: string, params: RequestParams = {}) =>
+    reviewControllerGetUserReviews: (
+      userId: string,
+      id: string,
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
         path: `/order/${id}/review/user/${userId}`,
         method: "GET",
@@ -928,10 +986,73 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Get EVE system info from ESI (auth required)
      * @request GET:/system/info/{systemId}
      */
-    systemControllerGetSystemInfo: (systemId: number, params: RequestParams = {}) =>
+    systemControllerGetSystemInfo: (
+      systemId: number,
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
         path: `/system/info/${systemId}`,
         method: "GET",
+        ...params,
+      }),
+  };
+  admin = {
+    /**
+     * No description
+     *
+     * @tags Admin Transactions
+     * @name AdminTransactionControllerGetPendingWithdrawals
+     * @summary Get all pending withdrawal transactions
+     * @request GET:/admin/transactions/pending-withdraws
+     * @secure
+     */
+    adminTransactionControllerGetPendingWithdrawals: (
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/admin/transactions/pending-withdraws`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Admin Transactions
+     * @name AdminTransactionControllerConfirm
+     * @summary Confirm a withdrawal transaction
+     * @request POST:/admin/transactions/confirm/{id}
+     * @secure
+     */
+    adminTransactionControllerConfirm: (
+      id: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/admin/transactions/confirm/${id}`,
+        method: "POST",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Admin Transactions
+     * @name AdminTransactionControllerCancel
+     * @summary Cancel a withdrawal transaction
+     * @request DELETE:/admin/transactions/cancel/{id}
+     * @secure
+     */
+    adminTransactionControllerCancel: (
+      id: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/admin/transactions/cancel/${id}`,
+        method: "DELETE",
+        secure: true,
         ...params,
       }),
   };

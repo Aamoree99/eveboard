@@ -9,6 +9,7 @@ import { TransactionType } from '@prisma/client';
 import { success } from '../common/response';
 import { randomUUID } from 'crypto';
 import {GetTransactionQueryDto} from "./dto/GetTransactionQueryDto";
+import {sendDM, sendToWithdrawChannel} from "../discordBot";
 
 const WITHDRAW_FEE_PERCENT = 10;
 
@@ -101,7 +102,7 @@ export class TransactionService {
 
         const fee = Math.ceil((amount * WITHDRAW_FEE_PERCENT) / 100);
         const payout = amount - fee;
-        const reason = `EVEBOARD_WITHDRAW:${randomUUID()}`;
+        const reason = `WD:${randomUUID().split('-')[0]}`;
 
         const transaction = await this.prisma.transaction.create({
             data: {
@@ -112,6 +113,35 @@ export class TransactionService {
                 confirmed: false,
             },
         });
+
+        await this.prisma.user.update({
+            where: { id: userId },
+            data: {
+                balance: {
+                    decrement: amount,
+                },
+            },
+        });
+
+
+        const msg =
+            `💸 **Запрос на вывод средств**\n` +
+            `👤 Пользователь: \`${user.name}\`\n` +
+            `💰 Сумма: \`${amount} ISK\`\n` +
+            `📉 Комиссия: \`${fee} ISK\`\n` +
+            `📤 Выплата: \`${payout} ISK\`\n` +
+            `🧾 Причина: \`${reason}\`\n` +
+            `🆔 Транзакция: \`${transaction.id}\``;
+
+        await sendToWithdrawChannel(msg);
+
+        console.log('[requestWithdraw] Возвращаем клиенту:', {
+            transactionId: transaction.id,
+            requestedAmount: amount,
+            fee,
+            payout,
+            reason,
+        })
 
         return success(
             `Withdrawal request created. You'll receive ${payout} ISK (fee: ${fee}) after confirmation.`,
@@ -181,7 +211,12 @@ export class TransactionService {
      * Cancel unconfirmed withdrawal and refund full amount
      */
     async cancelWithdraw(txId: string) {
-        const tx = await this.prisma.transaction.findUnique({ where: { id: txId } });
+        const tx = await this.prisma.transaction.findUnique({
+            where: { id: txId },
+            include: {
+                user: true,
+            },
+        });
 
         if (!tx || tx.type !== 'WITHDRAWAL') {
             throw new NotFoundException('Withdrawal transaction not found');
@@ -191,10 +226,37 @@ export class TransactionService {
             throw new BadRequestException('Cannot cancel a confirmed withdrawal');
         }
 
-        await this.prisma.transaction.delete({ where: { id: txId } });
+        // Попробуем удалить — если уже удалена, значит была отменена
+        const deleted = await this.prisma.transaction.delete({ where: { id: txId } }).catch(() => null);
 
-        return success('Withdrawal request cancelled. No ISK was deducted.');
+        if (!deleted) {
+            return success('Withdrawal already cancelled. No changes made.');
+        }
+
+        const payout = tx.amount;
+        const originalAmount = Math.ceil((payout * 100) / (100 - WITHDRAW_FEE_PERCENT));
+
+        await this.prisma.user.update({
+            where: { id: tx.userId },
+            data: {
+                balance: {
+                    increment: originalAmount,
+                },
+            },
+        });
+
+        // Отправим сообщение в Discord
+        if (tx.user?.discordId) {
+            await sendDM(
+                tx.user.discordId,
+                `❌ Your withdrawal request of **${payout.toLocaleString()} ISK** has been cancelled.\nThe full amount of **${originalAmount.toLocaleString()} ISK** has been refunded to your balance.`
+            );
+        }
+
+        return success(`Withdrawal cancelled. ${originalAmount} ISK refunded.`);
     }
+
+
 
     async findByUserId(userId: string, page = 1, limit = 20) {
         const where = { userId };
@@ -257,6 +319,76 @@ export class TransactionService {
             currentBalance: Number(currentBalance),
             lockedBalance,
             transactions: formattedTransactions,
+        };
+    }
+
+    async getPendingWithdrawals() {
+        return this.prisma.transaction.findMany({
+            where: {
+                type: 'WITHDRAWAL',
+                confirmed: false,
+            },
+            orderBy: {
+                createdAt: 'asc',
+            },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        balance: true,
+                        role: true,
+                    },
+                },
+            },
+        });
+    }
+
+    async confirmWithdraw(id: string) {
+        const tx = await this.prisma.transaction.findUnique({
+            where: { id },
+            include: {
+                user: true,
+            },
+        });
+
+        if (!tx) {
+            throw new NotFoundException('Transaction not found');
+        }
+
+        if (tx.type !== 'WITHDRAWAL') {
+            throw new BadRequestException('Not a withdrawal transaction');
+        }
+
+        if (tx.confirmed) {
+            throw new BadRequestException('Transaction already confirmed');
+        }
+
+        // Подтверждаем в базе
+        await this.prisma.transaction.update({
+            where: { id },
+            data: {
+                confirmed: true,
+            },
+        });
+
+        // Отправляем DM в Discord (если user.discordId есть)
+        if (tx.user.discordId) {
+            const payout = tx.amount.toLocaleString();
+            try {
+                await sendDM(
+                    tx.user.discordId,
+                    `✅ Your withdrawal request of **${payout} ISK** has been approved. The funds will be transferred shortly.`
+                );
+
+            } catch (err) {
+                console.error(`[confirmWithdraw] Не удалось отправить DM:`, err);
+            }
+        }
+
+        return {
+            success: true,
+            message: `Withdrawal ${id} confirmed.`,
         };
     }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './TransModal.scss'
 import { Api } from '../../api/Api'
-import type { CreateDepositDto } from '../../types/models'
+import type { CreateDepositDto, Transaction } from '../../types/models'
 import { FaCopy } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
 
@@ -36,16 +36,17 @@ const DepositModal = ({ onClose }: Props) => {
         try {
             const res = await api.transaction.transactionControllerCreate({
                 amount,
-            } satisfies CreateDepositDto)
+            } satisfies CreateDepositDto) as unknown as {
+                data: { success: boolean; message: string; data: Transaction }
+            }
 
-            const json = await res.json()
-            const transactionData = json?.data
+            const transactionData = res.data.data
 
             if (transactionData && transactionData.reason) {
                 const { reason } = transactionData
                 setDepositInfo({ amount, reason })
             } else {
-                console.error('[DepositModal] Invalid response:', json)
+                console.error('[DepositModal] Invalid response:', res)
                 alert(t('deposit.invalidResponse'))
             }
         } catch (e) {

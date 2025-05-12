@@ -38,20 +38,51 @@ const WithdrawModal = ({ onClose, userBalance }: Props) => {
     const fee = Math.ceil((amount * FEE_PERCENT) / 100)
     const payout = amount - fee
 
-    const handleSubmit = async () => {
-        if (!isValid) return
-        setLoading(true)
-        try {
-            const res = await api.transaction.transactionControllerRequestWithdraw({ amount })
-            const data = res.data as unknown as WithdrawResponseData
-            setResponse(data)
-        } catch (e) {
-            console.error('[WithdrawModal] Withdraw failed:', e)
-            alert(t('withdraw.failed'))
-        } finally {
-            setLoading(false)
-        }
+    interface ApiSuccessResponse<T> {
+        success: boolean
+        message: string
+        data?: T
     }
+
+    const handleSubmit = async () => {
+        if (!isValid) return;
+        setLoading(true);
+        try {
+            const res = await api.transaction.transactionControllerRequestWithdraw({ amount });
+
+// Костыль: тип указан как void, но мы знаем, что тело есть:
+            const raw = await (res as unknown as Response).json();
+            console.log('[WithdrawModal] Parsed manually:', raw);
+
+
+            if (
+                typeof raw !== 'object' ||
+                raw === null ||
+                typeof (raw as any).success !== 'boolean'
+            ) {
+                console.error('❌ Server returned unexpected response:', raw);
+                alert(t('withdraw.failed'));
+                return;
+            }
+
+            const parsed = raw as ApiSuccessResponse<WithdrawResponseData>;
+
+            if (!parsed.success || !parsed.data) {
+                console.warn('⚠️ Withdraw failed or data missing:', parsed);
+                alert(t('withdraw.failed'));
+                return;
+            }
+
+            setResponse(parsed.data);
+        } catch (e) {
+            console.error('[WithdrawModal] Withdraw failed:', e);
+            alert(t('withdraw.failed'));
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
 
     const fixAmountOnBlur = () => {
         let value = Number(amountStr || '0')
@@ -105,18 +136,19 @@ const WithdrawModal = ({ onClose, userBalance }: Props) => {
                     </>
                 ) : (
                     <div className="withdraw-success">
-                        <p>{t('withdraw.success')}</p>
-                        <p>
-                            <strong>{response.payout.toLocaleString()} ISK</strong> {t('withdraw.sent')}
-                            <br />
-                            <small>({t('withdraw.feeLabel')}: {response.fee.toLocaleString()} ISK)</small>
-                        </p>
-                        <p className="reason">
-                            {t('withdraw.reason')}<br />
-                            <code>{response.reason}</code>
-                        </p>
+                        <h3>{t('withdraw.success')}</h3>
+
+                        <div className="withdraw-info">
+                            <div><span>💰 {t('withdraw.title')}:</span> <code>{response.requestedAmount.toLocaleString()} ISK</code></div>
+                            <div><span>📉 {t('withdraw.feeLabel')}:</span> <code>{response.fee.toLocaleString()} ISK</code></div>
+                            <div><span>📤 {t('withdraw.youWillReceive')}:</span> <code>{response.payout.toLocaleString()} ISK</code></div>
+                            <div><span>🧾 {t('withdraw.reason')}:</span> <code>{response.reason}</code></div>
+                            <div><span>🆔 Transaction ID:</span> <code>{response.transactionId}</code></div>
+                        </div>
+
                         <button onClick={onClose}>{t('withdraw.close')}</button>
                     </div>
+
                 )}
             </div>
         </div>

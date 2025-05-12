@@ -244,7 +244,10 @@
   "status": "Статус",
   "date": "Дата",
   "close": "Закрыть",
-  "copied": "Скопировано!"
+  "copied": "Скопировано!",
+  "cancelWithdraw": "Отменить вывод",
+  "withdrawCanceled": "Вывод отменён",
+  "cancelFailed": "Не удалось отменить вывод"
 },
   "settings": {
   "title": "Настройки",

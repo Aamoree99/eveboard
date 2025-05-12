@@ -12,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SystemModule } from './system/system.module';
 import {ScheduleModule} from "@nestjs/schedule";
 import {OrderCronService} from "./common/order-cron.service";
+import { AdminTransactionModule } from './admin-transaction/admin-transaction.module';
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import {OrderCronService} from "./common/order-cron.service";
         PrismaModule,
         HttpModule,
         SystemModule,
+        AdminTransactionModule,
     ],
     providers: [WalletMonitorService,
         OrderCronService,],

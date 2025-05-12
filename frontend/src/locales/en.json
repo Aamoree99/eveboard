@@ -245,7 +245,10 @@
     "status": "Status",
     "date": "Date",
     "close": "Close",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "cancelWithdraw": "Cancel withdrawal",
+    "withdrawCanceled": "Withdrawal canceled",
+    "cancelFailed": "Failed to cancel withdrawal"
   },
   "settings": {
     "title": "Settings",

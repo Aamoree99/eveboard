@@ -70,9 +70,8 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
 
     useEffect(() => {
         api.order.orderControllerGetTypes()
-            .then(async (res) => {
-                const json = await res.json()
-                const types = json?.data || json
+            .then((res) => {
+                const types = res.data
                 if (Array.isArray(types)) {
                     setOrderTypes(types)
                     if (!form.type && types.length > 0) {
@@ -83,6 +82,7 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
             .catch(console.error)
     }, [])
 
+
     useEffect(() => {
         const fetchSystems = async () => {
             if (systemQuery.length < 3) {
@@ -91,8 +91,8 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
             }
             try {
                 const res = await api.system.systemControllerSearch({ q: systemQuery })
-                const json = await res.json()
-                setSystemOptions(Array.isArray(json) ? json : [])
+                const systems = res.data // Axios автоматически кладёт тело ответа сюда
+                setSystemOptions(Array.isArray(systems) ? systems : [])
             } catch (err) {
                 console.error('System search failed', err)
             }

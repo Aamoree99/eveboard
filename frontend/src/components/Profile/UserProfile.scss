@@ -857,3 +857,36 @@
   pointer-events: auto;
   transform: translateX(-50%) translateY(4px);
 }
+
+.cancel-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background: #e03e3e;
+  }
+}
+
+.admin-controls {
+  margin-top: 1.5rem;
+
+  button {
+    background: var(--accent-color);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--accent-color-hover);
+    }
+  }
+}

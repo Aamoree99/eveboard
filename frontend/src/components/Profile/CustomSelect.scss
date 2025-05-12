@@ -7,7 +7,8 @@
 }
 
 .custom-select__selected {
-  padding: 10px;
+  width: 100%;
+  padding: 10px 12px;
   border: 1px solid var(--accent-color);
   background-color: var(--card-bg, #fff);
   display: flex;
@@ -15,6 +16,10 @@
   align-items: center;
   border-radius: 4px;
   transition: border-color 0.2s, background-color 0.2s;
+  box-sizing: border-box;
+  min-height: 40px;
+  height: 40px; // 👈 фиксированная высота
+  overflow: hidden;
 }
 
 .custom-select__selected:hover {
@@ -22,26 +27,32 @@
 }
 
 .custom-select__arrow {
-  margin-left: 10px;
+  margin-left: 8px;
   color: var(--accent-color);
+  flex-shrink: 0;
+  line-height: 1; // 👈 чтобы не тянул блок вверх
 }
 
 .custom-select__options {
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
-  right: 0;
+  width: 100%;
   background-color: var(--card-bg, #fff);
   border: 1px solid var(--accent-color);
   border-radius: 4px;
   z-index: 10;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-height: 200px;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .custom-select__option {
-  padding: 10px;
+  padding: 10px 12px;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
+  white-space: nowrap;
 }
 
 .custom-select__option:hover,
@@ -49,3 +60,20 @@
   background-color: var(--accent-color-hover, #f0f0f0);
   color: var(--button-text);
 }
+
+.custom-select--open-up .custom-select__options {
+  top: auto;
+  bottom: calc(100% + 4px);
+}
+
+.custom-select__arrow {
+  display: inline-block;
+  margin-left: 8px;
+  transition: transform 0.2s ease;
+  color: var(--accent-color);
+}
+
+.custom-select__arrow.open {
+  transform: rotate(180deg);
+}
+

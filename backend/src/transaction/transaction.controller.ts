@@ -5,7 +5,7 @@ import {
   Get,
   Delete,
   Param,
-  UseGuards, Query,
+  UseGuards, Query, HttpCode, Header,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { CreateDepositDto } from './dto/create-deposit.dto';
@@ -55,6 +55,8 @@ export class TransactionController {
   }
 
   @Post('withdraw')
+  @HttpCode(200)
+  @Header('Content-Type', 'application/json')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Request a withdrawal from your internal balance' })
   @ApiBody({
@@ -73,8 +75,9 @@ export class TransactionController {
       @CurrentUser() user: User,
       @Body('amount') amount: number,
   ) {
-    return this.transactionService.requestWithdraw(user.id, amount)
+    return this.transactionService.requestWithdraw(user.id, amount);
   }
+
   /*
   @Post('withdraw/:id/confirm')
   @UseGuards(JwtAuthGuard)

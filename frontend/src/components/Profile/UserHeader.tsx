@@ -5,6 +5,8 @@ import WithdrawModal from './WithdrawModal'
 import { Api } from '../../api/Api'
 import { useAuth } from '../../context/AuthContext.tsx'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+
 
 interface Props {
     user: User
@@ -28,6 +30,8 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
     const [referralSubmitted, setReferralSubmitted] = useState(false)
     const [referralError, setReferralError] = useState<string | null>(null)
     const { t } = useTranslation()
+    const navigate = useNavigate()
+
 
     const handleSubmitReferral = async () => {
         if (!referralCode.trim()) return
@@ -36,13 +40,20 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
             setReferralSubmitted(true)
             setReferralError(null)
             reloadUser()
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Referral error:', err)
-            const message =
-                err?.response?.message || err?.statusText || t('user.referralUnknownError')
+
+            let message = t('user.referralUnknownError')
+
+            if (err && typeof err === 'object' && 'response' in err) {
+                const maybeErr = err as { response?: { message?: string }; statusText?: string }
+                message = maybeErr.response?.message || maybeErr.statusText || message
+            }
+
             setReferralError(message)
         }
     }
+
 
     return (
         <>
@@ -92,6 +103,13 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
                                 </button>
                             )}
                         </div>
+                    </div>
+                )}
+                {isOwnProfile && user.role === 'ADMIN' && (
+                    <div className="admin-controls">
+                        <button onClick={() => navigate('/admin/withdraws')}>
+                            🛠 View Pending Withdrawals
+                        </button>
                     </div>
                 )}
 

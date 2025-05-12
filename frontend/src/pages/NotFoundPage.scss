@@ -1,0 +1,78 @@
+.not-found-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  background: black;
+  color: #e0e0e0;
+  font-family: 'Orbitron', monospace;
+  overflow: hidden;
+
+  h1 {
+    font-size: 2.5rem;
+    color: #ff4c4c;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .code {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #ffcc00;
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+      color: #fff58a;
+    }
+  }
+
+  // ✨ Анимация частиц
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(#ffffff22 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: drift 60s linear infinite;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+
+  &::after {
+    animation-duration: 90s;
+    background-size: 40px 40px;
+    opacity: 0.025;
+  }
+}
+
+// 🌌 Анимация дрейфа точек
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(10%, 10%) rotate(360deg);
+  }
+}

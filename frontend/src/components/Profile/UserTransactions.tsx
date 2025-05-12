@@ -5,6 +5,7 @@ import './UserProfile.scss'
 import { FaCopy } from 'react-icons/fa'
 import Toast from "../ui/Toast.tsx"
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '../../context/AuthContext.tsx'
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -24,12 +25,23 @@ export const formatDateTime = (input?: string | Date): string => {
 
 const UserTransactions = () => {
     const { t } = useTranslation()
+    const { reloadUser } = useAuth();
     const [transactions, setTransactions] = useState<Transaction[]>([])
     const [page, setPage] = useState(1)
     const [hasMore, setHasMore] = useState(true)
     const [loading, setLoading] = useState(false)
     const [selectedTx, setSelectedTx] = useState<Transaction | null>(null)
     const [toastMessage, setToastMessage] = useState<string | null>(null)
+    const [cancelCountdown, setCancelCountdown] = useState<number | null>(null);
+
+
+    const reloadAll = () => {
+        setTransactions([]);
+        setPage(1);
+        loadTransactions(1);
+
+        reloadUser();
+    };
 
     const loadTransactions = (pageNumber = 1) => {
         if (loading) return
@@ -58,6 +70,36 @@ const UserTransactions = () => {
                 setLoading(false)
             })
     }
+
+    useEffect(() => {
+        if (!selectedTx || selectedTx.type !== 'WITHDRAWAL' || selectedTx.confirmed) {
+            setCancelCountdown(null)
+            return
+        }
+
+        const createdAt = new Date(selectedTx.createdAt)
+        const now = new Date()
+        const diffMs = now.getTime() - createdAt.getTime()
+
+        const delayMs = 2 * 60 * 60 * 1000 // 2 hours in ms
+        const remaining = delayMs - diffMs
+
+        if (remaining > 0) {
+            setCancelCountdown(Math.floor(remaining / 1000)) // in seconds
+            const interval = setInterval(() => {
+                setCancelCountdown(prev => {
+                    if (prev && prev > 1) return prev - 1
+                    clearInterval(interval)
+                    return null
+                })
+            }, 1000)
+
+            return () => clearInterval(interval)
+        } else {
+            setCancelCountdown(null)
+        }
+    }, [selectedTx])
+
 
     useEffect(() => {
         loadTransactions(1)
@@ -131,6 +173,30 @@ const UserTransactions = () => {
                             <span>{t('transactions.date')}</span>
                             <code>{formatDateTime(selectedTx.createdAt)}</code>
                         </div>
+
+                        {selectedTx.type === 'WITHDRAWAL' && !selectedTx.confirmed && (
+                            <button
+                                className="cancel-btn"
+                                onClick={async () => {
+                                    if (cancelCountdown !== null) return;
+                                    try {
+                                        await api.transaction.transactionControllerCancelWithdraw(selectedTx.id);
+                                        setToastMessage(t('transactions.withdrawCanceled'));
+                                        setSelectedTx(null);
+                                        reloadAll();
+                                    } catch (err) {
+                                        console.error('[UserTransactions] Cancel failed:', err);
+                                        setToastMessage(t('transactions.cancelFailed'));
+                                    }
+                                }}
+                                disabled={cancelCountdown !== null}
+                            >
+                                {cancelCountdown !== null
+                                    ? `${Math.floor(cancelCountdown / 60)}:${(cancelCountdown % 60).toString().padStart(2, '0')}`
+                                    : t('transactions.cancelWithdraw')}
+                            </button>
+                        )}
+
 
                         <button className="close-btn" onClick={() => setSelectedTx(null)}>{t('transactions.close')}</button>
                     </div>

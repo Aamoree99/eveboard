@@ -245,7 +245,10 @@
     "status": "Statut",
     "date": "Date",
     "close": "Fermer",
-    "copied": "Copié !"
+    "copied": "Copié !",
+    "cancelWithdraw": "Annuler le retrait",
+    "withdrawCanceled": "Retrait annulé",
+    "cancelFailed": "Échec de l'annulation du retrait"
   },
   "settings": {
     "title": "Paramètres",

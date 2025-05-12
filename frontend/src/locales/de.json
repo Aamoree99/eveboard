@@ -245,7 +245,10 @@
     "status": "Status",
     "date": "Datum",
     "close": "Schließen",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "cancelWithdraw": "Auszahlung stornieren",
+    "withdrawCanceled": "Auszahlung storniert",
+    "cancelFailed": "Auszahlung konnte nicht storniert werden"
   },
   "settings": {
     "title": "Einstellungen",

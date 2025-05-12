@@ -256,3 +256,17 @@ export const sendToLogChannel = async (content: string) => {
         console.error('❌ Ошибка при отправке лога в Discord:', err);
     }
 };
+
+export const sendToWithdrawChannel = async (content: string) => {
+    try {
+        const channel = await client.channels.fetch('1371561557250670814');
+
+        if (channel && channel.isTextBased?.()) {
+            await (channel as TextChannel).send(content);
+        } else {
+            console.warn('❌ [sendToWithdrawChannel] Канал недоступен или не текстовый');
+        }
+    } catch (err) {
+        console.error('❌ Ошибка при отправке в канал вывода (Withdraw):', err);
+    }
+};

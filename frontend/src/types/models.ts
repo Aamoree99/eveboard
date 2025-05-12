@@ -130,7 +130,7 @@ export interface Review {
 
 export interface Transaction {
     id: string
-    amount: number
+    amount: bigint
     reason: string
     type: TransactionType
     createdAt: string

@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLanguage } from '../../context/LanguageContext'
-import './CustomSelect.scss' // используем те же стили
+import './CustomSelect.scss'
 
 const languageLabels: Record<string, string> = {
     en: 'English',
@@ -11,10 +11,11 @@ const languageLabels: Record<string, string> = {
     cz: 'Čeština',
 };
 
-
 export const LanguageSelect = () => {
     const { currentLanguage, setLanguage, availableLanguages } = useLanguage()
     const [open, setOpen] = useState(false)
+    const [openUp, setOpenUp] = useState(false)
+    const selectRef = useRef<HTMLDivElement>(null)
 
     const selected = languageLabels[currentLanguage] || currentLanguage.toUpperCase()
 
@@ -23,11 +24,23 @@ export const LanguageSelect = () => {
         setOpen(false)
     }
 
+    useEffect(() => {
+        if (open && selectRef.current) {
+            const rect = selectRef.current.getBoundingClientRect()
+            const spaceBelow = window.innerHeight - rect.bottom
+            const dropdownHeight = 200 // примерная высота дропа
+            setOpenUp(spaceBelow < dropdownHeight)
+        }
+    }, [open])
+
     return (
-        <div className="custom-select">
+        <div
+            className={`custom-select ${openUp ? 'custom-select--open-up' : ''}`}
+            ref={selectRef}
+        >
             <div className="custom-select__selected" onClick={() => setOpen(prev => !prev)}>
                 {selected}
-                <span className="custom-select__arrow">{open ? '▲' : '▼'}</span>
+                <span className={`custom-select__arrow ${open ? 'open' : ''}`}>▼</span>
             </div>
             {open && (
                 <div className="custom-select__options">
