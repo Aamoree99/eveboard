@@ -1,4 +1,4 @@
-import './PromoBlock.scss'
+import './promoblock.scss'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { useEffect, useState } from 'react'
