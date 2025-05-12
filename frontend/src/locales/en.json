@@ -304,6 +304,7 @@
     "copied": "Copied to clipboard!"
   },
   "orderModal": {
+    "linkCopied": "Link copied!",
     "loading": "Loading order...",
     "error": "Failed to load order.",
     "close": "Close",

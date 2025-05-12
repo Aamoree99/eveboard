@@ -174,21 +174,23 @@ const OrderModal = ({ order, onClose }: Props) => {
                                         {loading ? t('orderModal.taking') : t('orderModal.takeOrder')}
                                     </button>
                                 ) : (
-                                    <div className="tooltip-wrapper">
-                                        <button disabled>{t('orderModal.takeOrder')}</button>
-                                        {!isLoggedIn && (
-                                            <span className="tooltip">{t('orderModal.loginToTake')}</span>
-                                        )}
-                                        {isRatingLow && (
-                                            <span className="tooltip">{t('orderModal.lowRating')}</span>
-                                        )}
-                                        {isRoleRestricted && (
-                                            <span className="tooltip">{t('orderModal.executorRequired')}</span>
-                                        )}
-                                    </div>
+                                    <span className="popover-wrapper">
+                                      <button disabled>{t('orderModal.takeOrder')}</button>
+                                      <div className="popover">
+                                        <div className="popover-content">
+                                          {!isLoggedIn
+                                              ? t('orderModal.loginToTake')
+                                              : isRatingLow
+                                                  ? t('orderModal.lowRating')
+                                                  : t('orderModal.executorRequired')}
+                                        </div>
+                                        <div className="popover-arrow" />
+                                      </div>
+                                    </span>
                                 )}
                             </div>
                         )}
+
 
                         {isCreator && order.status !== 'DONE' && order.status !== 'CANCELED' && (
                             <div className="manage-block">
@@ -252,7 +254,18 @@ const OrderModal = ({ order, onClose }: Props) => {
 
                         <div className="complain-block">
                             <button onClick={() => setComplaintOpen(true)} className="complain-btn">⚠️</button>
+                            <button
+                                onClick={() => {
+                                    navigator.clipboard.writeText(window.location.href);
+                                    setToastMessage(t('orderModal.linkCopied'));
+                                }}
+                                className="complain-btn"
+                                title="Copy link"
+                            >
+                                🔗
+                            </button>
                         </div>
+
 
                         {isComplaintOpen && (
                             <div className="complaint-modal-overlay" onClick={() => setComplaintOpen(false)}>

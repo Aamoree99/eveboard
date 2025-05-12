@@ -68,10 +68,14 @@ const Header = () => {
                         <NavLink to="/orders" className={({ isActive }) => isActive ? 'active' : ''}>
                             {t('header.orders')}
                         </NavLink>
-                        <NavLink to="/my" className={({ isActive }) => isActive ? 'active' : ''}>
-                            {t('header.my')}
-                        </NavLink>
+
+                        {user && (
+                            <NavLink to="/my" className={({ isActive }) => isActive ? 'active' : ''}>
+                                {t('header.my')}
+                            </NavLink>
+                        )}
                     </div>
+
 
                     <div className="search-bar">
                         <FiSearch className="search-icon" />

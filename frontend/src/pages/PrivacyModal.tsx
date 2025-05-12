@@ -15,7 +15,6 @@ const PrivacyModal = () => {
 
                 <h2>1. {t('privacy.access.title')}</h2>
                 <p>{t('privacy.access.desc')}</p>
-
                 <ul>
                     {(t('privacy.access.list', { returnObjects: true }) as Array<{ scope: string; desc: string }>).map((item, i) => (
                         <li key={i}>
@@ -24,23 +23,26 @@ const PrivacyModal = () => {
                     ))}
                 </ul>
 
+                <h2>2. {t('privacy.why.title')}</h2>
+                <p>{t('privacy.why.desc')}</p>
                 <ul>
                     {(t('privacy.why.list', { returnObjects: true }) as string[]).map((item, i) => (
                         <li key={i}>{item}</li>
                     ))}
                 </ul>
 
+                <h2>3. {t('privacy.no.title')}</h2>
                 <ul>
                     {(t('privacy.no.list', { returnObjects: true }) as string[]).map((item, i) => (
                         <li key={i} dangerouslySetInnerHTML={{ __html: item }} />
                     ))}
                 </ul>
 
-
                 <h2>4. {t('privacy.storage.title')}</h2>
                 <p>{t('privacy.storage.desc')}</p>
             </div>
         </div>
+
     )
 }
 

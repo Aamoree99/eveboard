@@ -245,7 +245,8 @@
   "date": "Дата",
   "close": "Закрыть",
   "copied": "Скопировано!"
-}, "settings": {
+},
+  "settings": {
   "title": "Настройки",
   "discord": "Discord:",
   "linkDiscord": "Привязать Discord",
@@ -272,8 +273,8 @@
     "orders": "Заказы",
     "reviews": "Отзывы",
     "transactions": "Транзакции"
-  }
-}, "user": {
+  }},
+  "user": {
   "noName": "Без имени",
   "discordRequired": "Требуется Discord",
   "pleaseLinkDiscord": "Пожалуйста, привяжите свой аккаунт Discord",
@@ -301,6 +302,7 @@
   "copied": "Скопировано в буфер обмена!"
 }
 , "orderModal": {
+  "linkCopied": "Ссылка скопирована!",
   "loading": "Загрузка заказа...",
   "error": "Не удалось загрузить заказ.",
   "close": "Закрыть",

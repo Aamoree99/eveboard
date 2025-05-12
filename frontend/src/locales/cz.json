@@ -304,6 +304,8 @@
     "copied": "Zkopírováno do schránky!"
   },
   "orderModal": {
+    "linkCopied": "Odkaz zkopírován!",
+
     "loading": "Načítání objednávky...",
     "error": "Nepodařilo se načíst objednávku.",
     "close": "Zavřít",

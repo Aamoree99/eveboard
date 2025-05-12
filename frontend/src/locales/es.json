@@ -304,6 +304,8 @@
     "copied": "¡Copiado al portapapeles!"
   },
   "orderModal": {
+    "linkCopied": "¡Enlace copiado!",
+
     "loading": "Cargando orden...",
     "error": "No se pudo cargar la orden.",
     "close": "Cerrar",

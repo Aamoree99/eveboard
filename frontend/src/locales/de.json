@@ -304,6 +304,8 @@
     "copied": "In die Zwischenablage kopiert!"
   },
   "orderModal": {
+    "linkCopied": "Link kopiert!",
+
     "loading": "Auftrag wird geladen...",
     "error": "Auftrag konnte nicht geladen werden.",
     "close": "Schließen",

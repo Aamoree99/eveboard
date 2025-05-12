@@ -304,6 +304,8 @@
     "copied": "Copié dans le presse-papiers !"
   },
   "orderModal": {
+    "linkCopied": "Lien copié !",
+
     "loading": "Chargement de l’ordre...",
     "error": "Échec du chargement de l’ordre.",
     "close": "Fermer",
