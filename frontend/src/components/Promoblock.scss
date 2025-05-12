@@ -1,0 +1,84 @@
+.promo-gila-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 2rem;
+  background: var(--card-bg);
+  color: var(--text-color);
+  text-align: center;
+  border-radius: 12px;
+  margin: 3rem 0;
+  border: 2px solid var(--promoted-border);
+  box-shadow: 0 0 30px var(--promoted-glow);
+
+  .promo-gila-image-wrapper {
+    position: relative;
+    max-width: 700px;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+
+    .gila-image {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 30px var(--promoted-glow-inner);
+      border: 1px solid var(--header-border);
+    }
+
+    .gila-source {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--search-placeholder);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+        color: var(--text-color);
+      }
+    }
+
+    &:hover {
+      transform: scale(1.01);
+    }
+  }
+
+  .promo-gila-text {
+    max-width: 700px;
+
+    h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: var(--promoted-text);
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .promo-progress-bar {
+      height: 12px;
+      background: var(--search-bg);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+
+      .filled {
+        height: 100%;
+        background: var(--promoted-border);
+        transition: width 0.3s ease;
+      }
+    }
+
+    .promo-progress-label {
+      font-size: 0.9rem;
+      color: var(--search-placeholder);
+    }
+
+    .promo-cta {
+      font-style: italic;
+      color: var(--search-placeholder);
+    }
+  }
+}

@@ -404,5 +404,11 @@
     "minPriceError": "El precio mínimo es {{amount}} ISK",
     "notEnoughISK": "No tienes suficiente ISK. Necesitas {{amount}} ISK",
     "unknownError": "Error desconocido"
+  },
+  "promo": {
+    "gilaTitle": "Cumple contratos — gana una Gila",
+    "gilaDesc": "Completa 50 contratos y la Gila será tuya. Demuestra lo que vales.",
+    "gilaProgress": "{{current}} / {{goal}} contratos"
   }
+
 }

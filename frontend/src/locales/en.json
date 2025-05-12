@@ -403,5 +403,11 @@
     "minPriceError": "Minimum price is {{amount}} ISK",
     "notEnoughISK": "Not enough ISK. You need {{amount}} ISK",
     "unknownError": "Unknown error"
+  },
+  "promo": {
+    "gilaTitle": "Complete contracts — earn a Gila",
+    "gilaDesc": "Complete 50 contracts and the Gila is yours. Show what you’re made of.",
+    "gilaProgress": "{{current}} / {{goal}} contracts"
   }
+
 }

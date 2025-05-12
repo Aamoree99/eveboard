@@ -6,6 +6,7 @@ import type { Order } from '../types/models'
 import type { CorpBalanceResponse } from '../types/api'
 import './HomePage.scss'
 import { useTranslation } from 'react-i18next'
+import PromoBlock from "../components/Promoblock.tsx";
 
 
 const api = new Api({
@@ -76,6 +77,8 @@ const HomePage: React.FC = () => {
             <div className="home-page">
                 <h1>{t('home.title')}</h1>
                 <p>{t('home.subtitle')}</p>
+
+                <PromoBlock />
 
                 <div className="home-promo-orders">
                     <h2>{t('home.featured')}</h2>
@@ -176,7 +179,7 @@ const HomePage: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="timeline-item" data-status="in-progress">
+                        <div className="timeline-item" data-status="done">
                             <div className="timeline-dot"></div>
                             <div className="timeline-content">
                                 <strong>{t('home.roadmapWithdraw')}</strong>
@@ -184,7 +187,7 @@ const HomePage: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="timeline-item" data-status="planned">
+                        <div className="timeline-item" data-status="in-progress">
                             <div className="timeline-dot"></div>
                             <div className="timeline-content">
                                 <strong>{t('home.roadmapZkill')}</strong>

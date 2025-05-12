@@ -404,5 +404,11 @@
     "minPriceError": "Minimální cena je {{amount}} ISK",
     "notEnoughISK": "Nedostatek ISK. Potřebujete {{amount}} ISK",
     "unknownError": "Neznámá chyba"
+  },
+  "promo": {
+    "gilaTitle": "Splň kontrakty — získej Gilu",
+    "gilaDesc": "Splň 50 kontraktů a Gila je tvoje. Ukaž, co v tobě je.",
+    "gilaProgress": "{{current}} / {{goal}} kontraktů"
   }
+
 }

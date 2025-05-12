@@ -404,5 +404,11 @@
     "minPriceError": "Mindestpreis ist {{amount}} ISK",
     "notEnoughISK": "Nicht genug ISK. Du benötigst {{amount}} ISK",
     "unknownError": "Unbekannter Fehler"
+  },
+  "promo": {
+    "gilaTitle": "Erfülle Aufträge — verdiene eine Gila",
+    "gilaDesc": "Erfülle 50 Aufträge und die Gila gehört dir. Zeig, was du drauf hast.",
+    "gilaProgress": "{{current}} / {{goal}} Aufträge"
   }
+
 }

@@ -6,7 +6,7 @@ import {
   Param,
   Patch,
   Post,
-  Query, Res,
+  Query, Req, Res,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -141,5 +141,13 @@ export class OrderController {
       @CurrentUser() user: PrismaUser,
   ) {
     return this.orderService.complain(orderId, user.id, dto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('completed-count')
+  async getCompletedOrderCount(@Req() req: any): Promise<{ count: number }> {
+    const userId = req.user.id
+    const count = await this.orderService.getCompletedOrderCount(userId)
+    return { count }
   }
 }

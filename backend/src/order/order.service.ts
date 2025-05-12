@@ -407,5 +407,12 @@ export class OrderService {
     }
     }
 
-
+    async getCompletedOrderCount(userId: string): Promise<number> {
+        return this.prisma.order.count({
+            where: {
+                executorId: userId,
+                status: 'DONE',
+            },
+        })
+    }
 }

@@ -772,6 +772,20 @@ export class Api<
     /**
      * No description
      *
+     * @tags Orders
+     * @name OrderControllerGetCompletedOrderCount
+     * @request GET:/order/completed-count
+     */
+    orderControllerGetCompletedOrderCount: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/order/completed-count`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags Reviews
      * @name ReviewControllerCreate
      * @summary Leave a review for a completed order

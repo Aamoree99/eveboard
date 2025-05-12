@@ -412,7 +412,13 @@
   "minPriceError": "Минимальная цена — {{amount}} ISK",
   "notEnoughISK": "Недостаточно ISK. Необходимо {{amount}} ISK",
   "unknownError": "Неизвестная ошибка"
-}
+},
+  "promo": {
+    "gilaTitle": "Выполни контракты — получи Gila",
+    "gilaDesc": "50 выполненных заказов — и Gila твоя. Покажи, на что ты способен.",
+    "gilaProgress": "{{current}} / {{goal}} заказов"
+  }
+
 
 
 
