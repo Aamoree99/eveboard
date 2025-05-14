@@ -47,6 +47,14 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
         promotingUntil: '',
     })
 
+    const autoResize = (el: HTMLTextAreaElement | null) => {
+        if (el) {
+            el.style.height = 'auto'
+            el.style.height = `${el.scrollHeight}px`
+        }
+    }
+
+
     const [systemQuery, setSystemQuery] = useState('')
     const [systemOptions, setSystemOptions] = useState<SystemOption[]>([])
     const [selectedSystem, setSelectedSystem] = useState<SystemOption | null>(null)
@@ -171,6 +179,12 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
         } finally {
             setLoading(false)
         }
+
+        useEffect(() => {
+            autoResize(document.querySelector('textarea[name="description"]'))
+            autoResize(document.querySelector('textarea[name="requirements"]'))
+        }, [])
+
     }
 
     return (
@@ -209,6 +223,7 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
                             placeholder={t('createOrderForm.descriptionPlaceholder')}
                             value={form.description}
                             onChange={handleChange}
+                            onInput={(e) => autoResize(e.currentTarget)}
                             required
                         />
                     </label>
@@ -220,6 +235,7 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
                             placeholder={t('createOrderForm.requirementsPlaceholder')}
                             value={form.requirements}
                             onChange={handleChange}
+                            onInput={(e) => autoResize(e.currentTarget)}
                         />
                     </label>
 

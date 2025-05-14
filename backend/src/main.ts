@@ -7,6 +7,8 @@ import 'dotenv/config';
 import {startDiscordBot} from "./discordBot";
 
 async function bootstrap() {
+    await startDiscordBot();
+
     const app = await NestFactory.create(AppModule);
 
     // Валидация DTO
@@ -44,8 +46,6 @@ async function bootstrap() {
     await app.listen(3000);
     console.log('🚀 Server running at http://localhost:3000');
     console.log('📚 Swagger UI at http://localhost:3000/docs');
-
-    await startDiscordBot();
 }
 
 bootstrap();

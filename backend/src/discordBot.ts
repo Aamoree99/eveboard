@@ -211,7 +211,7 @@ export const announceNewOrder = async (
             return;
         }
 
-        const orderLink = `https://localhost:3000/order?orderId=${order.id}`; // ← замени на свой домен
+        const orderLink = `https://eveboard.space/order?orderId=${order.id}`; // ← замени на свой домен
 
         const fields = [
             { name: '🗂 Category', value: categoryLabel, inline: true },

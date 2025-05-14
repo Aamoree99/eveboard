@@ -35,6 +35,7 @@
   resize: none;
   appearance: none;
   transition: border 0.2s;
+  overflow: hidden;
 }
 
 .create-order-form input:focus,
