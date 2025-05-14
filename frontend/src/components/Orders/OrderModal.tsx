@@ -140,14 +140,35 @@ const OrderModal = ({ order, onClose }: Props) => {
                     <div className="order-left">
                         <h2>{order.title}</h2>
                         <div className="order-type">{order.type.replace(/_/g, ' ').toLowerCase()}</div>
-                        <p className="order-description">{order.description}</p>
+                        <p className="order-description">
+                            {order.description
+                                ?.replace(/\u2028|\u2029|\r\n|\r/g, '\n')
+                                .split('\n')
+                                .map((line, i) => (
+                                    <span key={i}>
+                                        {line}
+                                        <br />
+                                    </span>
+                                ))}
+                        </p>
 
                         {order.requirements && (
                             <div className="order-req">
                                 <strong>{t('orderModal.requirements')}:</strong>
-                                <p>{order.requirements}</p>
+                                <p className="order-req-text">
+                                    {order.requirements
+                                        .replace(/\u2028|\u2029|\r\n|\r/g, '\n')
+                                        .split('\n')
+                                        .map((line, i) => (
+                                            <span key={i}>
+                                                {line}
+                                                <br />
+                                            </span>
+                                        ))}
+                                </p>
                             </div>
                         )}
+
 
                         <div className="order-meta">
                             <div>
