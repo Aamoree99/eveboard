@@ -69,19 +69,26 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
     const totalPrice = numericPrice + (form.isAnonymous ? ANONYMITY_EXTRA : 0) + promoPrice
 
     useEffect(() => {
+        console.log('Calling orderControllerGetTypes...')
         api.order.orderControllerGetTypes()
-            .then((res) => {
-                const types = res.data
+            .then(async (res) => {
+                const json = await res.json()
+                console.log('Order types response JSON:', json)
+                const types = json.data
+
                 if (Array.isArray(types)) {
                     setOrderTypes(types)
                     if (!form.type && types.length > 0) {
                         setForm((prev) => ({ ...prev, type: types[0].value }))
                     }
+                } else {
+                    console.warn('Expected array in json.data, got:', types)
                 }
             })
-            .catch(console.error)
+            .catch((err) => {
+                console.error('orderControllerGetTypes FAILED:', err)
+            })
     }, [])
-
 
     useEffect(() => {
         const fetchSystems = async () => {

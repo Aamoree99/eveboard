@@ -638,6 +638,22 @@ export class Api<
      * No description
      *
      * @tags Orders
+     * @name OrderControllerGetCompletedOrderCount
+     * @request GET:/order/completed-count
+     * @secure
+     */
+    orderControllerGetCompletedOrderCount: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/order/completed-count`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Orders
      * @name OrderControllerGetOne
      * @summary Get order by ID
      * @request GET:/order/{id}
@@ -766,20 +782,6 @@ export class Api<
         body: data,
         secure: true,
         type: ContentType.Json,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Orders
-     * @name OrderControllerGetCompletedOrderCount
-     * @request GET:/order/completed-count
-     */
-    orderControllerGetCompletedOrderCount: (params: RequestParams = {}) =>
-      this.request<void, any>({
-        path: `/order/completed-count`,
-        method: "GET",
         ...params,
       }),
 

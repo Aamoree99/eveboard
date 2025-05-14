@@ -58,6 +58,15 @@ export class OrderController {
     return this.orderService.getPromotedOrders();
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('completed-count')
+  @ApiBearerAuth()
+  async getCompletedOrderCount(@Req() req: any): Promise<{ count: number }> {
+    const userId = req.user.id
+    const count = await this.orderService.getCompletedOrderCount(userId)
+    return { count }
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get order by ID' })
   @ApiParam({ name: 'id', description: 'Order ID' })
@@ -141,13 +150,5 @@ export class OrderController {
       @CurrentUser() user: PrismaUser,
   ) {
     return this.orderService.complain(orderId, user.id, dto);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('completed-count')
-  async getCompletedOrderCount(@Req() req: any): Promise<{ count: number }> {
-    const userId = req.user.id
-    const count = await this.orderService.getCompletedOrderCount(userId)
-    return { count }
   }
 }
