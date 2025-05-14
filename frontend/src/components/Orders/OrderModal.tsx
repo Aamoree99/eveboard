@@ -123,12 +123,12 @@ const OrderModal = ({ order, onClose }: Props) => {
             const res = await api.system.systemControllerGetSystemInfo(order.system.id, { secure: true })
             const { success, message } = await res.json()
             if (success) {
-                alert(t('orderModal.routeSet'))
+                setToastMessage(t('orderModal.routeSet'))
             } else {
                 throw new Error(message)
             }
         } catch {
-            alert(t('orderModal.routeFailed'))
+            setToastMessage(t('orderModal.routeFailed'))
         }
     }
 
@@ -322,7 +322,7 @@ const OrderModal = ({ order, onClose }: Props) => {
                         )}
                     </div>
 
-                    {order.status === 'TAKEN' && (isCreator || isExecutor) && (
+                    {order.status === 'TAKEN' && (isCreator || isExecutor || user?.role === 'ADMIN') && (
                         <div className="order-chat-container">
                             <OrderChat orderId={order.id} />
                         </div>

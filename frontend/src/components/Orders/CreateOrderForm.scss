@@ -204,3 +204,45 @@ button[type="submit"]:hover {
     transform: translateY(0);
   }
 }
+
+.ghost-autocomplete {
+  position: relative;
+  overflow: visible;
+
+  input {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    padding: 8px 12px; // 🟡 ← выстави в точности как у input
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .ghost-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    padding: 8px 12px; // 🟡 ← точно такой же как у input!
+    width: 100%;
+    color: transparent;
+    white-space: pre;
+    box-sizing: border-box;
+  }
+
+  .invisible {
+    visibility: hidden;
+  }
+
+  .ghost {
+    color: #aaa;
+  }
+}

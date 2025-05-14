@@ -540,3 +540,14 @@
   }
 }
 
+.clickable-system {
+  cursor: pointer;
+  color: var(--accent-color); // опционально для визуального выделения
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--accent-color);
+  }
+}
+

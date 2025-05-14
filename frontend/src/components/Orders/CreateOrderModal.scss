@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 100;
   backdrop-filter: blur(4px);
   padding: 16px; // чуть-чуть отступов, чтобы не прилипало к краям
 }

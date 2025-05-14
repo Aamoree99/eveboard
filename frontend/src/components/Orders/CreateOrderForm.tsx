@@ -61,6 +61,8 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
     const [orderTypes, setOrderTypes] = useState<OrderTypeOption[]>([])
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [ghostSuggestion, setGhostSuggestion] = useState('')
+
 
     const numericPrice = Number(form.price || '0')
 
@@ -102,14 +104,28 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
         const fetchSystems = async () => {
             if (systemQuery.length < 3) {
                 setSystemOptions([])
+                setGhostSuggestion('')
                 return
             }
+
             try {
                 const res = await api.system.systemControllerSearch({ q: systemQuery })
-                const systems = res.data // Axios автоматически кладёт тело ответа сюда
-                setSystemOptions(Array.isArray(systems) ? systems : [])
+                const json = await res.json()
+                const systems: SystemOption[] = Array.isArray(json) ? json : []
+
+                setSystemOptions(systems)
+
+                const match = systems.find((s) =>
+                    s.name.toLowerCase().startsWith(systemQuery.toLowerCase())
+                )
+                if (match && match.name.toLowerCase() !== systemQuery.toLowerCase()) {
+                    setGhostSuggestion(match.name)
+                } else {
+                    setGhostSuggestion('')
+                }
             } catch (err) {
                 console.error('System search failed', err)
+                setGhostSuggestion('')
             }
         }
 
@@ -179,12 +195,6 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
         } finally {
             setLoading(false)
         }
-
-        useEffect(() => {
-            autoResize(document.querySelector('textarea[name="description"]'))
-            autoResize(document.querySelector('textarea[name="requirements"]'))
-        }, [])
-
     }
 
     return (
@@ -241,29 +251,39 @@ const CreateOrderForm = ({ onClose, onCreated }: Props) => {
 
                     <label>
                         {t('createOrderForm.system')}
-                        <div className="relative-wrapper">
+                        <div className="relative-wrapper ghost-autocomplete">
                             <input
                                 placeholder={t('createOrderForm.systemPlaceholder')}
                                 value={selectedSystem?.name || systemQuery}
                                 onChange={(e) => {
-                                    setSystemQuery(e.target.value)
+                                    const value = e.target.value
+                                    setSystemQuery(value)
                                     setSelectedSystem(null)
+                                    setGhostSuggestion('')
                                 }}
+                                onKeyDown={(e) => {
+                                    if ((e.key === 'Tab' || e.key === 'Enter') && ghostSuggestion) {
+                                        e.preventDefault()
+                                        const matched = systemOptions.find(opt => opt.name === ghostSuggestion)
+                                        if (matched) {
+                                            setSelectedSystem(matched)
+                                            setSystemQuery(matched.name)
+                                            setGhostSuggestion('')
+                                        }
+                                    }
+                                }}
+
                             />
-                            {systemOptions.length > 0 && !selectedSystem && (
-                                <ul className="autocomplete-list">
-                                    {systemOptions.map((sys) => (
-                                        <li key={sys.id} onClick={() => {
-                                            setSelectedSystem(sys)
-                                            setSystemQuery(sys.name)
-                                        }}>
-                                            {sys.name}
-                                        </li>
-                                    ))}
-                                </ul>
+                            {ghostSuggestion && (
+                                <div className="ghost-text">
+                                    <span className="invisible">{systemQuery}</span>
+                                    <span className="ghost">{ghostSuggestion.slice(systemQuery.length)}</span>
+                                </div>
                             )}
+
                         </div>
                     </label>
+
 
                     <div className="double-row">
                         <label>
