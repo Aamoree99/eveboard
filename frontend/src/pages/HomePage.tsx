@@ -7,6 +7,7 @@ import type { CorpBalanceResponse } from '../types/api'
 import './HomePage.scss'
 import { useTranslation } from 'react-i18next'
 import PromoBlock from "../components/Promoblock.tsx";
+import {Helmet} from "react-helmet-async";
 
 
 const api = new Api({
@@ -74,6 +75,7 @@ const HomePage: React.FC = () => {
 
     return (
         <Layout>
+            <Helmet/>
             <div className="home-page">
                 <h1>{t('home.title')}</h1>
                 <p>{t('home.subtitle')}</p>

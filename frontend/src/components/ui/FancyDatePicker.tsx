@@ -24,7 +24,8 @@ const isSameDay = (a: Date, b: Date) =>
 const FancyDatePicker = ({ value, onChange, min, max }: FancyDatePickerProps) => {
     const ref = useRef<HTMLDivElement>(null)
     const [open, setOpen] = useState(false)
-    const [viewDate, setViewDate] = useState(() => value ? new Date(value) : new Date())
+    const [viewDate, setViewDate] = useState(() => new Date())
+
 
     const selectedDate = value ? new Date(value) : null
     const minDate = min ? new Date(min) : null
@@ -64,7 +65,13 @@ const FancyDatePicker = ({ value, onChange, min, max }: FancyDatePickerProps) =>
         <div className="fancy-datepicker" ref={ref}>
             <div
                 className="fancy-datepicker-display"
-                onClick={() => setOpen((o) => !o)}
+                onClick={() => {
+                    if (!open) {
+                        const today = new Date()
+                        setViewDate(new Date(today.getFullYear(), today.getMonth(), 1))
+                    }
+                    setOpen(!open)
+                }}
             >
                 {selectedDate ? selectedDate.toLocaleDateString() : 'Select date'}
             </div>

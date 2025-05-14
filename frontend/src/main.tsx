@@ -9,11 +9,13 @@ import { LanguageProvider } from './context/LanguageContext' // 👈 добав�
 
 import './styles/global.scss'
 import './i18n'
+import {HelmetProvider} from "react-helmet-async";
 
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
+        <HelmetProvider>
         <ThemeProvider>
             <QueryClientProvider client={queryClient}>
                 <BrowserRouter>
@@ -25,5 +27,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 </BrowserRouter>
             </QueryClientProvider>
         </ThemeProvider>
+        </HelmetProvider>
     </React.StrictMode>
 )
