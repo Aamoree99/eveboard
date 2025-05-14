@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import './TransModal.scss'
 import { Api } from '../../api/Api'
-import type { CreateDepositDto, Transaction } from '../../types/models'
 import { FaCopy } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
 
@@ -34,23 +33,43 @@ const DepositModal = ({ onClose }: Props) => {
 
         setLoading(true)
         try {
-            const res = await api.transaction.transactionControllerCreate({
-                amount,
-            } satisfies CreateDepositDto) as unknown as {
-                data: { success: boolean; message: string; data: Transaction }
+            const res = await api.transaction.transactionControllerCreate({ amount })
+
+            // Проверка, что fetch вернул 2xx
+            if (!res.ok) {
+                let errorText = ''
+                try {
+                    errorText = await res.text()
+                } catch {
+                    errorText = 'Failed to parse error text'
+                }
+
+                console.error('[DepositModal] Bad response:', res.status, errorText)
+                alert(t('deposit.invalidResponse'))
+                return
             }
 
-            const transactionData = res.data.data
+            // Попытка распарсить JSON
+            let body
+            try {
+                body = await res.json()
+            } catch (jsonErr) {
+                console.error('[DepositModal] Failed to parse JSON:', jsonErr)
+                alert(t('deposit.invalidResponse'))
+                return
+            }
+
+            const transactionData = body?.data
 
             if (transactionData && transactionData.reason) {
                 const { reason } = transactionData
                 setDepositInfo({ amount, reason })
             } else {
-                console.error('[DepositModal] Invalid response:', res)
+                console.error('[DepositModal] Invalid structure:', body)
                 alert(t('deposit.invalidResponse'))
             }
         } catch (e) {
-            console.error('[DepositModal] Failed:', e)
+            console.error('[DepositModal] Network or unexpected error:', e)
             alert(t('deposit.failed'))
         } finally {
             setLoading(false)
@@ -87,9 +106,15 @@ const DepositModal = ({ onClose }: Props) => {
                                     const parsed = Number(raw)
                                     if (!isNaN(parsed)) setAmount(parsed)
                                 }}
+                                onBlur={() => {
+                                    if (amount < 100_000_000) {
+                                        setAmount(100_000_000)
+                                    }
+                                }}
                                 inputMode="numeric"
                                 pattern="[0-9\s]*"
                             />
+
                         </label>
 
                         <button onClick={handleSubmit} disabled={loading}>
