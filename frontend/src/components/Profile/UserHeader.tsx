@@ -97,11 +97,12 @@ const UserHeader = ({ user, isOwnProfile, onRatingClick }: Props) => {
                             <button onClick={() => setShowDepositModal(true)}>
                                 {t('user.topUp')}
                             </button>
-                            {Number(user.balance) >= 500_000_000 && (
-                                <button onClick={() => setShowWithdrawModal(true)}>
-                                    {t('user.withdraw')}
-                                </button>
-                            )}
+                            <button
+                                onClick={() => setShowWithdrawModal(true)}
+                                disabled={Number(user.balance) < 500_000_000}
+                            >
+                                {t('user.withdraw')}
+                            </button>
                         </div>
                     </div>
                 )}
