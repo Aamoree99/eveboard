@@ -551,3 +551,9 @@
   }
 }
 
+.order-description,
+.order-req p {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
