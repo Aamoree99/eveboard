@@ -3,6 +3,8 @@ import './TransModal.scss'
 import { Api } from '../../api/Api'
 import { FaCopy } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
+import Toast from '../ui/Toast'
+
 
 const api = new Api({
     baseUrl: import.meta.env.VITE_API_URL,
@@ -20,6 +22,12 @@ const DepositModal = ({ onClose }: Props) => {
     const { t } = useTranslation()
     const [amount, setAmount] = useState(500_000_000)
     const [loading, setLoading] = useState(false)
+    const [toastMessage, setToastMessage] = useState<string | null>(null)
+
+    const showToast = (msg: string) => {
+        setToastMessage(msg)
+    }
+
     const [depositInfo, setDepositInfo] = useState<{
         amount: number
         reason: string
@@ -27,7 +35,7 @@ const DepositModal = ({ onClose }: Props) => {
 
     const handleSubmit = async () => {
         if (amount < 100_000_000) {
-            alert(t('deposit.minAlert'))
+            showToast(t('deposit.minAlert'))
             return
         }
 
@@ -45,7 +53,7 @@ const DepositModal = ({ onClose }: Props) => {
                 }
 
                 console.error('[DepositModal] Bad response:', res.status, errorText)
-                alert(t('deposit.invalidResponse'))
+                showToast(t('deposit.invalidResponse'))
                 return
             }
 
@@ -55,7 +63,7 @@ const DepositModal = ({ onClose }: Props) => {
                 body = await res.json()
             } catch (jsonErr) {
                 console.error('[DepositModal] Failed to parse JSON:', jsonErr)
-                alert(t('deposit.invalidResponse'))
+                showToast(t('deposit.invalidResponse'))
                 return
             }
 
@@ -66,11 +74,11 @@ const DepositModal = ({ onClose }: Props) => {
                 setDepositInfo({ amount, reason })
             } else {
                 console.error('[DepositModal] Invalid structure:', body)
-                alert(t('deposit.invalidResponse'))
+                showToast(t('deposit.invalidResponse'))
             }
         } catch (e) {
             console.error('[DepositModal] Network or unexpected error:', e)
-            alert(t('deposit.failed'))
+            showToast(t('deposit.failed'))
         } finally {
             setLoading(false)
         }
@@ -78,7 +86,7 @@ const DepositModal = ({ onClose }: Props) => {
 
     const handleCopy = (text: string) => {
         navigator.clipboard.writeText(text)
-        alert(t('deposit.copied'))
+        showToast(t('deposit.copied'))
     }
 
     return (
@@ -157,6 +165,13 @@ const DepositModal = ({ onClose }: Props) => {
                     </div>
                 )}
             </div>
+            {toastMessage && (
+                <Toast
+                    message={toastMessage}
+                    onClose={() => setToastMessage(null)}
+                />
+            )}
+
         </div>
     )
 }
